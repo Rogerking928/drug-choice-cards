@@ -1,0 +1,1822 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="皮膚病選藥卡（試用版）：慢性蕁麻疹、異位性皮膚炎、乾癬的台灣健保價、自費價、療效與健保規定，每項附出處、只說明文獻不做建議。">
+<meta property="og:title" content="皮膚病選藥卡（試用版）">
+<meta property="og:description" content="皮膚病選藥卡（試用版）：慢性蕁麻疹、異位性皮膚炎、乾癬的台灣健保價、自費價、療效與健保規定，每項附出處、只說明文獻不做建議。">
+<meta property="og:url" content="https://rogerking928.github.io/drug-choice-cards/">
+<meta name="author" content="Yen-Hsiang Wang">
+<style>[hidden]{display:none!important}body{margin:0}</style>
+<title>皮膚病選藥卡（試用版）</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: tabs, one per disease. Each: summary (Chinese) → "which drug when" table → main table (shading on efficacy only) → checks box → two charts → sources folded. */
+:root{
+  --bg:#f6f7f5; --panel:#ffffff; --fg:#1d2420; --muted:#5d6a63; --rule:#d9dfdb; --group:#eef1ef;
+  --accent:#1f6f5c; --placebo:#b9c3be; --cost:#8f9c96;
+  --good-bg:#dcefe0; --warn-bg:#fbebcc;
+  --t1:#1f6f5c; --t1-bg:#e1f0ea; --t2:#7a5a00; --t2-bg:#fbefd2; --t3:#9a3b2f; --t3-bg:#f7e1dd;
+  --display:"Noto Serif TC","Songti TC",serif; --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; --num:"IBM Plex Mono","Noto Sans TC","PingFang TC","Microsoft JhengHei",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121614; --panel:#1a201d; --fg:#e4ebe7; --muted:#9aa9a1; --rule:#2c3531; --group:#222a26;
+  --accent:#5fc1a5; --placebo:#4a5550; --cost:#6b7a73;
+  --good-bg:#1b3a2a; --warn-bg:#3d3018;
+  --t1:#7fd6b9; --t1-bg:#173229; --t2:#e8c071; --t2-bg:#3a2f16; --t3:#f2a093; --t3-bg:#3d201c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121614; --panel:#1a201d; --fg:#e4ebe7; --muted:#9aa9a1; --rule:#2c3531; --group:#222a26;
+  --accent:#5fc1a5; --placebo:#4a5550; --cost:#6b7a73;
+  --good-bg:#1b3a2a; --warn-bg:#3d3018;
+  --t1:#7fd6b9; --t1-bg:#173229; --t2:#e8c071; --t2-bg:#3a2f16; --t3:#f2a093; --t3-bg:#3d201c; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--display);font-size:1.6rem;line-height:1.25;margin:0;text-wrap:balance}
+h2{font-size:1rem;margin:0 0 10px}
+h2.dz{font-family:var(--display);font-size:1.25rem;margin:0}
+.meta{color:var(--muted);font-size:.84rem;margin:6px 0 0}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums}
+sup{font-size:.68em;color:var(--muted);margin-left:1px}
+section{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--rule)}
+.tabs a{padding:8px 14px;border-radius:8px 8px 0 0;text-decoration:none;color:var(--muted);font-weight:500;border:1px solid transparent;border-bottom:0;margin-bottom:-1px}
+.tabs a[aria-current="page"]{background:var(--panel);color:var(--fg);border-color:var(--rule)}
+.tabs a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.disease{display:flex;flex-direction:column;gap:20px}
+
+ul.sum{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+ul.sum li{padding-left:14px;position:relative}
+ul.sum li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+ul.sum b{margin-right:4px}
+
+/* tags for label status */
+.tag{display:inline-block;font-size:.7rem;font-weight:700;padding:0 6px;border-radius:4px;white-space:nowrap;vertical-align:1px}
+.t1{color:var(--t1);background:var(--t1-bg)} .t2{color:var(--t2);background:var(--t2-bg)} .t3{color:var(--t3);background:var(--t3-bg)}
+.m-only{display:none}
+.tags{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.78rem;color:var(--muted);margin:0 0 10px}
+
+table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.5;hyphens:none;overflow-wrap:normal;word-break:normal}
+th,td{padding:9px 10px;border:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:700;font-size:.8rem}
+td:first-child{font-weight:700}
+td small{font-weight:400;color:var(--muted)}
+tr.grp td{background:var(--group);font-size:.74rem;font-weight:700;letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
+td.g{background:var(--good-bg)} td.w{background:var(--warn-bg)}
+table.main td.g>.cv::before{content:"▲ ";font-size:.8em}
+table.main td.w>.cv::before{content:"△ ";font-size:.8em}
+.na{color:var(--muted)}
+table.pick td:first-child{font-weight:500}
+@media (max-width:600px){
+  table{font-size:.74rem} th,td{padding:6px 5px} th{font-size:.7rem}
+  .c-unit,.c-note{display:none}
+  .m-only{display:inline}
+  .tag{white-space:normal;line-height:1.35;padding:0 4px}
+  section{padding:14px 12px}
+}
+ul.notes{font-size:.8rem;color:var(--muted);margin:10px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.key{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:-1px;margin:0 3px 0 8px;border:1px solid var(--rule)}
+
+details.box{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 16px;font-size:.88rem;color:var(--fg)}
+details.box summary{font-weight:700}
+details.box ul{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:640px){.charts{grid-template-columns:1fr}}
+.chart h3{font-size:.9rem;margin:0 0 10px}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px;align-items:center;font-size:.82rem}
+.bar-row small{display:block;color:var(--muted);font-size:.7rem;line-height:1.2}
+.track{display:flex;flex-direction:column;gap:3px;padding-right:84px}
+.bar{height:13px;border-radius:3px;background:var(--accent);position:relative}
+.bar.pl{background:var(--placebo);height:7px}
+.bar.c{background:var(--cost)}
+.bar span{position:absolute;left:calc(100% + 5px);top:50%;transform:translateY(-50%);font-family:var(--num);font-size:.72rem;white-space:nowrap}
+.bar.pl span{color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.72rem;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:7px;border-radius:2px;margin-right:4px}
+
+details.refs{font-size:.78rem;color:var(--muted)}
+summary{cursor:pointer;color:var(--fg);font-weight:500}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+ol.refs{padding-left:20px;margin:8px 0 0;display:flex;flex-direction:column;gap:4px}
+ol.refs a{color:var(--accent)}
+.foot{font-size:.78rem;color:var(--muted);margin:0}
+/* Print: both diseases, one per page, no charts or tabs; light colours. */
+@media print{
+  :root{--bg:#fff;--panel:#fff;--fg:#000;--muted:#444;--rule:#999}
+  body{font-size:10pt;padding:0}
+  .tabs,section[aria-labelledby$="-h-fig"],details.refs{display:none!important}
+  .disease[hidden]{display:flex!important}
+  #ad,#pso{break-before:page}
+  section{border:0;padding:0;break-inside:auto}
+  table{font-size:8pt} th,td{padding:3px 4px}
+  .c-unit,.c-note{display:table-cell!important} .m-only{display:none!important}
+  tr{break-inside:avoid}
+  td.g,td.w,.key,.tag,tr.grp td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+.viewbar{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted)}
+.viewbar button{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:3px 12px;cursor:pointer}
+.viewbar button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.viewbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+body.cards table.main thead{display:none}
+body.cards table.main,body.cards table.main tbody{display:block}
+body.cards table.main tr{display:block;border:1px solid var(--rule);border-radius:8px;margin:0 0 10px;overflow:hidden}
+body.cards table.main tr.grp{border:0;margin:16px 0 6px}
+body.cards table.main tr.grp td{background:none;border:0;padding:0}
+body.cards table.main td{display:grid;grid-template-columns:7.2em minmax(0,1fr);gap:8px;border:0;border-top:1px solid var(--rule);font-size:.86rem}
+body.cards table.main td::before{content:attr(data-label);font-size:.72rem;color:var(--muted);font-weight:500}
+body.cards table.main td:first-child{display:block;border-top:0;background:var(--group);font-size:.95rem}
+body.cards table.main td:first-child::before,body.cards table.main tr.grp td::before{content:none}
+body.cards table.main .c-unit,body.cards table.main .c-note{display:grid!important}
+body.cards table.main .m-only{display:none!important}
+@media print{.viewbar{display:none!important}}
+.viewbar{flex-wrap:wrap}
+.viewbar .sep{width:10px}
+body:not(.en) .l-en,body.en .l-zh{display:none!important}
+@media print{.disease.guide{display:none!important}body:not(.en) .disease[data-lang="en"],body.en .disease[data-lang="zh"]{display:none!important}}
+
+/* guide (teaching) mode */
+.modebar{display:flex;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;width:max-content;max-width:100%}
+.modebar button{font:inherit;font-weight:500;padding:7px 16px;border:0;background:var(--panel);color:var(--muted);cursor:pointer}
+.modebar button[aria-pressed="true"]{background:var(--accent);color:var(--panel)}
+.modebar button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.guide{max-width:720px;line-height:1.75;font-size:1rem}
+.guide h2{font-family:var(--display);font-size:1.35rem;margin:6px 0 0}
+.guide h3{font-size:1.02rem;margin:0 0 6px;display:flex;align-items:baseline;gap:10px}
+.guide h3 .n{font-family:var(--num);font-size:.8rem;color:var(--accent);background:var(--group);border-radius:4px;padding:0 6px}
+.guide p{margin:0}
+.guide .step{display:flex;flex-direction:column;gap:6px;background:none;border:0;padding:0}
+.guide ul{margin:4px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.guide .rec{display:inline-block;font-size:.74rem;font-weight:700;padding:0 6px;border-radius:4px;background:var(--t1-bg);color:var(--t1);margin-right:4px;white-space:nowrap}
+.guide .gkey{background:var(--warn-bg);border-radius:10px;padding:14px 16px}
+.guide table{font-size:.88rem}
+.guide td:first-child{width:20%}
+.guide .cg{background:var(--t1-bg)} .guide .ch{background:var(--warn-bg)}
+.guide ol.path{margin:4px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.guide details{font-size:.8rem;color:var(--muted)}
+body.guidemode .viewbar [data-view],body.guidemode .viewbar .lay{display:none}
+
+.flow{display:flex;flex-direction:column;gap:6px}
+.flow h2{margin:0}
+.fhint{margin:0;font-size:.8rem;color:var(--muted)}
+.fwrap{display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:6px}
+.fstep{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%}
+.flab{font-size:.74rem;color:var(--muted);text-align:center}
+.frow{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%}
+.fnode{font:inherit;font-weight:700;font-size:.9rem;color:var(--fg);background:var(--group);border:1.5px solid var(--accent);border-radius:10px;padding:8px 14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;min-width:0;max-width:100%;line-height:1.35}
+.fnode small{font-weight:400;font-size:.74rem;color:var(--muted)}
+.fnode:hover{background:var(--t1-bg)}
+.fnode:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.farrow{color:var(--accent);font-size:1.1rem;line-height:1}
+.fside{margin-top:10px;padding-top:8px;border-top:1px dashed var(--rule);width:100%;display:flex;justify-content:center}
+.fside .fnode{border-style:dashed}
+.fnode.na{border-style:dashed;border-color:var(--muted);background:var(--panel)}
+.fnode.na small{color:var(--t3)}
+@keyframes flash{0%{outline:3px solid var(--accent)}100%{outline:3px solid transparent}}
+.flash{animation:flash 1.6s ease-out}
+@media (prefers-reduced-motion:reduce){.flash{animation:none;outline:3px solid var(--accent)}}
+@media print{.flow{display:none!important}}
+
+.calc .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
+.calc label{display:flex;flex-direction:column;gap:3px;font-size:.8rem;color:var(--muted)}
+.calc select,.calc input{font:inherit;font-size:.95rem;color:var(--fg);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:6px 8px;min-width:0;width:100%}
+.calc select:focus-visible,.calc input:focus-visible,.calc .pb:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.calc .pbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.calc .pb{font:inherit;font-size:.8rem;border:1px solid var(--rule);background:var(--panel);color:var(--fg);border-radius:999px;padding:2px 10px;cursor:pointer}
+.calc .pb:disabled{opacity:.45;cursor:default}
+.calc .res{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:12px}
+.calc .res div{display:flex;flex-direction:column}
+.calc .res span{font-size:.78rem;color:var(--muted)}
+.calc .res b{font-family:var(--num);font-size:1.35rem;font-variant-numeric:tabular-nums}
+.calc .hint{font-size:.8rem;color:var(--muted);margin:0}
+@media print{.calc{display:none!important}}
+
+.secnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--rule);scrollbar-width:thin}
+.secnav button{flex:0 0 auto;font:inherit;font-size:.82rem;color:var(--fg);background:var(--panel);border:1px solid var(--rule);border-radius:999px;padding:4px 12px;cursor:pointer;white-space:nowrap}
+.secnav button[data-jump="guide"]{border-color:var(--accent);color:var(--accent)}
+.secnav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.disease [data-sec]{scroll-margin-top:56px}
+details.more{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 16px}
+details.more>summary{font-weight:700;cursor:pointer}
+details.more[open]>summary{margin-bottom:8px}
+details.more ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.nhi ol.nsteps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.nhi details.more{margin-top:10px;background:var(--bg)}
+.colbtn{font:inherit;font-size:.8rem;margin:0 0 8px;border:1px solid var(--rule);background:var(--panel);color:var(--accent);border-radius:999px;padding:3px 12px;cursor:pointer}
+.colbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table.main.simple th:nth-child(2),table.main.simple td:nth-child(2),table.main.simple th:nth-child(3),table.main.simple td:nth-child(3),table.main.simple th:nth-child(6),table.main.simple td:nth-child(6){display:none!important}
+table.main.simple .m-only{display:inline!important}
+@media print{.secnav,.colbtn{display:none!important}table.main.simple td,table.main.simple th{display:table-cell!important}table.main.simple .m-only{display:none!important}}
+details.upd{margin-top:6px;font-size:.84rem;color:var(--muted)}
+details.upd summary{cursor:pointer}
+.backbtn{align-self:flex-start;font:inherit;font-size:.85rem;color:var(--accent);background:var(--panel);border:1px solid var(--accent);border-radius:999px;padding:4px 14px;cursor:pointer}
+.backbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media print{.backbtn{display:none!important}}
+
+.cmp .cmp-tier{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.cmp h3{font-size:.95rem;margin:10px 0 0}
+.cmp-head,.cmp-row{display:grid;grid-template-columns:minmax(90px,1.1fr) minmax(0,1.6fr) minmax(0,1.4fr);gap:10px;align-items:start}
+.cmp-head{font-size:.74rem;color:var(--muted);border-bottom:1px solid var(--rule);padding-bottom:4px}
+.cmp-row{padding:6px 0;border-bottom:1px solid var(--rule)}
+.cmp-n{font-weight:700;font-size:.88rem;line-height:1.3}
+.cmp-n small,.cmp-c small{display:block;font-weight:400;font-size:.72rem;color:var(--muted)}
+.cmp-e,.cmp-c{display:flex;flex-direction:column;gap:2px;font-size:.8rem;min-width:0}
+.cmp-e span,.cmp-c span{font-family:var(--num);font-variant-numeric:tabular-nums}
+.cmp .noval{font-family:var(--body)!important;color:var(--muted);font-size:.78rem}
+.cbar{height:10px;border-radius:3px;max-width:100%}
+.cbar.e{background:var(--accent)} .cbar.c{background:var(--cost)}
+@media (max-width:520px){.cmp-head{display:none}.cmp-row{grid-template-columns:1fr 1fr}.cmp-n{grid-column:1/-1}}
+.beta{background:var(--warn-bg);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;font-size:.9rem;line-height:1.6}
+.beta b{margin-right:6px} .beta a{color:var(--accent)} .mail{font-family:var(--num);user-select:all;overflow-wrap:anywhere}
+.feedback{display:flex;flex-direction:column;gap:8px}
+.fb{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.fb label{display:flex;flex-direction:column;gap:3px;font-size:.82rem;color:var(--muted)}
+.fb .wide{grid-column:1/-1}
+.fb select,.fb textarea,.fb input{font:inherit;font-size:.95rem;color:var(--fg);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:6px 8px;width:100%;min-width:0}
+.fbbtns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fbbtns button{font:inherit;border-radius:999px;padding:6px 16px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--panel)}
+.fbbtns button[type=button]{background:var(--panel);color:var(--accent)}
+.fb :focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#fb-msg{font-size:.82rem;color:var(--muted)}
+@media print{.beta,.feedback{display:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="beta" role="note"><b><span class="l-zh">試用版</span><span class="l-en">Beta</span></b>
+<span class="l-zh">內容持續更新中，可能有錯誤或遺漏。歡迎<a href="#feedback">給意見</a>或來信合作：<span class="mail">rogerwang890928@gmail.com</span></span>
+<span class="l-en">Content is being updated and may contain errors or gaps. Your <a href="#feedback">feedback</a> and collaboration are welcome: <span class="mail">rogerwang890928@gmail.com</span></span></div>
+
+  <h1><span class="l-zh">皮膚病選藥卡</span><span class="l-en">Drug Choice Cards for Skin Disease</span></h1>
+  <p class="meta"><span class="l-zh">給醫師的快速參考 · 查核日 <span class="num">2026-10-24</span> · 價格為健保支付價（NT$），各院自費價不同</span><span class="l-en">Quick reference for clinicians · checked <span class="num">2026-10-24</span> · prices are Taiwan NHI prices (NT$); hospital self-pay prices differ</span></p>
+  <details class="upd"><summary><span class="l-zh">更新紀錄</span><span class="l-en">Update log</span></summary><p class="meta"><span class="l-zh">2026/10/24 新增乾癬、B 肝預防性用藥的健保規定；全面比對台灣、美國、歐盟已核准藥物，補上 icotrokinra、Staquis；建立卡片，全文對照原始資料查核 · 2026/8 Omlyclo 健保價為原廠一半 · 2026/6 Ebglyss 納入健保（異位性皮膚炎）、美國核准 Ebglyss 每 8 週維持。每週自動監測新研究與健保變動，人工核對後更新。</span><span class="l-en">2026/10/24 psoriasis and NHI rules on hepatitis B prophylaxis added; approved drugs in Taiwan, the US and the EU cross-checked, icotrokinra and Staquis added; cards created and every item checked against the original source · 2026/8 Omlyclo NHI price half of Xolair · 2026/6 Ebglyss covered by NHI (atopic dermatitis); US approves Ebglyss every 8 weeks for maintenance. New research and NHI changes are screened weekly and checked by hand before any update.</span></p></details>
+</header>
+<div class="viewbar" role="group" aria-label="版面 Layout"><span class="l-zh">語言</span><span class="l-en">Language</span><button type="button" data-lang-btn="zh" aria-pressed="true">中文</button><button type="button" data-lang-btn="en" aria-pressed="false">English</button><span class="sep lay"></span><span class="lay"><span class="l-zh">版面</span><span class="l-en">Layout</span></span><button type="button" data-view="table" aria-pressed="true"><span class="l-zh">表格</span><span class="l-en">Table</span></button><button type="button" data-view="cards" aria-pressed="false"><span class="l-zh">一藥一卡</span><span class="l-en">Cards</span></button></div>
+<nav class="tabs" aria-label="疾病">
+  <a href="#csu" data-tab="csu"><span class="l-zh">慢性蕁麻疹</span><span class="l-en">Chronic urticaria</span></a>
+  <a href="#ad" data-tab="ad"><span class="l-zh">異位性皮膚炎</span><span class="l-en">Atopic dermatitis</span></a>
+  <a href="#pso" data-tab="pso"><span class="l-zh">乾癬</span><span class="l-en">Psoriasis</span></a>
+</nav>
+
+<div class="disease" data-dz="csu" data-lang="zh">
+<h2 class="dz">慢性自發性蕁麻疹（CSU）</h2>
+<nav class="secnav" aria-label="本頁"><button type="button" data-jump="flow">流程圖</button><button type="button" data-jump="table">藥物表</button><button type="button" data-jump="calc">費用試算</button><button type="button" data-jump="nhi">健保怎麼申請</button><button type="button" data-jump="fig">同層級比較</button><button type="button" data-jump="guide">看懂指引</button><button type="button" data-jump="refs">參考文獻</button></nav>
+<section class="flow" data-sec="flow" aria-label="流程圖：指引的順序1">
+  <h2>流程圖：指引的順序<sup>1</sup></h2>
+  <p class="fhint">點方塊跳到下方表格</p>
+  <div class="fwrap"><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="g0">第 2 代抗組織胺<small>每天固定吃</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="g0">加到 4 倍<small>仿單外</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">仍不夠：加上</span><div class="frow"><button type="button" class="fnode" data-go="g1">omalizumab<small>Xolair；生物相似藥 Omlyclo 健保價為一半</small></button><button type="button" class="fnode" data-go="g1">dupilumab<small>Dupixent</small></button><button type="button" class="fnode na" data-go="na">remibrutinib<small>Rhapsido，口服；台灣未核准</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">仍不夠</span><div class="frow"><button type="button" class="fnode" data-go="g2">ciclosporin<small>仿單外、副作用較多</small></button></div></div><div class="fside"><button type="button" class="fnode" data-go="g3">急性發作：短期類固醇<small>最多 10 天</small></button></div></div>
+</section>
+
+<section data-sec="table" aria-labelledby="zh-csu-h-table">
+  <h2 id="zh-csu-h-table">表 1：台灣慢性自發性蕁麻疹用藥</h2>
+  <div class="tags"><span><span class="tag t1">仿單內</span> 台灣或美國仿單所列</span><span><span class="tag t2">仿單外・指引建議</span> 2026 年指引建議</span><span><span class="tag t3">仿單外・觀察性研究</span> 僅有研究證據</span></div>
+  <button type="button" class="colbtn" aria-pressed="false">顯示完整欄位（單價、用法、備註）</button>
+  <table class="main simple">
+    <thead><tr><th>藥物</th><th class="c-unit">單價</th><th>用法</th><th>每 4 週</th><th>療效</th><th class="c-note">備註</th></tr></thead>
+    <tbody>
+      <tr class="grp" data-g="g0"><td colspan="6">第一線</td></tr>
+      <tr><td>第 2 代抗組織胺<br><small>fexofenadine, bilastine</small><small class="m-only"><br>控制後逐步減量<sup>1</sup></small></td>
+        <td class="c-unit">1.5–4 / 錠<br><small>健保給付<sup>2</sup></small></td>
+        <td>每日 <span class="tag t1">仿單內</span>；最多加到 4 倍 <span class="tag t2">仿單外・指引建議</span><sup>1</sup></td>
+        <td>標準劑量：約 42–112 元<br>4 倍劑量：約 168–448 元</td>
+        <td class="w">標準劑量無效者 63% 加量後改善；小型試驗<sup>3</sup></td>
+        <td class="c-note">控制後逐步減量<sup>1</sup></td></tr>
+
+      <tr class="grp" data-g="g1"><td colspan="6">加在抗組織胺之上</td></tr>
+      <tr><td>Xolair<br><small>omalizumab</small><small class="m-only"><br>首選<sup>1</sup>。可拉長間隔或加量 <span class="tag t2">仿單外・指引建議</span><sup>1</sup></small></td>
+        <td class="c-unit">14,234 / 150 mg<sup>2</sup><br><small>自費 15,657–17,081<sup>7</sup></small></td>
+        <td>150 或 300 mg，每 4 週<sup>4</sup>；指引建議從 300 mg 開始<sup>1</sup></td>
+        <td>28,468<br><small>300 mg</small><br><small>自費 31,314–34,162<sup>7</sup></small></td>
+        <td class="g">36% 對比 安慰劑 9%，第 12 週（試驗 2 相近）<sup>4</sup></td>
+        <td class="c-note">首選<sup>1</sup>。可拉長間隔或加量 <span class="tag t2">仿單外・指引建議</span><sup>1</sup></td></tr>
+      <tr><td>Omlyclo<br><small>omalizumab 生物相似藥</small><small class="m-only"><br>價格為 Xolair 的一半<sup>2</sup></small></td>
+        <td class="c-unit">7,026 / 150 mg<sup>2</sup><br><small>自費 未查到</small></td>
+        <td>同 Xolair<sup>5</sup></td>
+        <td>14,052<br><small>自費 未查到</small></td>
+        <td class="g">搔癢分數與 Xolair 相當，n = 619<sup>5</sup></td>
+        <td class="c-note">價格為 Xolair 的一半<sup>2</sup></td></tr>
+      <tr><td>Dupixent<br><small>dupilumab</small><small class="m-only"><br>曾用 omalizumab 者未達主要指標<sup>6</sup>。無拉長間隔的資料<sup>1</sup></small></td>
+        <td class="c-unit">15,687 / 300 mg<sup>2</sup><br><small>自費 17,256–18,825<sup>7</sup></small></td>
+        <td>成人 600 mg，之後 300 mg 每 2 週；青少年依體重<sup>6</sup></td>
+        <td>31,374<br><small>自費 34,512–37,650<sup>7</sup></small></td>
+        <td class="w">30–32% 對比 安慰劑 13–17%，第 24 週；可能弱於 omalizumab<sup>1,6</sup></td>
+        <td class="c-note">曾用 omalizumab 者未達主要指標<sup>6</sup>。無拉長間隔的資料<sup>1</sup></td></tr>
+
+      <tr class="grp" data-g="g2"><td colspan="6">重度、難治</td></tr>
+      <tr><td>Ciclosporin<small class="m-only"><br>副作用較多；不作為標準用藥<sup>1</sup>。監測血壓、腎功能</small></td>
+        <td class="c-unit">113 / 100 mg<sup>2</sup></td>
+        <td>3–5 mg/kg/日 <span class="tag t2">仿單外・指引建議</span><sup>1</sup></td>
+        <td>約 6,300–9,500<br><small>60 kg</small></td>
+        <td class="w">安慰劑對照試驗證實有效<sup>1</sup></td>
+        <td class="c-note">副作用較多；不作為標準用藥<sup>1</sup>。監測血壓、腎功能</td></tr>
+
+      <tr class="grp" data-g="g3"><td colspan="6">僅用於急性發作</td></tr>
+      <tr><td>Prednisolone<small class="m-only"><br>強烈不建議長期使用<sup>1</sup></small></td>
+        <td class="c-unit">0.9–2 / 5 mg<sup>2</sup></td>
+        <td>20–50 mg/日，≤ 10 天<sup>1</sup></td>
+        <td>約 40–200<br><small>每療程</small></td>
+        <td class="w">可能縮短發作；缺乏良好試驗<sup>1</sup></td>
+        <td class="c-note">強烈不建議長期使用<sup>1</sup></td></tr>
+
+      <tr class="grp" data-g="g4"><td colspan="6">不在指引流程內・證據不足但便宜</td></tr>
+      <tr><td>Montelukast<small class="m-only"><br>FDA 加框警語：神經精神事件<sup>1</sup></small></td>
+        <td class="c-unit">9.9 / 10 mg<sup>2</sup></td>
+        <td>10 mg 每日，加用</td>
+        <td>約 280</td>
+        <td class="w">加用效果有限<sup>1</sup></td>
+        <td class="c-note">FDA 加框警語：神經精神事件<sup>1</sup></td></tr>
+      <tr><td>其他<br><small>H2 阻斷劑、hydroxychloroquine、methotrexate、dapsone</small><small class="m-only"><br>指引：無法取得較貴藥物時仍可考慮<sup>1</sup></small></td>
+        <td class="c-unit">1.2–4.3 / 錠<sup>2</sup></td>
+        <td>加用</td>
+        <td>—</td>
+        <td class="w">證據不足，無法建議<sup>1</sup></td>
+        <td class="c-note">指引：無法取得較貴藥物時仍可考慮<sup>1</sup></td></tr>
+    </tbody>
+  </table>
+  <ul class="notes">
+    <li>名詞：UAS7 為一週蕁麻疹活性分數（搔癢加風疹塊，0–42 分），UAS7 = 0 指完全沒有搔癢和風疹塊。</li>
+    <li>療效底色： <i class="key" style="background:var(--good-bg)"></i>▲ 證據或效果較強 <i class="key" style="background:var(--warn-bg)"></i>△ 較弱、不確定或無可比數據。生物製劑療效：無搔癢且無風疹塊（UAS7 = 0）。各試驗評估的週數不同，數字不能直接比較。</li>
+    <li>Omlyclo 試驗：主要指標搔癢分數與 Xolair 相當；次要指標 UAS7 = 0 為 23.6% 對比 30.7%（第 12 週）及 40.1% 對比 37.5%（第 24 週）<sup>5</sup>。</li>
+    <li>生物製劑在台灣有 CSU 適應症（12 歲以上），但健保不給付 CSU<sup>2,9</sup>。醫院自費價通常高於健保價<sup>7</sup>。</li>
+    <li data-g="na">台灣未核准：remibrutinib（Rhapsido，口服；美國與歐盟已核准）<sup>8,9</sup>。</li>
+  </ul>
+</section>
+
+<section class="calc" data-sec="calc" aria-labelledby="zh-csu-calc-h" data-calc='[{"n": "Xolair 150 mg", "p": 14234, "lo": 15657, "hi": 17081, "u": 2, "d": 28}, {"n": "Omlyclo 150 mg", "p": 7026, "lo": null, "hi": null, "u": 2, "d": 28}, {"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}]' data-na="自費價未查到">
+  <h2 id="zh-csu-calc-h">費用試算</h2>
+  <p class="hint">選藥物後輸入您醫院的每支／每顆價格；只算維持期藥費，誘導期與部分負擔另計。<sup>2,7</sup></p>
+  <div class="cgrid">
+    <label for="zh-csu-c-drug">藥物<select id="zh-csu-c-drug" class="c-drug"><option value="0">Xolair 150 mg</option><option value="1">Omlyclo 150 mg</option><option value="2">Dupixent 300 mg</option></select></label>
+    <label for="zh-csu-c-price">每支／每顆價格（元）<input id="zh-csu-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="zh-csu-c-units">每次用量（支／顆）<input id="zh-csu-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label for="zh-csu-c-days">間隔（天）<input id="zh-csu-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
+  </div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">健保價</button><button type="button" class="pb" data-k="lo">自費低</button><button type="button" class="pb" data-k="hi">自費高</button></div>
+  <div class="res" aria-live="polite"><div><span>每 4 週</span><b class="c-r4">—</b></div><div><span>每年（365 天）</span><b class="c-ry">—</b></div></div>
+</section>
+
+<section class="nhi" data-sec="nhi" aria-label="健保怎麼申請">
+  <h2>健保怎麼申請</h2>
+  <ol class="nsteps"><li><b>抗組織胺</b>：健保給付。</li><li><b>生物製劑用於 CSU</b>：健保不給付，需自費。omalizumab 的規定 6.2.6 只限重度持續性氣喘；dupilumab 的 6.2.9、13.17 不含 CSU<sup>2</sup>。</li><li><b>自費價</b>：各醫院不同，可用上方「費用試算」帶入您醫院的價格<sup>7</sup>。</li></ol>
+  
+</section>
+
+<section data-sec="fig" class="cmp" aria-label="圖 1：同層級比較">
+  <h2>圖 1：同層級比較</h2>
+  <div class="cmp-tier"><h3>4 倍抗組織胺仍不夠時加上</h3><div class="cmp-head"><span></span><span>療效：完全沒症狀（UAS7 = 0）<sup>4,6</sup></span><span>每 4 週（健保價）<sup>2,7</sup></span></div><div class="cmp-row"><div class="cmp-n">Xolair<small>omalizumab；第 12 週</small></div><div class="cmp-e"><div class="cbar e" style="width:36%"></div><span>36%（安慰劑 9%）</span></div><div class="cmp-c"><div class="cbar c" style="width:90.7%"></div><span>28,468</span><small>自費 31,314–34,162</small></div></div><div class="cmp-row"><div class="cmp-n">Omlyclo<small>生物相似藥</small></div><div class="cmp-e"><span class="noval">主要指標與 Xolair 等效</span></div><div class="cmp-c"><div class="cbar c" style="width:44.8%"></div><span>14,052</span><small>自費 未查到</small></div></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>dupilumab；第 24 週</small></div><div class="cmp-e"><div class="cbar e" style="width:31%"></div><span>30–32%（安慰劑 13–17%）</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>31,374</span><small>自費 34,512–37,650</small></div></div></div>
+  <p class="note">療效來自不同試驗與週數，只能看大概，不能直接相減；費用為維持期藥費，長條為健保價，小字為醫院自費價範圍。</p>
+</section>
+
+<details class="more"><summary>重點整理</summary>
+<ul class="sum">
+    <li><b>指引的順序：</b>二代抗組織胺 → 控制不好加到 4 倍 → 仍不好加上 omalizumab（首選）或 dupilumab，抗組織胺繼續吃 → 都不夠才用 ciclosporin<sup>1</sup>。</li>
+    <li><b>健保：</b>生物製劑 CSU 健保不給付、要自費：omalizumab 的給付規定 6.2.6 只限重度持續性氣喘，dupilumab 的 6.2.9、13.17 也不含 CSU<sup>2</sup>。以健保價計，每 4 週 Xolair 約 28,000、Dupixent 約 31,000、Omlyclo 約 14,000 元；病人實際付的是醫院自費價，通常更高（醫院公開價：Xolair 每 4 週約 31,000–34,000 元）<sup>2,7</sup>。</li>
+    <li><b>omalizumab 打了不夠好：</b>指引建議加量或縮短間隔，或改 ciclosporin<sup>1</sup>。Dupixent 在曾用過 omalizumab 的病人身上（CUPID Study B）沒有達到主要指標<sup>6</sup>。</li>
+    <li><b>拉長間隔：</b>omalizumab 完全控制 3 個月後，逐步拉長打針間隔，直到風疹塊再出現<sup>1</sup>。改成每 8 週打，每 4 週 Xolair 約 14,000、Omlyclo 約 7,000 元<sup>2</sup>。</li>
+  </ul>
+</details>
+<details class="more"><summary>不同情況，文獻怎麼說</summary>
+<table class="pick">
+    <thead><tr><th style="width:45%">情境</th><th>文獻與規定怎麼說</th></tr></thead>
+    <tbody>
+      <tr><td>費用</td><td>Omlyclo 健保價為 Xolair 的一半，且與原廠等效；指引寫明控制後可拉長間隔<sup>1,2,5</sup></td></tr>
+      <tr><td>合併異位性皮膚炎、氣喘或鼻息肉</td><td>指引指出 dupilumab 對這些共病有額外好處<sup>1</sup></td></tr>
+      <tr><td>總 IgE 很低</td><td>指引：omalizumab 常反應不足；dupilumab 療效不受 IgE 高低影響<sup>1</sup></td></tr>
+      <tr><td>IgE 低且有自體免疫標記（anti-TPO）</td><td>指引：ciclosporin 在這類病人可能特別有效<sup>1</sup></td></tr>
+      <tr><td>omalizumab 控制不佳</td><td>指引列出 omalizumab 加量、縮短間隔或改用 ciclosporin<sup>1</sup>；Dupixent 在用過 omalizumab 的病人試驗中未達主要指標<sup>6</sup></td></tr>
+      <tr><td>懷孕</td><td>指引：抗組織胺優先 loratadine 或 cetirizine；omalizumab 有安全的報告；ciclosporin 與早產、低出生體重有關<sup>1</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<details class="box">
+  <summary>用藥前與用藥中</summary>
+  <ul>
+    <li>所有病人：全血球計數含白血球分類、CRP 和／或 ESR。專科照護：總 IgE 與 IgG anti-TPO<sup>1</sup>。</li>
+    <li>以 UAS7（每週活性）與 UCT（控制程度）追蹤反應<sup>1</sup>。</li>
+    <li>ciclosporin：血壓與腎功能。dapsone：先驗 G6PD。</li>
+    <li>懷孕：第一孕期盡量避免全身性治療；首選 loratadine（或 desloratadine、cetirizine、levocetirizine）；omalizumab 有安全的報告；ciclosporin 與早產及低出生體重有關<sup>1</sup>。</li>
+  </ul>
+</details>
+
+<details class="refs" data-sec="refs">
+  <summary>參考文獻（9）</summary>
+  <ol class="refs">
+    <li>Zuberbier T, et al. International guideline for urticaria. <i>Allergy</i> 2026;81(8):2582–2632. <a href="https://doi.org/10.1111/all.70210" target="_blank" rel="noopener">doi:10.1111/all.70210</a></li>
+    <li>National Health Insurance Administration, Taiwan. NHI drug price list (open data), downloaded 24 October 2026; NHI rules 6.2.6, 6.2.9, 13.17.</li>
+    <li>Guillén-Aguinaga S, et al. Updosing nonsedating antihistamines in CSU. <i>Br J Dermatol</i> 2016;175(6):1153–65. <a href="https://doi.org/10.1111/bjd.14768" target="_blank" rel="noopener">doi:10.1111/bjd.14768</a></li>
+    <li>XOLAIR (omalizumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>Saini SS, et al. CT-P39 compared with reference omalizumab in CSU. <i>Allergy</i> 2025;80(8):2167–77. <a href="https://doi.org/10.1111/all.16446" target="_blank" rel="noopener">doi:10.1111/all.16446</a></li>
+    <li>DUPIXENT (dupilumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>Self-pay prices from hospital public price lists: Chang Gung Memorial Hospital (list dated 1 October 2025), Fu Jen Catholic University Hospital, Kuang Tien General Hospital (September 2026) and Taipei City Hospital (October 2026); accessed 24 October 2026. Prices differ by hospital and purchasing contract.</li>
+    <li>European Medicines Agency. Rhapsido (remibrutinib) EPAR. <a href="https://www.ema.europa.eu/en/medicines/human/EPAR/rhapsido" target="_blank" rel="noopener">ema.europa.eu</a></li>
+    <li>Taiwan Food and Drug Administration. All drug licences (open data), downloaded 24 October 2026.</li>
+  </ol>
+</details>
+</div>
+
+<div class="disease" data-dz="csu" data-lang="en">
+<h2 class="dz">Chronic spontaneous urticaria (CSU)</h2>
+<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">NHI application</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
+<section class="flow" data-sec="flow" aria-label="Flowchart: guideline order1">
+  <h2>Flowchart: guideline order<sup>1</sup></h2>
+  <p class="fhint">Tap a box to jump to the table</p>
+  <div class="fwrap"><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="g0">2nd-gen antihistamine<small>daily</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="g0">Up to 4× dose<small>off-label</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">Still not enough: add</span><div class="frow"><button type="button" class="fnode" data-go="g1">omalizumab<small>Xolair; biosimilar Omlyclo at half the NHI price</small></button><button type="button" class="fnode" data-go="g1">dupilumab<small>Dupixent</small></button><button type="button" class="fnode na" data-go="na">remibrutinib<small>Rhapsido, oral; not approved in Taiwan</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">Still not enough</span><div class="frow"><button type="button" class="fnode" data-go="g2">ciclosporin<small>off-label, more adverse effects</small></button></div></div><div class="fside"><button type="button" class="fnode" data-go="g3">Acute flare: short steroid course<small>up to 10 days</small></button></div></div>
+</section>
+
+<section data-sec="table" aria-labelledby="en-csu-h-table">
+  <h2 id="en-csu-h-table">Table 1. Drugs for chronic spontaneous urticaria in Taiwan</h2>
+  <div class="tags"><span><span class="tag t1">On-label</span> in the Taiwan or US label</span><span><span class="tag t2">Off-label · guideline</span> recommended by the 2026 guideline</span><span><span class="tag t3">Off-label · observational</span> studies only</span></div>
+  <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
+  <table class="main simple">
+    <thead><tr><th>Drug</th><th class="c-unit">Unit price</th><th>Dosing</th><th>Per 4 weeks</th><th>Efficacy</th><th class="c-note">Notes</th></tr></thead>
+    <tbody>
+      <tr class="grp" data-g="g0"><td colspan="6">First line</td></tr>
+      <tr><td>2nd-gen antihistamine<br><small>fexofenadine, bilastine</small><small class="m-only"><br>Step down once controlled<sup>1</sup></small></td>
+        <td class="c-unit">1.5–4 / tablet<br><small>NHI covered<sup>2</sup></small></td>
+        <td>Daily <span class="tag t1">On-label</span>; up to 4× <span class="tag t2">Off-label · guideline</span><sup>1</sup></td>
+        <td>Standard dose: about 42–112<br>4 times the dose: about 168–448</td>
+        <td class="w">63% of standard-dose non-responders improve on a higher dose; small trials<sup>3</sup></td>
+        <td class="c-note">Step down once controlled<sup>1</sup></td></tr>
+
+      <tr class="grp" data-g="g1"><td colspan="6">Add-on to the antihistamine</td></tr>
+      <tr><td>Xolair<br><small>omalizumab</small><small class="m-only"><br>First choice<sup>1</sup>. Extend or up-dose <span class="tag t2">Off-label · guideline</span><sup>1</sup></small></td>
+        <td class="c-unit">14,234 / 150 mg<sup>2</sup><br><small>Self-pay 15,657–17,081<sup>7</sup></small></td>
+        <td>150 or 300 mg every 4 weeks<sup>4</sup>; guideline starts at 300 mg<sup>1</sup></td>
+        <td>28,468<br><small>300 mg</small><br><small>Self-pay 31,314–34,162<sup>7</sup></small></td>
+        <td class="g">36% vs 9% placebo, wk 12 (trial 2 similar)<sup>4</sup></td>
+        <td class="c-note">First choice<sup>1</sup>. Extend or up-dose <span class="tag t2">Off-label · guideline</span><sup>1</sup></td></tr>
+      <tr><td>Omlyclo<br><small>omalizumab biosimilar</small><small class="m-only"><br>Half the price of Xolair<sup>2</sup></small></td>
+        <td class="c-unit">7,026 / 150 mg<sup>2</sup><br><small>Self-pay not found</small></td>
+        <td>Same as Xolair<sup>5</sup></td>
+        <td>14,052<br><small>Self-pay not found</small></td>
+        <td class="g">Equivalent to Xolair on itch score, n = 619<sup>5</sup></td>
+        <td class="c-note">Half the price of Xolair<sup>2</sup></td></tr>
+      <tr><td>Dupixent<br><small>dupilumab</small><small class="m-only"><br>Failed in omalizumab-experienced patients<sup>6</sup>. No data on extending<sup>1</sup></small></td>
+        <td class="c-unit">15,687 / 300 mg<sup>2</sup><br><small>Self-pay 17,256–18,825<sup>7</sup></small></td>
+        <td>Adults 600 mg, then 300 mg every 2 weeks; adolescents by weight<sup>6</sup></td>
+        <td>31,374<br><small>Self-pay 34,512–37,650<sup>7</sup></small></td>
+        <td class="w">30–32% vs 13–17% placebo, wk 24; likely weaker than omalizumab<sup>1,6</sup></td>
+        <td class="c-note">Failed in omalizumab-experienced patients<sup>6</sup>. No data on extending<sup>1</sup></td></tr>
+
+      <tr class="grp" data-g="g2"><td colspan="6">Severe, refractory</td></tr>
+      <tr><td>Ciclosporin<small class="m-only"><br>More adverse effects; not for standard use<sup>1</sup>. Monitor blood pressure, kidney function</small></td>
+        <td class="c-unit">113 / 100 mg<sup>2</sup></td>
+        <td>3–5 mg/kg/day <span class="tag t2">Off-label · guideline</span><sup>1</sup></td>
+        <td>~6,300–9,500<br><small>60 kg</small></td>
+        <td class="w">Effective in placebo-controlled trials<sup>1</sup></td>
+        <td class="c-note">More adverse effects; not for standard use<sup>1</sup>. Monitor blood pressure, kidney function</td></tr>
+
+      <tr class="grp" data-g="g3"><td colspan="6">Acute flares only</td></tr>
+      <tr><td>Prednisolone<small class="m-only"><br>Strongly against long-term use<sup>1</sup></small></td>
+        <td class="c-unit">0.9–2 / 5 mg<sup>2</sup></td>
+        <td>20–50 mg/day, ≤ 10 days<sup>1</sup></td>
+        <td>~40–200<br><small>per course</small></td>
+        <td class="w">May shorten a flare; no good trials<sup>1</sup></td>
+        <td class="c-note">Strongly against long-term use<sup>1</sup></td></tr>
+
+      <tr class="grp" data-g="g4"><td colspan="6">Not in the guideline algorithm · too little evidence, but affordable</td></tr>
+      <tr><td>Montelukast<small class="m-only"><br>FDA boxed warning: neuropsychiatric events<sup>1</sup></small></td>
+        <td class="c-unit">9.9 / 10 mg<sup>2</sup></td>
+        <td>10 mg daily, add-on</td>
+        <td>~280</td>
+        <td class="w">Modest benefit as add-on<sup>1</sup></td>
+        <td class="c-note">FDA boxed warning: neuropsychiatric events<sup>1</sup></td></tr>
+      <tr><td>Others<br><small>H2 blocker, HCQ, MTX, dapsone</small><small class="m-only"><br>Guideline: may still be relevant where costlier drugs are not available<sup>1</sup></small></td>
+        <td class="c-unit">1.2–4.3 / tablet<sup>2</sup></td>
+        <td>Add-on</td>
+        <td>—</td>
+        <td class="w">Too little evidence to recommend<sup>1</sup></td>
+        <td class="c-note">Guideline: may still be relevant where costlier drugs are not available<sup>1</sup></td></tr>
+    </tbody>
+  </table>
+  <ul class="notes">
+    <li>Terms: UAS7 is the weekly urticaria activity score (itch plus hives, 0–42); UAS7 = 0 means no itch and no hives.</li>
+    <li>Efficacy shading: <i class="key" style="background:var(--good-bg)"></i>▲ stronger evidence or effect <i class="key" style="background:var(--warn-bg)"></i>△ weaker, uncertain or no comparable figure. Efficacy for biologics: no itch and no hives (UAS7 = 0). Trials measured response at different weeks; figures are not directly comparable.</li>
+    <li>Omlyclo trial: primary itch score equivalent to Xolair; the secondary UAS7 = 0 was 23.6% vs 30.7% at week 12 and 40.1% vs 37.5% at week 24<sup>5</sup>.</li>
+    <li>Biologics are licensed for CSU in Taiwan (age 12+) but not covered by NHI for CSU<sup>2,9</sup>. Hospital self-pay prices are usually higher than NHI prices<sup>7</sup>.</li>
+    <li data-g="na">Not approved in Taiwan: remibrutinib (Rhapsido, oral; approved in the US and EU)<sup>8,9</sup>.</li>
+  </ul>
+</section>
+
+<section class="calc" data-sec="calc" aria-labelledby="en-csu-calc-h" data-calc='[{"n": "Xolair 150 mg", "p": 14234, "lo": 15657, "hi": 17081, "u": 2, "d": 28}, {"n": "Omlyclo 150 mg", "p": 7026, "lo": null, "hi": null, "u": 2, "d": 28}, {"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}]' data-na="Self-pay price not found">
+  <h2 id="en-csu-calc-h">Cost calculator</h2>
+  <p class="hint">Pick a drug and enter your hospital's price per syringe or tablet; maintenance drug cost only, excluding induction and co-payment.<sup>2,7</sup></p>
+  <div class="cgrid">
+    <label for="en-csu-c-drug">Drug<select id="en-csu-c-drug" class="c-drug"><option value="0">Xolair 150 mg</option><option value="1">Omlyclo 150 mg</option><option value="2">Dupixent 300 mg</option></select></label>
+    <label for="en-csu-c-price">Price per unit (NT$)<input id="en-csu-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="en-csu-c-units">Units per dose<input id="en-csu-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label for="en-csu-c-days">Interval (days)<input id="en-csu-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
+  </div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">NHI price</button><button type="button" class="pb" data-k="lo">Self-pay low</button><button type="button" class="pb" data-k="hi">Self-pay high</button></div>
+  <div class="res" aria-live="polite"><div><span>Per 4 weeks</span><b class="c-r4">—</b></div><div><span>Per year (365 days)</span><b class="c-ry">—</b></div></div>
+</section>
+
+<section class="nhi" data-sec="nhi" aria-label="NHI application">
+  <h2>NHI application</h2>
+  <ol class="nsteps"><li><b>Antihistamines</b>: covered by NHI.</li><li><b>Biologics for CSU</b>: not covered; self-pay. The omalizumab rule 6.2.6 is for severe persistent asthma only; the dupilumab rules 6.2.9 and 13.17 do not include CSU<sup>2</sup>.</li><li><b>Self-pay price</b>: differs by hospital; enter your hospital's price in the cost calculator above<sup>7</sup>.</li></ol>
+  
+</section>
+
+<section data-sec="fig" class="cmp" aria-label="Figure 1. Compare within each step">
+  <h2>Figure 1. Compare within each step</h2>
+  <div class="cmp-tier"><h3>When 4× antihistamine is not enough, add</h3><div class="cmp-head"><span></span><span>Efficacy：No itch or hives (UAS7 = 0)<sup>4,6</sup></span><span>Per 4 weeks (NHI price)<sup>2,7</sup></span></div><div class="cmp-row"><div class="cmp-n">Xolair<small>omalizumab; week 12</small></div><div class="cmp-e"><div class="cbar e" style="width:36%"></div><span>36% (placebo 9%)</span></div><div class="cmp-c"><div class="cbar c" style="width:90.7%"></div><span>28,468</span><small>Self-pay 31,314–34,162</small></div></div><div class="cmp-row"><div class="cmp-n">Omlyclo<small>biosimilar</small></div><div class="cmp-e"><span class="noval">Equivalent to Xolair on the primary endpoint</span></div><div class="cmp-c"><div class="cbar c" style="width:44.8%"></div><span>14,052</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>dupilumab; week 24</small></div><div class="cmp-e"><div class="cbar e" style="width:31%"></div><span>30–32% (placebo 13–17%)</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>31,374</span><small>Self-pay 34,512–37,650</small></div></div></div>
+  <p class="note">Efficacy comes from different trials and weeks and is only a rough guide, not for direct subtraction; costs are maintenance drug costs, bars at NHI price, small text the hospital self-pay range.</p>
+</section>
+
+<details class="more"><summary>Summary</summary>
+<ul class="sum">
+    <li><b>Guideline order:</b> Second-generation antihistamine → if not controlled, up to 4× the dose → if still not controlled, add omalizumab (first choice) or dupilumab and keep the antihistamine → ciclosporin only if these are not enough<sup>1</sup>.</li>
+    <li><b>NHI:</b> NHI does not cover biologics for CSU; patients pay themselves. Omalizumab rule 6.2.6 covers only severe persistent asthma; dupilumab rules 6.2.9 and 13.17 do not include CSU<sup>2</sup>. At NHI prices, per 4 weeks: Xolair about NT$28,000, Dupixent about NT$31,000, Omlyclo about NT$14,000. Patients pay the hospital self-pay price, which is usually higher (hospital lists: Xolair about NT$31,000–34,000 per 4 weeks)<sup>2,7</sup>.</li>
+    <li><b>Not enough response to omalizumab:</b> The guideline suggests a higher dose or a shorter interval, or switching to ciclosporin<sup>1</sup>. Dupixent did not meet its primary endpoint in omalizumab-experienced patients (CUPID Study B)<sup>6</sup>.</li>
+    <li><b>Extending the interval:</b> After 3 months of complete control on omalizumab, extend the injection interval step by step until hives return<sup>1</sup>. Every 8 weeks, Xolair costs about NT$14,000 and Omlyclo about NT$7,000 per 4 weeks<sup>2</sup>.</li>
+  </ul>
+</details>
+<details class="more"><summary>What the sources say, by situation</summary>
+<table class="pick">
+    <thead><tr><th style="width:45%">Situation</th><th>What the sources say</th></tr></thead>
+    <tbody>
+      <tr><td>Cost</td><td>Omlyclo's NHI price is half of Xolair's and it is equivalent; the guideline allows longer intervals once controlled<sup>1,2,5</sup></td></tr>
+      <tr><td>Also has atopic dermatitis, asthma or nasal polyps</td><td>The guideline notes extra benefit of dupilumab with these conditions<sup>1</sup></td></tr>
+      <tr><td>Very low total IgE</td><td>Guideline: omalizumab often works less well; dupilumab works regardless of IgE<sup>1</sup></td></tr>
+      <tr><td>Low IgE with autoimmune markers (anti-TPO)</td><td>Guideline: ciclosporin may work especially well here<sup>1</sup></td></tr>
+      <tr><td>Not controlled on omalizumab</td><td>The guideline lists up-dosing omalizumab, shorter intervals or ciclosporin<sup>1</sup>; Dupixent missed its primary endpoint in omalizumab-experienced patients<sup>6</sup></td></tr>
+      <tr><td>Pregnant</td><td>Guideline: loratadine or cetirizine preferred among antihistamines; omalizumab reported safe; ciclosporin linked to preterm birth and low birth weight<sup>1</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<details class="box">
+  <summary>Before and during treatment</summary>
+  <ul>
+    <li>All patients: complete blood count with differential, CRP and/or ESR. Specialist care: total IgE and IgG anti-TPO<sup>1</sup>.</li>
+    <li>Track response with UAS7 (weekly activity) and UCT (control)<sup>1</sup>.</li>
+    <li>Ciclosporin: blood pressure and kidney function. Dapsone: check G6PD first.</li>
+    <li>Pregnancy: avoid systemic treatment in the first trimester where possible; prefer loratadine (or desloratadine, cetirizine, levocetirizine); omalizumab reported safe; ciclosporin linked to preterm birth and low birth weight<sup>1</sup>.</li>
+  </ul>
+</details>
+
+<details class="refs" data-sec="refs">
+  <summary>References (9)</summary>
+  <ol class="refs">
+    <li>Zuberbier T, et al. International guideline for urticaria. <i>Allergy</i> 2026;81(8):2582–2632. <a href="https://doi.org/10.1111/all.70210" target="_blank" rel="noopener">doi:10.1111/all.70210</a></li>
+    <li>National Health Insurance Administration, Taiwan. NHI drug price list (open data), downloaded 24 October 2026; NHI rules 6.2.6, 6.2.9, 13.17.</li>
+    <li>Guillén-Aguinaga S, et al. Updosing nonsedating antihistamines in CSU. <i>Br J Dermatol</i> 2016;175(6):1153–65. <a href="https://doi.org/10.1111/bjd.14768" target="_blank" rel="noopener">doi:10.1111/bjd.14768</a></li>
+    <li>XOLAIR (omalizumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>Saini SS, et al. CT-P39 compared with reference omalizumab in CSU. <i>Allergy</i> 2025;80(8):2167–77. <a href="https://doi.org/10.1111/all.16446" target="_blank" rel="noopener">doi:10.1111/all.16446</a></li>
+    <li>DUPIXENT (dupilumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>Self-pay prices from hospital public price lists: Chang Gung Memorial Hospital (list dated 1 October 2025), Fu Jen Catholic University Hospital, Kuang Tien General Hospital (September 2026) and Taipei City Hospital (October 2026); accessed 24 October 2026. Prices differ by hospital and purchasing contract.</li>
+    <li>European Medicines Agency. Rhapsido (remibrutinib) EPAR. <a href="https://www.ema.europa.eu/en/medicines/human/EPAR/rhapsido" target="_blank" rel="noopener">ema.europa.eu</a></li>
+    <li>Taiwan Food and Drug Administration. All drug licences (open data), downloaded 24 October 2026.</li>
+  </ol>
+</details>
+</div>
+
+<div class="disease" data-dz="ad" data-lang="zh" hidden>
+<h2 class="dz">異位性皮膚炎（中重度、全身性治療）</h2>
+<nav class="secnav" aria-label="本頁"><button type="button" data-jump="flow">流程圖</button><button type="button" data-jump="table">藥物表</button><button type="button" data-jump="calc">費用試算</button><button type="button" data-jump="nhi">健保怎麼申請</button><button type="button" data-jump="fig">同層級比較</button><button type="button" data-jump="guide">看懂指引</button><button type="button" data-jump="refs">參考文獻</button></nav>
+<section class="flow" data-sec="flow" aria-label="流程圖：健保的申請順序2">
+  <h2>流程圖：健保的申請順序<sup>2</sup></h2>
+  <p class="fhint">指引對生物製劑與 JAK 抑制劑為強烈建議，未要求先用第 2 步<sup>1</sup>。點方塊跳到下方表格</p>
+  <div class="fwrap"><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="top">保濕＋外用藥<small>外用類固醇；鈣調磷酸酶抑制劑為第二線</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">中重度仍不夠</span><div class="frow"><button type="button" class="fnode" data-go="g0">照光＋傳統口服藥<small>methotrexate、azathioprine、ciclosporin 至少兩種</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">健保事前審查</span><div class="frow"><button type="button" class="fnode" data-go="g1">生物製劑<small>Dupixent、Ebglyss</small></button><button type="button" class="fnode" data-go="g2">JAK 抑制劑<small>Rinvoq、Cibinqo</small></button><button type="button" class="fnode na" data-go="na">tralokinumab、nemolizumab<small>台灣未核准</small></button></div></div></div>
+</section>
+
+<details class="more" data-g="top"><summary>外用藥（第一線）</summary>
+<table class="pick">
+    <thead><tr><th style="width:30%">藥物</th><th>用途</th><th style="width:24%">健保價</th></tr></thead>
+    <tbody>
+      <tr><td>外用類固醇</td><td>發作時第一線；強度多種</td><td>便宜；健保給付<sup>2</sup></td></tr>
+      <tr><td>Protopic<br><small>tacrolimus 軟膏</small></td><td>台灣為第二線。0.03% 用於 2 歲以上；0.1% 用於 16 歲以上。用於發作及每週兩次維持<sup>3</sup></td><td>每條 196–1,228，依規格<sup>2</sup></td></tr>
+      <tr><td>Elidel<br><small>pimecrolimus 1% 乳膏</small></td><td>台灣為第二線，3 個月大以上<sup>3</sup></td><td>每條 272–747，依規格<sup>2</sup></td></tr>
+      <tr><td>Staquis<br><small>crisaborole 軟膏</small></td><td>非類固醇；輕度至中度，3 個月大以上<sup>3</sup></td><td>健保未收載<sup>2</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<section data-sec="table" aria-labelledby="zh-ad-h-table">
+  <h2 id="zh-ad-h-table">表 2：台灣中重度異位性皮膚炎全身性用藥</h2>
+  <div class="tags"><span><span class="tag t1">仿單內</span> 台灣或美國仿單所列</span><span><span class="tag t2">仿單外・指引建議</span></span><span><span class="tag t3">仿單外・觀察性研究</span> 僅有研究證據</span></div>
+  <button type="button" class="colbtn" aria-pressed="false">顯示完整欄位（單價、用法、備註）</button>
+  <table class="main simple">
+    <thead><tr><th>藥物</th><th class="c-unit">單價</th><th>用法</th><th>每 4 週</th><th>EASI-75，單一療法</th><th class="c-note">健保與備註</th></tr></thead>
+    <tbody>
+      <tr class="grp" data-g="g0"><td colspan="6">傳統口服藥・條件式建議</td></tr>
+      <tr><td>Ciclosporin<small class="m-only"><br>不可與 JAK 抑制劑併用（健保）<sup>2</sup></small></td>
+        <td class="c-unit">113 / 100 mg<sup>2</sup></td>
+        <td>3–5 mg/kg/日 <span class="tag t1">仿單內</span><sup>1,3</sup></td>
+        <td>約 6,300–9,500<br><small>60 kg</small></td>
+        <td class="w">無可比數據<sup>1</sup></td>
+        <td class="c-note">不可與 JAK 抑制劑併用（健保）<sup>2</sup></td></tr>
+      <tr><td>Methotrexate<small class="m-only"><br>健保規定試用劑量 15 mg/週<sup>2</sup></small></td>
+        <td class="c-unit">3.2–4.3 / 2.5 mg<sup>2</sup></td>
+        <td>15 mg 每週 <span class="tag t2">仿單外・指引建議</span><sup>1,3</sup></td>
+        <td>約 80–100</td>
+        <td class="w">無可比數據<sup>1</sup></td>
+        <td class="c-note">健保規定試用劑量 15 mg/週<sup>2</sup></td></tr>
+      <tr><td>Azathioprine<small class="m-only"><br>NUDT15 或 TPMT 變異者健保允許較低劑量<sup>2</sup></small></td>
+        <td class="c-unit">9.6 / 50 mg<sup>2</sup></td>
+        <td>2 mg/kg/日 <span class="tag t2">仿單外・指引建議</span><sup>1,3</sup></td>
+        <td>約 650<br><small>60 kg</small></td>
+        <td class="w">無可比數據<sup>1</sup></td>
+        <td class="c-note">NUDT15 或 TPMT 變異者健保允許較低劑量<sup>2</sup></td></tr>
+
+      <tr class="grp" data-g="g1"><td colspan="6">生物製劑</td></tr>
+      <tr><td>Dupixent<br><small>dupilumab</small><small class="m-only"><br>健保 6 歲以上。結膜炎比 Rinvoq 常見<sup>2,9</sup></small></td>
+        <td class="c-unit">15,687 / 300 mg<sup>2</sup><br><small>自費 17,256–18,825<sup>16</sup></small></td>
+        <td>600 mg，之後 300 mg 每 2 週 <span class="tag t1">仿單內</span>；每 3–4 週 <span class="tag t3">仿單外・觀察性研究</span><sup>4,10,11</sup></td>
+        <td>31,374<br><small>自費 34,512–37,650<sup>16</sup></small></td>
+        <td class="w">44–51% 對比 安慰劑 12–15%，第 16 週<sup>4</sup></td>
+        <td class="c-note">健保 6 歲以上。結膜炎比 Rinvoq 常見<sup>2,9</sup></td></tr>
+      <tr><td>Ebglyss<br><small>lebrikizumab</small><small class="m-only"><br>健保 12 歲以上、≥ 40 kg，自 2026 年六月起。AAD 2024 未評估<sup>1,2</sup></small></td>
+        <td class="c-unit">23,183 / 250 mg<sup>2</sup><br><small>自費 26,660–36,000<sup>16</sup></small></td>
+        <td>500 mg 於第 0、2 週，之後 250 mg 每 2 週至第 16 週，再改每 4 週 <span class="tag t1">仿單內</span><sup>2,5</sup></td>
+        <td>約 58,000（至第 16 週），之後 23,183<br><small>自費 26,660–36,000<sup>16</sup></small></td>
+        <td>52–59% 對比 安慰劑 16–18%，第 16 週<sup>5</sup></td>
+        <td class="c-note">健保 12 歲以上、≥ 40 kg，自 2026 年六月起。AAD 2024 未評估<sup>1,2</sup></td></tr>
+
+      <tr class="grp" data-g="g2"><td colspan="6">口服 JAK 抑制劑・加框警語</td></tr>
+      <tr><td>Rinvoq<br><small>upadacitinib</small><small class="m-only"><br>健保 12 歲以上。Rinvoq 與 Cibinqo 擇一，不可併用<sup>2</sup></small></td>
+        <td class="c-unit">743 / 15 mg<sup>2</sup><br><small>自費 817–988<sup>16</sup></small></td>
+        <td>15 mg 每日；30 mg 限 EASI ≥ 20、18 歲以上（健保）<sup>2</sup></td>
+        <td>20,804<br><small>30 mg：41,608（2 顆 15 mg）</small><br><small>自費 22,876–27,664<sup>16</sup></small></td>
+        <td class="g">15 mg 60–70%；30 mg 73–80%；安慰劑 13–16%，第 16 週<sup>6</sup></td>
+        <td class="c-note">健保 12 歲以上。Rinvoq 與 Cibinqo 擇一，不可併用<sup>2</sup></td></tr>
+      <tr><td>Cibinqo<br><small>abrocitinib</small><small class="m-only"><br>健保 12 歲以上。需記錄 B、C 型肝炎<sup>2</sup></small></td>
+        <td class="c-unit">799 / 100 或 200 mg<sup>2</sup><br><small>自費 879–960<sup>16</sup></small></td>
+        <td>100–200 mg 每日<sup>2</sup></td>
+        <td>22,372<br><small>自費 24,612–26,880<sup>16</sup></small></td>
+        <td class="g">200 mg 61–62%；100 mg 40–44%；安慰劑 10–12%，第 12 週<sup>7</sup></td>
+        <td class="c-note">健保 12 歲以上。需記錄 B、C 型肝炎<sup>2</sup></td></tr>
+      <tr><td>Olumiant<br><small>baricitinib</small><small class="m-only"><br>有異位性皮膚炎適應症；健保不給付異位性皮膚炎<sup>2,3</sup></small></td>
+        <td class="c-unit">959 / 4 mg<sup>2</sup><br><small>自費 1,060–1,275<sup>16</sup></small></td>
+        <td>4 mg 每日</td>
+        <td>26,852<br><small>自費</small><br><small>自費 29,680–35,700<sup>16</sup></small></td>
+        <td class="w">IGA 0/1 14–17% 對比 安慰劑 5%，第 16 週<sup>8</sup></td>
+        <td class="na c-note">有異位性皮膚炎適應症；健保不給付異位性皮膚炎<sup>2,3</sup></td></tr>
+    </tbody>
+  </table>
+  <ul class="notes">
+    <li>名詞：EASI 為濕疹面積與嚴重度指數，EASI-75 指改善 75% 以上；IGA 0/1 指醫師評估為「清除或幾乎清除」。</li>
+    <li>療效底色： <i class="key" style="background:var(--good-bg)"></i>▲ 反應率較高 <i class="key" style="background:var(--warn-bg)"></i>△ 反應率較低或無可比數據。EASI-75：Eczema Area and Severity Index 改善至少 75%；範圍為各美國仿單中兩項樞紐單一療法試驗<sup>4–7</sup>。baricitinib 報告的是 IGA 0/1（完全或幾乎清除），標準較嚴格<sup>8</sup>。</li>
+    <li>與 Dupixent 直接比較：唯一的單一療法試驗是 Heads Up（Rinvoq 30 mg，EASI-75 71.0% 對比 61.1%，第 16 週）<sup>9</sup>。其他：JADE COMPARE 與 JADE DARE（Cibinqo，併用外用藥）<sup>12,13</sup> 及 LEVEL-UP（Rinvoq，可調整劑量）<sup>14</sup>。</li>
+    <li>Ebglyss：前 16 週共用 10 支（NT$231,830）。美國仿單維持期也可用 250 mg 每 8 週<sup>5</sup>；台灣健保規定每 4 週<sup>2</sup>。AAD 2024 指引未評估 Ebglyss 與 nemolizumab<sup>1</sup>。</li>
+    <li>健保藥價檔列有 upadacitinib 15 mg 與 45 mg 錠，沒有 30 mg 錠<sup>2</sup>。健保規定 Dupixent、Ebglyss、Rinvoq、Cibinqo 不可互相併用<sup>2</sup>。</li>
+    <li data-g="na">台灣未核准：tralokinumab（Adtralza）、nemolizumab（Nemluvio）<sup>3</sup>。ruxolitinib 乳膏（Opzelura）歐盟已核准用於異位性皮膚炎，台灣同成分乳膏只核准白斑<sup>3</sup>。</li>
+  </ul>
+</section>
+
+<section class="calc" data-sec="calc" aria-labelledby="zh-ad-calc-h" data-calc='[{"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}, {"n": "Ebglyss 250 mg（第 16 週後）", "p": 23183, "lo": 26660, "hi": 36000, "u": 1, "d": 28}, {"n": "Rinvoq 15 mg", "p": 743, "lo": 817, "hi": 988, "u": 1, "d": 1}, {"n": "Cibinqo 200 mg", "p": 799, "lo": 879, "hi": 960, "u": 1, "d": 1}, {"n": "Olumiant 4 mg", "p": 959, "lo": 1060, "hi": 1275, "u": 1, "d": 1}]' data-na="自費價未查到">
+  <h2 id="zh-ad-calc-h">費用試算</h2>
+  <p class="hint">選藥物後輸入您醫院的每支／每顆價格；只算維持期藥費，誘導期與部分負擔另計。<sup>2,16</sup></p>
+  <div class="cgrid">
+    <label for="zh-ad-c-drug">藥物<select id="zh-ad-c-drug" class="c-drug"><option value="0">Dupixent 300 mg</option><option value="1">Ebglyss 250 mg（第 16 週後）</option><option value="2">Rinvoq 15 mg</option><option value="3">Cibinqo 200 mg</option><option value="4">Olumiant 4 mg</option></select></label>
+    <label for="zh-ad-c-price">每支／每顆價格（元）<input id="zh-ad-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="zh-ad-c-units">每次用量（支／顆）<input id="zh-ad-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label for="zh-ad-c-days">間隔（天）<input id="zh-ad-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
+  </div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">健保價</button><button type="button" class="pb" data-k="lo">自費低</button><button type="button" class="pb" data-k="hi">自費高</button></div>
+  <div class="res" aria-live="polite"><div><span>每 4 週</span><b class="c-r4">—</b></div><div><span>每年（365 天）</span><b class="c-ry">—</b></div></div>
+</section>
+
+<section class="nhi" data-sec="nhi" aria-label="健保怎麼申請（12 歲以上）">
+  <h2>健保怎麼申請（12 歲以上）</h2>
+  <ol class="nsteps"><li><b>條件</b>：病灶 ≥ 6 個月；EASI ≥ 16、紅腫面積 ≥ 30%、IGA 3–4。</li><li><b>先完成治療</b>：照光 12 週，加上 methotrexate、azathioprine、環孢素至少兩種，各足量 12 週無效；有醫療因素無法照光可免照光。</li><li><b>送事前審查</b>：申請表、EASI 評分表、照片、病歷影本與照光劑量紀錄。</li><li><b>第 16 週評估</b>：需達 EASI 50；6 個月一個療程，期滿前 1 個月申請續用。</li><li><b>暫緩</b>：Dupixent 用滿 1 年、其他用滿 2 年後 EASI ≤ 16 要暫緩；復發 ≥ 50% 或 EASI ≥ 16 可重新申請<sup>2</sup>。</li></ol>
+  <details class="more"><summary>詳細規定</summary><ul><li>6–11 歲：只給付 Dupixent；外用藥 12 週加一種全身性藥物 12 週無效即可申請（13.17.2）。</li><li>Dupixent、Ebglyss、Rinvoq、Cibinqo 彼此不併用；JAK 抑制劑不併用環孢素；Rinvoq 與 Cibinqo 擇一，副作用無法忍受才能互換。</li><li>懷孕或哺乳排除使用；懷孕需停藥。</li><li>Cibinqo 宜記錄 B、C 肝檢驗<sup>2</sup>。</li></ul></details>
+</section>
+
+<section data-sec="fig" class="cmp" aria-label="圖 2：同層級比較">
+  <h2>圖 2：同層級比較</h2>
+  <div class="cmp-tier"><h3>健保同一關卡：生物製劑與 JAK 抑制劑</h3><div class="cmp-head"><span></span><span>療效：EASI-75，單一療法<sup>4–8</sup></span><span>每 4 週（健保價）<sup>2,16</sup></span></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>生物製劑；第 16 週</small></div><div class="cmp-e"><div class="cbar e" style="width:47.5%"></div><span>44–51%</span></div><div class="cmp-c"><div class="cbar c" style="width:75.4%"></div><span>31,374</span><small>自費 34,512–37,650</small></div></div><div class="cmp-row"><div class="cmp-n">Ebglyss<small>生物製劑；第 16 週</small></div><div class="cmp-e"><div class="cbar e" style="width:55.5%"></div><span>52–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:55.7%"></div><span>23,183</span><small>自費 26,660–36,000</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 15<small>JAK；第 16 週</small></div><div class="cmp-e"><div class="cbar e" style="width:65%"></div><span>60–70%</span></div><div class="cmp-c"><div class="cbar c" style="width:50.0%"></div><span>20,804</span><small>自費 22,876–27,664</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 30<small>JAK；第 16 週</small></div><div class="cmp-e"><div class="cbar e" style="width:76.5%"></div><span>73–80%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>41,608</span><small>自費 未查到</small></div></div><div class="cmp-row"><div class="cmp-n">Cibinqo 200<small>JAK；第 12 週</small></div><div class="cmp-e"><div class="cbar e" style="width:61.5%"></div><span>61–62%</span></div><div class="cmp-c"><div class="cbar c" style="width:53.8%"></div><span>22,372</span><small>自費 24,612–26,880</small></div></div><div class="cmp-row"><div class="cmp-n">Olumiant 4<small>JAK；健保不給付異位性皮膚炎</small></div><div class="cmp-e"><span class="noval">IGA 0/1 14–17%（較嚴格的指標）</span></div><div class="cmp-c"><div class="cbar c" style="width:64.5%"></div><span>26,852</span><small>自費 29,680–35,700</small></div></div></div>
+  <p class="note">療效來自不同試驗與週數，只能看大概，不能直接相減；費用為維持期藥費，長條為健保價，小字為醫院自費價範圍。</p>
+</section>
+
+<details class="more"><summary>重點整理</summary>
+<ul class="sum">
+    <li><b>指引的順序：</b>保濕＋外用類固醇，外用鈣調磷酸酶抑制劑為第二線（見下方外用藥表）→ 中重度控制不好：照光、傳統口服藥、生物製劑或 JAK 抑制劑。AAD 2024 指引對 dupilumab、tralokinumab 與 JAK 抑制劑強烈建議，照光與傳統口服藥條件式建議，全身性類固醇條件式不建議<sup>1</sup>。</li>
+    <li><b>健保（12 歲以上）：</b>病灶持續 6 個月以上；EASI ≥ 16、紅腫面積 ≥ 30%、IGA 3–4；先做完照光 12 週，加上 methotrexate、azathioprine、環孢素至少兩種、各足量 12 週無效（或有副作用、禁忌）；光敏感等醫療因素無法照光者可免照光；需事前審查，第 16 週要達 EASI 50<sup>2</sup>。</li>
+    <li><b>健保給付：</b>Dupixent（6 歲以上）、Ebglyss、Rinvoq、Cibinqo（12 歲以上）。Olumiant 有許可證但健保不給付異位性皮膚炎<sup>2,3</sup>。</li>
+    <li><b>暫緩與重新申請：</b>Dupixent 用滿 1 年、Ebglyss、Rinvoq、Cibinqo 用滿 2 年後若 EASI ≤ 16 要暫緩；復發至少 50% 或 EASI ≥ 16 可重新申請，附上次療程前後與這次的照片；停藥超過 3 個月視為新申請<sup>2</sup>。</li>
+    <li><b>拉長間隔：</b>Dupixent 標準劑量滿 1 年、EASI ≤ 7 持續 6 個月以上者，荷蘭登錄研究中 83% 改成每 3–4 週打後仍維持控制<sup>10</sup>；統合分析顯示效果與每 2 週相當<sup>11</sup>。健保規定用滿 1 年、EASI ≤ 16 就要暫緩，所以主要適用於暫緩後自費的病人<sup>2</sup>。</li>
+  </ul>
+</details>
+<details class="more"><summary>不同情況，文獻怎麼說</summary>
+<table class="pick">
+    <thead><tr><th style="width:45%">情境</th><th>文獻與規定怎麼說</th></tr></thead>
+    <tbody>
+      <tr><td>合併氣喘或鼻息肉</td><td>Dupixent 在台灣同時有這兩種適應症<sup>3</sup></td></tr>
+      <tr><td>年齡 ≥ 65、吸菸、有心血管或癌症風險</td><td>EMA：這些族群除非沒有其他合適藥物，不使用 JAK 抑制劑<sup>15</sup></td></tr>
+      <tr><td>止癢速度</td><td>直接比較試驗中，JAK 抑制劑止癢比 Dupixent 快<sup>9,13</sup></td></tr>
+      <tr><td>定期抽血</td><td>生物製劑仿單不要求例行檢驗；JAK 抑制劑仿單要求監測<sup>4–6</sup></td></tr>
+      <tr><td>打針次數</td><td>Ebglyss 第 16 週後每 4 週一次（美國仿單也可每 8 週）<sup>2,5</sup></td></tr>
+      <tr><td>6–11 歲兒童</td><td>健保只給付 Dupixent<sup>2</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<details class="box">
+  <summary>用藥前與用藥中</summary>
+  <ul>
+    <li>JAK 抑制劑：篩檢潛伏結核與病毒性肝炎；檢查血球、肝指數與血脂；確認是否懷孕並建議避孕；補齊疫苗，包括帶狀疱疹<sup>6</sup>。淋巴球 &lt; 500/mm³、嗜中性球 &lt; 1000/mm³ 或血紅素 &lt; 8 g/dL 時不可開始<sup>6</sup>。</li>
+    <li>EMA：≥ 65 歲、心血管或癌症風險較高、目前吸菸或長期曾吸菸者，僅在沒有合適替代藥物時使用 JAK 抑制劑<sup>15</sup>。</li>
+    <li>生物製劑：仿單不要求例行檢驗監測；先完成符合年齡的疫苗接種<sup>4,5</sup>。使用上述任何藥物期間避免活性疫苗<sup>4–7</sup>。</li>
+    <li>健保事前審查資料（12 歲以上）：申請表（附表 32-1；6–11 歲：附表 32-2）、EASI 評分表（附表 32）、照片、病歷影本含照光劑量紀錄，以及先前各全身性藥物的劑量與療程（≥ 12 週）。每 6 個月續審，於到期前 1 個月送件，附達 EASI 50 的照片<sup>2</sup>。</li>
+    <li>azathioprine：NUDT15 與 TPMT<sup>2</sup>。ciclosporin：血壓與腎功能。methotrexate：肝指數與血球<sup>2</sup>。</li>
+    <li><b>B 型肝炎：</b>用藥前篩檢 HBsAg、anti-HBc 與 C 肝<sup>6</sup>。健保預防性抗病毒藥（10.7.3）只給付併用 rituximab、anthracycline 類或中高劑量類固醇者；用生物製劑或 JAK 抑制劑時，要 B 肝發作後才給付，事先預防需自費<sup>2</sup>。</li>
+  </ul>
+</details>
+<details class="box">
+  <summary>兒童、懷孕與常見副作用</summary>
+  <ul>
+    <li><b>Dupixent 依體重給藥</b> （6–17 歲；健保 6 歲以上）：15–&lt;30 kg 600 mg，之後 300 mg 每 4 週・30–&lt;60 kg 400 mg，之後 200 mg 每 2 週・≥ 60 kg 600 mg，之後 300 mg 每 2 週。6 個月至 5 歲（僅仿單，健保不給付）：5–&lt;15 kg 200 mg 或 15–&lt;30 kg 300 mg，每 4 週，不需起始劑量<sup>2,4</sup>。</li>
+    <li><b>其他藥物：</b> Ebglyss、Rinvoq、Cibinqo 12 歲以上（Ebglyss 需 ≥ 40 kg）<sup>2</sup>。</li>
+    <li><b>懷孕與哺乳：</b> 健保排除懷孕或哺乳婦女，懷孕須停藥<sup>2</sup>。Rinvoq：治療期間及最後一劑後 4 週需有效避孕<sup>6</sup>。Cibinqo：不建議哺乳<sup>7</sup>。Dupixent、Ebglyss、Cibinqo 設有懷孕登錄<sup>4,5,7</sup>。</li>
+    <li><b>Dupixent 與 Ebglyss：</b> 眼部副作用主要為結膜炎與角膜炎；請病人回報新出現或惡化的眼部症狀。注射部位反應常見<sup>4,5</sup>。</li>
+    <li><b>JAK 抑制劑：</b> 常見噁心、頭痛、痤瘡、單純疱疹與肌酸激酶上升（Cibinqo）<sup>7</sup>；嚴重感染與帶狀疱疹比 Dupixent 多（Rinvoq 30 mg）<sup>9</sup>。</li>
+  </ul>
+</details>
+
+<details class="refs" data-sec="refs">
+  <summary>參考文獻（16）</summary>
+  <ol class="refs">
+    <li>Davis DMR, et al. Executive summary: guidelines of care for the management of atopic dermatitis in adults with phototherapy and systemic therapies. <i>J Am Acad Dermatol</i> 2024;90(2):342–5. <a href="https://doi.org/10.1016/j.jaad.2023.08.103" target="_blank" rel="noopener">doi:10.1016/j.jaad.2023.08.103</a></li>
+    <li>National Health Insurance Administration, Taiwan. NHI drug price list (open data), downloaded 24 October 2026; NHI rules 13.17, 13.17.1 (revised 1 June 2026), 13.17.2 and 10.7.3 (hepatitis B antivirals).</li>
+    <li>Taiwan Food and Drug Administration. All drug licences (open data), downloaded 24 October 2026.</li>
+    <li>DUPIXENT (dupilumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>EBGLYSS (lebrikizumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>RINVOQ (upadacitinib) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>CIBINQO (abrocitinib) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>Simpson EL, et al. Baricitinib in moderate-to-severe atopic dermatitis: two randomized monotherapy phase III trials. <i>Br J Dermatol</i> 2020;183(2):242–55. <a href="https://doi.org/10.1111/bjd.18898" target="_blank" rel="noopener">doi:10.1111/bjd.18898</a></li>
+    <li>Blauvelt A, et al. Upadacitinib vs dupilumab in adults with moderate-to-severe atopic dermatitis (Heads Up). <i>JAMA Dermatol</i> 2021;157(9):1047–55. <a href="https://doi.org/10.1001/jamadermatol.2021.3023" target="_blank" rel="noopener">doi:10.1001/jamadermatol.2021.3023</a></li>
+    <li>Spekhorst LS, et al. Successful tapering of dupilumab in patients with atopic dermatitis with low disease activity: the BioDay registry. <i>Br J Dermatol</i> 2023;189(3):327–35. <a href="https://doi.org/10.1093/bjd/ljad159" target="_blank" rel="noopener">doi:10.1093/bjd/ljad159</a></li>
+    <li>Lai CPT, et al. Use of extended dosing intervals of dupilumab in treatment of atopic dermatitis: a systematic review and meta-analysis. <i>Dermatitis</i> 2025 (online ahead of print). PMID 40833352. <a href="https://doi.org/10.1177/17103568251367706" target="_blank" rel="noopener">doi:10.1177/17103568251367706</a></li>
+    <li>Bieber T, et al. Abrocitinib versus placebo or dupilumab for atopic dermatitis (JADE COMPARE). <i>N Engl J Med</i> 2021;384:1101–12. <a href="https://doi.org/10.1056/NEJMoa2019380" target="_blank" rel="noopener">doi:10.1056/NEJMoa2019380</a></li>
+    <li>Reich K, et al. Efficacy and safety of abrocitinib versus dupilumab in adults with moderate-to-severe atopic dermatitis (JADE DARE). <i>Lancet</i> 2022;400:273–82. <a href="https://doi.org/10.1016/S0140-6736(22)01199-0" target="_blank" rel="noopener">doi:10.1016/S0140-6736(22)01199-0</a></li>
+    <li>Silverberg JI, et al. Upadacitinib versus dupilumab in adults and adolescents with moderate-to-severe atopic dermatitis: week 16 results (LEVEL-UP). <i>Br J Dermatol</i> 2025;192(1):36–45. <a href="https://doi.org/10.1093/bjd/ljae404" target="_blank" rel="noopener">doi:10.1093/bjd/ljae404</a></li>
+    <li>European Medicines Agency. EMA recommends measures to minimise risk of serious side effects with Janus kinase inhibitors for chronic inflammatory disorders. 28 October 2022. <a href="https://www.ema.europa.eu/en/news/ema-recommends-measures-minimise-risk-serious-side-effects-janus-kinase-inhibitors-chronic-inflammatory-disorders" target="_blank" rel="noopener">ema.europa.eu</a></li>
+      <li>Self-pay prices from hospital public price lists: Chang Gung Memorial Hospital (list dated 1 October 2025), Fu Jen Catholic University Hospital, Kuang Tien General Hospital (September 2026) and Taipei City Hospital (October 2026); accessed 24 October 2026. Prices differ by hospital and purchasing contract.</li>
+  </ol>
+</details>
+</div>
+
+<div class="disease" data-dz="ad" data-lang="en" hidden>
+<h2 class="dz">Atopic dermatitis (moderate to severe, systemic therapy)</h2>
+<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">NHI application</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
+<section class="flow" data-sec="flow" aria-label="Flowchart: NHI application order2">
+  <h2>Flowchart: NHI application order<sup>2</sup></h2>
+  <p class="fhint">The guideline strongly recommends biologics and JAK inhibitors without requiring step 2 first<sup>1</sup>. Tap a box to jump to the table</p>
+  <div class="fwrap"><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="top">Moisturiser + topicals<small>topical steroid; calcineurin inhibitor second line</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">Moderate to severe, not controlled</span><div class="frow"><button type="button" class="fnode" data-go="g0">Phototherapy + conventional oral<small>at least two of MTX, AZA, ciclosporin</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">NHI pre-approval</span><div class="frow"><button type="button" class="fnode" data-go="g1">Biologics<small>Dupixent, Ebglyss</small></button><button type="button" class="fnode" data-go="g2">JAK inhibitors<small>Rinvoq, Cibinqo</small></button><button type="button" class="fnode na" data-go="na">tralokinumab, nemolizumab<small>not approved in Taiwan</small></button></div></div></div>
+</section>
+
+<details class="more" data-g="top"><summary>Topical therapy (first line)</summary>
+<table class="pick">
+    <thead><tr><th style="width:30%">Drug</th><th>Use</th><th style="width:24%">NHI price</th></tr></thead>
+    <tbody>
+      <tr><td>Topical corticosteroid</td><td>First line for flares; many potencies</td><td>Low; NHI covered<sup>2</sup></td></tr>
+      <tr><td>Protopic<br><small>tacrolimus ointment</small></td><td>Second line in Taiwan. 0.03% from age 2; 0.1% from age 16. Flares and twice-weekly maintenance<sup>3</sup></td><td>196–1,228 per tube, by size<sup>2</sup></td></tr>
+      <tr><td>Elidel<br><small>pimecrolimus 1% cream</small></td><td>Second line in Taiwan, from age 3 months<sup>3</sup></td><td>272–747 per tube, by size<sup>2</sup></td></tr>
+      <tr><td>Staquis<br><small>crisaborole ointment</small></td><td>Non-steroid; mild to moderate, from age 3 months<sup>3</sup></td><td>Not in the NHI list<sup>2</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<section data-sec="table" aria-labelledby="en-ad-h-table">
+  <h2 id="en-ad-h-table">Table 2. Systemic drugs for moderate-to-severe atopic dermatitis in Taiwan</h2>
+  <div class="tags"><span><span class="tag t1">On-label</span> in the Taiwan or US label</span><span><span class="tag t2">Off-label · guideline</span></span><span><span class="tag t3">Off-label · observational</span> studies only</span></div>
+  <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
+  <table class="main simple">
+    <thead><tr><th>Drug</th><th class="c-unit">Unit price</th><th>Dosing</th><th>Per 4 weeks</th><th>EASI-75, monotherapy</th><th class="c-note">NHI and notes</th></tr></thead>
+    <tbody>
+      <tr class="grp" data-g="g0"><td colspan="6">Conventional oral · conditional recommendation</td></tr>
+      <tr><td>Ciclosporin<small class="m-only"><br>Not with JAK inhibitors (NHI)<sup>2</sup></small></td>
+        <td class="c-unit">113 / 100 mg<sup>2</sup></td>
+        <td>3–5 mg/kg/day <span class="tag t1">On-label</span><sup>1,3</sup></td>
+        <td>~6,300–9,500<br><small>60 kg</small></td>
+        <td class="w">No comparable figure<sup>1</sup></td>
+        <td class="c-note">Not with JAK inhibitors (NHI)<sup>2</sup></td></tr>
+      <tr><td>Methotrexate<small class="m-only"><br>NHI trial dose 15 mg/week<sup>2</sup></small></td>
+        <td class="c-unit">3.2–4.3 / 2.5 mg<sup>2</sup></td>
+        <td>15 mg weekly <span class="tag t2">Off-label · guideline</span><sup>1,3</sup></td>
+        <td>~80–100</td>
+        <td class="w">No comparable figure<sup>1</sup></td>
+        <td class="c-note">NHI trial dose 15 mg/week<sup>2</sup></td></tr>
+      <tr><td>Azathioprine<small class="m-only"><br>NHI allows lower dose for NUDT15 or TPMT variants<sup>2</sup></small></td>
+        <td class="c-unit">9.6 / 50 mg<sup>2</sup></td>
+        <td>2 mg/kg/day <span class="tag t2">Off-label · guideline</span><sup>1,3</sup></td>
+        <td>~650<br><small>60 kg</small></td>
+        <td class="w">No comparable figure<sup>1</sup></td>
+        <td class="c-note">NHI allows lower dose for NUDT15 or TPMT variants<sup>2</sup></td></tr>
+
+      <tr class="grp" data-g="g1"><td colspan="6">Biologics</td></tr>
+      <tr><td>Dupixent<br><small>dupilumab</small><small class="m-only"><br>NHI from age 6. Conjunctivitis more common than with Rinvoq<sup>2,9</sup></small></td>
+        <td class="c-unit">15,687 / 300 mg<sup>2</sup><br><small>Self-pay 17,256–18,825<sup>16</sup></small></td>
+        <td>600 mg, then 300 mg every 2 weeks <span class="tag t1">On-label</span>; every 3–4 weeks <span class="tag t3">Off-label · observational</span><sup>4,10,11</sup></td>
+        <td>31,374<br><small>Self-pay 34,512–37,650<sup>16</sup></small></td>
+        <td class="w">44–51% vs 12–15% placebo, wk 16<sup>4</sup></td>
+        <td class="c-note">NHI from age 6. Conjunctivitis more common than with Rinvoq<sup>2,9</sup></td></tr>
+      <tr><td>Ebglyss<br><small>lebrikizumab</small><small class="m-only"><br>NHI from age 12, ≥ 40 kg, since Jun 2026. Not assessed in AAD 2024<sup>1,2</sup></small></td>
+        <td class="c-unit">23,183 / 250 mg<sup>2</sup><br><small>Self-pay 26,660–36,000<sup>16</sup></small></td>
+        <td>500 mg at wk 0 and 2, 250 mg every 2 weeks to wk 16, then every 4 weeks <span class="tag t1">On-label</span><sup>2,5</sup></td>
+        <td>~58,000 to wk 16, then 23,183<br><small>Self-pay 26,660–36,000<sup>16</sup></small></td>
+        <td>52–59% vs 16–18% placebo, wk 16<sup>5</sup></td>
+        <td class="c-note">NHI from age 12, ≥ 40 kg, since Jun 2026. Not assessed in AAD 2024<sup>1,2</sup></td></tr>
+
+      <tr class="grp" data-g="g2"><td colspan="6">Oral JAK inhibitors · boxed warning</td></tr>
+      <tr><td>Rinvoq<br><small>upadacitinib</small><small class="m-only"><br>NHI from age 12. Either Rinvoq or Cibinqo, not both<sup>2</sup></small></td>
+        <td class="c-unit">743 / 15 mg<sup>2</sup><br><small>Self-pay 817–988<sup>16</sup></small></td>
+        <td>15 mg daily; 30 mg if EASI ≥ 20, age 18+ (NHI)<sup>2</sup></td>
+        <td>20,804<br><small>30 mg: 41,608 as 2 × 15 mg</small><br><small>Self-pay 22,876–27,664<sup>16</sup></small></td>
+        <td class="g">15 mg 60–70%; 30 mg 73–80%; placebo 13–16%, wk 16<sup>6</sup></td>
+        <td class="c-note">NHI from age 12. Either Rinvoq or Cibinqo, not both<sup>2</sup></td></tr>
+      <tr><td>Cibinqo<br><small>abrocitinib</small><small class="m-only"><br>NHI from age 12. Record hepatitis B and C<sup>2</sup></small></td>
+        <td class="c-unit">799 / 100 or 200 mg<sup>2</sup><br><small>Self-pay 879–960<sup>16</sup></small></td>
+        <td>100–200 mg daily<sup>2</sup></td>
+        <td>22,372<br><small>Self-pay 24,612–26,880<sup>16</sup></small></td>
+        <td class="g">200 mg 61–62%; 100 mg 40–44%; placebo 10–12%, wk 12<sup>7</sup></td>
+        <td class="c-note">NHI from age 12. Record hepatitis B and C<sup>2</sup></td></tr>
+      <tr><td>Olumiant<br><small>baricitinib</small><small class="m-only"><br>Licensed for AD; not NHI-covered for AD<sup>2,3</sup></small></td>
+        <td class="c-unit">959 / 4 mg<sup>2</sup><br><small>Self-pay 1,060–1,275<sup>16</sup></small></td>
+        <td>4 mg daily</td>
+        <td>26,852<br><small>self-pay</small><br><small>Self-pay 29,680–35,700<sup>16</sup></small></td>
+        <td class="w">IGA 0/1 14–17% vs 5% placebo, wk 16<sup>8</sup></td>
+        <td class="na c-note">Licensed for AD; not NHI-covered for AD<sup>2,3</sup></td></tr>
+    </tbody>
+  </table>
+  <ul class="notes">
+    <li>Terms: EASI is the Eczema Area and Severity Index; EASI-75 means at least 75% improvement; IGA 0/1 means the doctor rates the skin "clear or almost clear".</li>
+    <li>Efficacy shading: <i class="key" style="background:var(--good-bg)"></i>▲ higher response <i class="key" style="background:var(--warn-bg)"></i>△ lower response or no comparable figure. EASI-75: at least 75% improvement in the Eczema Area and Severity Index; ranges are the two pivotal monotherapy trials in each US label<sup>4–7</sup>. Baricitinib reports IGA 0/1 (clear or almost clear), a stricter outcome<sup>8</sup>.</li>
+    <li>Head to head with Dupixent: the only monotherapy trial is Heads Up (Rinvoq 30 mg, EASI-75 71.0% vs 61.1% at week 16)<sup>9</sup>. Others: JADE COMPARE and JADE DARE (Cibinqo, with topical therapy)<sup>12,13</sup> and LEVEL-UP (Rinvoq with dose adjustment)<sup>14</sup>.</li>
+    <li>Ebglyss: the first 16 weeks use 10 syringes (NT$231,830). The US label also allows 250 mg every 8 weeks for maintenance<sup>5</sup>; Taiwan NHI specifies every 4 weeks<sup>2</sup>. Neither Ebglyss nor nemolizumab was assessed in the AAD 2024 guideline<sup>1</sup>.</li>
+    <li>The NHI price file lists upadacitinib 15 mg and 45 mg tablets but no 30 mg tablet<sup>2</sup>. Dupixent, Ebglyss, Rinvoq and Cibinqo are not combined with each other under NHI<sup>2</sup>.</li>
+    <li data-g="na">Not approved in Taiwan: tralokinumab (Adtralza), nemolizumab (Nemluvio)<sup>3</sup>. Ruxolitinib cream (Opzelura) is EU-approved for atopic dermatitis; in Taiwan the same cream is licensed only for vitiligo<sup>3</sup>.</li>
+  </ul>
+</section>
+
+<section class="calc" data-sec="calc" aria-labelledby="en-ad-calc-h" data-calc='[{"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}, {"n": "Ebglyss 250 mg (after week 16)", "p": 23183, "lo": 26660, "hi": 36000, "u": 1, "d": 28}, {"n": "Rinvoq 15 mg", "p": 743, "lo": 817, "hi": 988, "u": 1, "d": 1}, {"n": "Cibinqo 200 mg", "p": 799, "lo": 879, "hi": 960, "u": 1, "d": 1}, {"n": "Olumiant 4 mg", "p": 959, "lo": 1060, "hi": 1275, "u": 1, "d": 1}]' data-na="Self-pay price not found">
+  <h2 id="en-ad-calc-h">Cost calculator</h2>
+  <p class="hint">Pick a drug and enter your hospital's price per syringe or tablet; maintenance drug cost only, excluding induction and co-payment.<sup>2,16</sup></p>
+  <div class="cgrid">
+    <label for="en-ad-c-drug">Drug<select id="en-ad-c-drug" class="c-drug"><option value="0">Dupixent 300 mg</option><option value="1">Ebglyss 250 mg (after week 16)</option><option value="2">Rinvoq 15 mg</option><option value="3">Cibinqo 200 mg</option><option value="4">Olumiant 4 mg</option></select></label>
+    <label for="en-ad-c-price">Price per unit (NT$)<input id="en-ad-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="en-ad-c-units">Units per dose<input id="en-ad-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label for="en-ad-c-days">Interval (days)<input id="en-ad-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
+  </div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">NHI price</button><button type="button" class="pb" data-k="lo">Self-pay low</button><button type="button" class="pb" data-k="hi">Self-pay high</button></div>
+  <div class="res" aria-live="polite"><div><span>Per 4 weeks</span><b class="c-r4">—</b></div><div><span>Per year (365 days)</span><b class="c-ry">—</b></div></div>
+</section>
+
+<section class="nhi" data-sec="nhi" aria-label="NHI application (age 12+)">
+  <h2>NHI application (age 12+)</h2>
+  <ol class="nsteps"><li><b>Criteria</b>: lesions for ≥ 6 months; EASI ≥ 16, red inflamed area ≥ 30%, IGA 3–4.</li><li><b>Treatments first</b>: phototherapy for 12 weeks plus at least two of MTX, AZA and ciclosporin, each at full dose for 12 weeks without response; phototherapy can be skipped for medical reasons.</li><li><b>Pre-approval</b>: application form, EASI score sheet, photos, copies of records and the phototherapy dose log.</li><li><b>Week 16 review</b>: EASI 50 needed; 6 months per course; apply to continue 1 month before expiry.</li><li><b>Pause</b>: after 1 year of Dupixent or 2 years of the others, pause if EASI ≤ 16; relapse ≥ 50% or EASI ≥ 16 allows a new application<sup>2</sup>.</li></ol>
+  <details class="more"><summary>Full rules</summary><ul><li>Age 6–11: only Dupixent; topical therapy for 12 weeks plus one systemic drug for 12 weeks without response (13.17.2).</li><li>Dupixent, Ebglyss, Rinvoq and Cibinqo are not combined; JAK inhibitors are not combined with ciclosporin; Rinvoq or Cibinqo, switching only for intolerable side effects.</li><li>Excluded in pregnancy or breastfeeding; stop if pregnant.</li><li>For Cibinqo, record hepatitis B and C tests<sup>2</sup>.</li></ul></details>
+</section>
+
+<section data-sec="fig" class="cmp" aria-label="Figure 2. Compare within each step">
+  <h2>Figure 2. Compare within each step</h2>
+  <div class="cmp-tier"><h3>Same NHI step: biologics and JAK inhibitors</h3><div class="cmp-head"><span></span><span>Efficacy：EASI-75, monotherapy<sup>4–8</sup></span><span>Per 4 weeks (NHI price)<sup>2,16</sup></span></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>biologic; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:47.5%"></div><span>44–51%</span></div><div class="cmp-c"><div class="cbar c" style="width:75.4%"></div><span>31,374</span><small>Self-pay 34,512–37,650</small></div></div><div class="cmp-row"><div class="cmp-n">Ebglyss<small>biologic; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:55.5%"></div><span>52–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:55.7%"></div><span>23,183</span><small>Self-pay 26,660–36,000</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 15<small>JAK; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:65%"></div><span>60–70%</span></div><div class="cmp-c"><div class="cbar c" style="width:50.0%"></div><span>20,804</span><small>Self-pay 22,876–27,664</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 30<small>JAK; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:76.5%"></div><span>73–80%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>41,608</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Cibinqo 200<small>JAK; week 12</small></div><div class="cmp-e"><div class="cbar e" style="width:61.5%"></div><span>61–62%</span></div><div class="cmp-c"><div class="cbar c" style="width:53.8%"></div><span>22,372</span><small>Self-pay 24,612–26,880</small></div></div><div class="cmp-row"><div class="cmp-n">Olumiant 4<small>JAK; not NHI-covered for atopic dermatitis</small></div><div class="cmp-e"><span class="noval">IGA 0/1 14–17% (a stricter outcome)</span></div><div class="cmp-c"><div class="cbar c" style="width:64.5%"></div><span>26,852</span><small>Self-pay 29,680–35,700</small></div></div></div>
+  <p class="note">Efficacy comes from different trials and weeks and is only a rough guide, not for direct subtraction; costs are maintenance drug costs, bars at NHI price, small text the hospital self-pay range.</p>
+</section>
+
+<details class="more"><summary>Summary</summary>
+<ul class="sum">
+    <li><b>Guideline order:</b> Moisturiser + topical corticosteroid, with topical calcineurin inhibitors second line (see the topical table below) → moderate to severe and not controlled: phototherapy, conventional oral drugs, a biologic or a JAK inhibitor. The AAD 2024 guideline strongly recommends dupilumab, tralokinumab and JAK inhibitors, conditionally recommends phototherapy and conventional oral drugs, and conditionally recommends against systemic corticosteroids<sup>1</sup>.</li>
+    <li><b>NHI (age 12+):</b> Lesions for at least 6 months; EASI ≥ 16, affected area ≥ 30%, IGA 3–4. Failed 12 weeks of phototherapy plus at least two of MTX, AZA and ciclosporin, each at full dose for 12 weeks (or side effects or contraindications). Phototherapy can be skipped for medical reasons such as photosensitivity. Pre-approval required; the week 16 target is EASI 50<sup>2</sup>.</li>
+    <li><b>NHI coverage:</b> Dupixent (age 6+), Ebglyss, Rinvoq, Cibinqo (age 12+). Olumiant is licensed but not NHI-covered for atopic dermatitis<sup>2,3</sup>.</li>
+    <li><b>Pausing and reapplying:</b> After 1 year of Dupixent, or 2 years of Ebglyss, Rinvoq or Cibinqo, pause if EASI ≤ 16. Reapply if relapse is at least 50% or EASI ≥ 16, with photos from before and after the last course and from now. A gap of more than 3 months counts as a new application<sup>2</sup>.</li>
+    <li><b>Extending the interval:</b> After 1 year of standard-dose Dupixent with EASI ≤ 7 for at least 6 months, 83% stayed controlled on every 3–4 weeks in a Dutch registry<sup>10</sup>; a meta-analysis found efficacy similar to every 2 weeks<sup>11</sup>. NHI requires a pause after 1 year if EASI ≤ 16, so this mainly applies to self-paying patients after the pause<sup>2</sup>.</li>
+  </ul>
+</details>
+<details class="more"><summary>What the sources say, by situation</summary>
+<table class="pick">
+    <thead><tr><th style="width:45%">Situation</th><th>What the sources say</th></tr></thead>
+    <tbody>
+      <tr><td>Also has asthma or nasal polyps</td><td>Dupixent is licensed for both in Taiwan<sup>3</sup></td></tr>
+      <tr><td>Age ≥ 65, smoker, cardiovascular or cancer risk</td><td>EMA: no JAK inhibitor in these groups unless no suitable alternative<sup>15</sup></td></tr>
+      <tr><td>Speed of itch relief</td><td>In head-to-head trials, JAK inhibitors relieved itch faster than Dupixent<sup>9,13</sup></td></tr>
+      <tr><td>Regular blood tests</td><td>Biologic labels require no routine laboratory tests; JAK inhibitor labels require monitoring<sup>4–6</sup></td></tr>
+      <tr><td>Number of injections</td><td>Ebglyss after week 16 every 4 weeks (US label also allows every 8 weeks)<sup>2,5</sup></td></tr>
+      <tr><td>Children aged 6–11</td><td>NHI covers only Dupixent<sup>2</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<details class="box">
+  <summary>Before and during treatment</summary>
+  <ul>
+    <li>JAK inhibitors: test for latent tuberculosis and viral hepatitis; check blood counts, liver enzymes and lipids; confirm pregnancy status and advise contraception; bring vaccines up to date, including herpes zoster<sup>6</sup>. Do not start if lymphocytes &lt; 500/mm³, neutrophils &lt; 1000/mm³ or hemoglobin &lt; 8 g/dL<sup>6</sup>.</li>
+    <li>EMA: use JAK inhibitors in people aged ≥ 65, at higher cardiovascular or cancer risk, or current or long-term former smokers only if no suitable alternative<sup>15</sup>.</li>
+    <li>Biologics: no routine laboratory monitoring in the labels; complete age-appropriate vaccinations first<sup>4,5</sup>. Avoid live vaccines during treatment with any of these drugs<sup>4–7</sup>.</li>
+    <li>NHI pre-approval packet (age 12+): application form (Annex 32-1; age 6–11: Annex 32-2), EASI score sheet (Annex 32), photos, copies of records with the phototherapy dose log, and each prior systemic drug with dose and duration (≥ 12 weeks). Renew every 6 months, 1 month before expiry, with photos showing EASI 50<sup>2</sup>.</li>
+    <li>Azathioprine: NUDT15 and TPMT<sup>2</sup>. Ciclosporin: blood pressure and kidney function. Methotrexate: liver enzymes and blood counts<sup>2</sup>.</li>
+    <li><b>Hepatitis B:</b> screen for HBsAg, anti-HBc and hepatitis C first<sup>6</sup>. NHI pays for preventive antivirals (rule 10.7.3) only with rituximab, anthracyclines or moderate-to-high-dose steroids; with biologics or JAK inhibitors it pays only after a hepatitis B flare, so prophylaxis is self-pay<sup>2</sup>.</li>
+  </ul>
+</details>
+<details class="box">
+  <summary>Children, pregnancy and common side effects</summary>
+  <ul>
+    <li><b>Dupixent dose by weight</b> (age 6–17; NHI from age 6): 15–&lt;30 kg 600 mg, then 300 mg every 4 weeks · 30–&lt;60 kg 400 mg, then 200 mg every 2 weeks · ≥ 60 kg 600 mg, then 300 mg every 2 weeks. Age 6 months–5 years (label only, not NHI): 5–&lt;15 kg 200 mg or 15–&lt;30 kg 300 mg every 4 weeks, no loading dose<sup>2,4</sup>.</li>
+    <li><b>Other drugs:</b> Ebglyss, Rinvoq and Cibinqo from age 12 (Ebglyss ≥ 40 kg)<sup>2</sup>.</li>
+    <li><b>Pregnancy and breastfeeding:</b> NHI excludes pregnant or breastfeeding women and requires stopping in pregnancy<sup>2</sup>. Rinvoq: effective contraception during treatment and 4 weeks after the last dose<sup>6</sup>. Cibinqo: breastfeeding not recommended<sup>7</sup>. Pregnancy registries exist for Dupixent, Ebglyss and Cibinqo<sup>4,5,7</sup>.</li>
+    <li><b>Dupixent and Ebglyss:</b> conjunctivitis and keratitis are the main eye effects; ask patients to report new or worsening eye symptoms. Injection-site reactions are common<sup>4,5</sup>.</li>
+    <li><b>JAK inhibitors:</b> nausea, headache, acne, herpes simplex and raised creatine kinase are common (Cibinqo)<sup>7</sup>; serious infection and herpes zoster more frequent than with Dupixent (Rinvoq 30 mg)<sup>9</sup>.</li>
+  </ul>
+</details>
+
+<details class="refs" data-sec="refs">
+  <summary>References (16)</summary>
+  <ol class="refs">
+    <li>Davis DMR, et al. Executive summary: guidelines of care for the management of atopic dermatitis in adults with phototherapy and systemic therapies. <i>J Am Acad Dermatol</i> 2024;90(2):342–5. <a href="https://doi.org/10.1016/j.jaad.2023.08.103" target="_blank" rel="noopener">doi:10.1016/j.jaad.2023.08.103</a></li>
+    <li>National Health Insurance Administration, Taiwan. NHI drug price list (open data), downloaded 24 October 2026; NHI rules 13.17, 13.17.1 (revised 1 June 2026), 13.17.2 and 10.7.3 (hepatitis B antivirals).</li>
+    <li>Taiwan Food and Drug Administration. All drug licences (open data), downloaded 24 October 2026.</li>
+    <li>DUPIXENT (dupilumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>EBGLYSS (lebrikizumab) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>RINVOQ (upadacitinib) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>CIBINQO (abrocitinib) prescribing information. DailyMed, accessed 24 October 2026.</li>
+    <li>Simpson EL, et al. Baricitinib in moderate-to-severe atopic dermatitis: two randomized monotherapy phase III trials. <i>Br J Dermatol</i> 2020;183(2):242–55. <a href="https://doi.org/10.1111/bjd.18898" target="_blank" rel="noopener">doi:10.1111/bjd.18898</a></li>
+    <li>Blauvelt A, et al. Upadacitinib vs dupilumab in adults with moderate-to-severe atopic dermatitis (Heads Up). <i>JAMA Dermatol</i> 2021;157(9):1047–55. <a href="https://doi.org/10.1001/jamadermatol.2021.3023" target="_blank" rel="noopener">doi:10.1001/jamadermatol.2021.3023</a></li>
+    <li>Spekhorst LS, et al. Successful tapering of dupilumab in patients with atopic dermatitis with low disease activity: the BioDay registry. <i>Br J Dermatol</i> 2023;189(3):327–35. <a href="https://doi.org/10.1093/bjd/ljad159" target="_blank" rel="noopener">doi:10.1093/bjd/ljad159</a></li>
+    <li>Lai CPT, et al. Use of extended dosing intervals of dupilumab in treatment of atopic dermatitis: a systematic review and meta-analysis. <i>Dermatitis</i> 2025 (online ahead of print). PMID 40833352. <a href="https://doi.org/10.1177/17103568251367706" target="_blank" rel="noopener">doi:10.1177/17103568251367706</a></li>
+    <li>Bieber T, et al. Abrocitinib versus placebo or dupilumab for atopic dermatitis (JADE COMPARE). <i>N Engl J Med</i> 2021;384:1101–12. <a href="https://doi.org/10.1056/NEJMoa2019380" target="_blank" rel="noopener">doi:10.1056/NEJMoa2019380</a></li>
+    <li>Reich K, et al. Efficacy and safety of abrocitinib versus dupilumab in adults with moderate-to-severe atopic dermatitis (JADE DARE). <i>Lancet</i> 2022;400:273–82. <a href="https://doi.org/10.1016/S0140-6736(22)01199-0" target="_blank" rel="noopener">doi:10.1016/S0140-6736(22)01199-0</a></li>
+    <li>Silverberg JI, et al. Upadacitinib versus dupilumab in adults and adolescents with moderate-to-severe atopic dermatitis: week 16 results (LEVEL-UP). <i>Br J Dermatol</i> 2025;192(1):36–45. <a href="https://doi.org/10.1093/bjd/ljae404" target="_blank" rel="noopener">doi:10.1093/bjd/ljae404</a></li>
+    <li>European Medicines Agency. EMA recommends measures to minimise risk of serious side effects with Janus kinase inhibitors for chronic inflammatory disorders. 28 October 2022. <a href="https://www.ema.europa.eu/en/news/ema-recommends-measures-minimise-risk-serious-side-effects-janus-kinase-inhibitors-chronic-inflammatory-disorders" target="_blank" rel="noopener">ema.europa.eu</a></li>
+      <li>Self-pay prices from hospital public price lists: Chang Gung Memorial Hospital (list dated 1 October 2025), Fu Jen Catholic University Hospital, Kuang Tien General Hospital (September 2026) and Taipei City Hospital (October 2026); accessed 24 October 2026. Prices differ by hospital and purchasing contract.</li>
+  </ol>
+</details>
+</div>
+
+<div class="disease" data-dz="pso" data-lang="zh" hidden>
+<h2 class="dz">乾癬（中重度斑塊型、全身性治療）</h2>
+<nav class="secnav" aria-label="本頁"><button type="button" data-jump="flow">流程圖</button><button type="button" data-jump="table">藥物表</button><button type="button" data-jump="calc">費用試算</button><button type="button" data-jump="nhi">健保怎麼申請</button><button type="button" data-jump="fig">同層級比較</button><button type="button" data-jump="guide">看懂指引</button><button type="button" data-jump="refs">參考文獻</button></nav>
+<section class="flow" data-sec="flow" aria-label="流程圖：健保的申請順序2">
+  <h2>流程圖：健保的申請順序<sup>2</sup></h2>
+  <p class="fhint">指引：第一次全身性治療即可考慮生物製劑或 deucravacitinib（弱建議）<sup>1</sup>。點方塊跳到下方表格</p>
+  <div class="fwrap"><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="g0">照光＋傳統口服藥<small>methotrexate、ciclosporin、acitretin</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">照光＋一種口服藥無效</span><div class="frow"><button type="button" class="fnode" data-go="g1">口服標靶藥<small>Otezla、Sotyktu</small></button><button type="button" class="fnode na" data-go="na">icotrokinra<small>Icotyde，口服 IL-23；台灣未核准</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">兩種全身性治療各 3 個月無效、PASI ≥ 10</span><div class="frow"><button type="button" class="fnode" data-go="g2">TNF<small>adalimumab 等</small></button><button type="button" class="fnode" data-go="g3">IL-12/23<small>Stelara</small></button><button type="button" class="fnode" data-go="g4">IL-17<small>Cosentyx 等</small></button><button type="button" class="fnode" data-go="g5">IL-23<small>Tremfya、Skyrizi</small></button><button type="button" class="fnode na" data-go="na">tildrakizumab（IL-23）<small>Ilumetri；有許可證、健保未收載</small></button></div></div></div>
+</section>
+
+<section data-sec="table" aria-labelledby="zh-pso-h-table">
+  <h2 id="zh-pso-h-table">表 3：台灣中重度斑塊型乾癬全身性用藥</h2>
+  <button type="button" class="colbtn" aria-pressed="false">顯示完整欄位（單價、用法、備註）</button>
+  <table class="main simple">
+    <thead><tr><th>藥物</th><th class="c-unit">單價</th><th>用法</th><th>每 4 週</th><th>療效 對比 安慰劑</th><th class="c-note">健保與備註</th></tr></thead>
+    <tbody>
+      <tr class="grp" data-g="g0"><td colspan="6">傳統口服藥</td></tr>
+      <tr><td>Methotrexate<small class="m-only"><br>懷孕禁用<sup>5</sup></small></td>
+        <td class="c-unit">3.2–4.3 / 2.5 mg<sup>2</sup></td><td>15 mg 每週（健保劑量）<sup>2</sup></td><td>約 100</td>
+        <td class="w">無可比數據；PASI 90 優於 apremilast<sup>4</sup></td>
+        <td class="c-note">懷孕禁用<sup>5</sup></td></tr>
+      <tr><td>Ciclosporin<small class="m-only"><br>腎功能、血壓</small></td>
+        <td class="c-unit">113 / 100 mg<sup>2</sup></td><td>2.5–5 mg/kg/日<sup>2</sup></td><td>約 5,200–9,500<br><small>60 kg；100 與 25 mg 膠囊</small></td>
+        <td class="w">無可比數據；PASI 90 優於 apremilast<sup>4</sup></td>
+        <td class="c-note">腎功能、血壓</td></tr>
+      <tr><td>Acitretin<small class="m-only"><br>停藥後 ≥ 24 個月內不可懷孕（健保同意書；美國仿單 3 年）<sup>2,5</sup></small></td>
+        <td class="c-unit">71 / 25 mg<sup>2</sup></td><td>0.3–1 mg/kg/日<sup>2</sup></td><td>約 2,000<br><small>25 mg/日</small></td>
+        <td class="w">無可比數據</td>
+        <td class="c-note">停藥後 ≥ 24 個月內不可懷孕（健保同意書；美國仿單 3 年）<sup>2,5</sup></td></tr>
+
+      <tr class="grp" data-g="g1"><td colspan="6">口服標靶藥・健保給付規定 8.2.16</td></tr>
+      <tr><td>Otezla<br><small>apremilast</small><small class="m-only"><br>憂鬱、體重減輕<sup>5</sup></small></td>
+        <td class="c-unit">171 / 30 mg<sup>2</sup><br><small>自費 195<sup>13</sup></small></td><td>劑量調升後 30 mg 每日兩次<sup>5</sup></td><td>9,576<br><small>自費 10,920<sup>13</sup></small></td>
+        <td class="w">PASI 75 29–33% 對比 5–6%，第 16 週（仿單無 PASI 90）<sup>5</sup></td>
+        <td class="c-note">憂鬱、體重減輕<sup>5</sup></td></tr>
+      <tr><td>Sotyktu<br><small>deucravacitinib</small><small class="m-only"><br>肌酸激酶（CPK）上升；先打帶狀疱疹疫苗<sup>5</sup></small></td>
+        <td class="c-unit">396 / 6 mg<sup>2</sup><br><small>自費 436–527<sup>13</sup></small></td><td>6 mg 每日<sup>5</sup></td><td>11,088<br><small>自費 12,208–14,756<sup>13</sup></small></td>
+        <td class="w">PASI 90 27–36% 對比 3–4%，第 16 週；優於 apremilast<sup>5</sup></td>
+        <td class="c-note">肌酸激酶（CPK）上升；先打帶狀疱疹疫苗<sup>5</sup></td></tr>
+
+      <tr class="grp" data-g="g2"><td colspan="6">TNF 抑制劑・加框警語</td></tr>
+      <tr><td>adalimumab 生物相似藥<br><small>Hulio, Idacio, Hyrimoz, Yuflyma</small><small class="m-only"><br>比 Humira 便宜 17%<sup>2</sup></small></td>
+        <td class="c-unit">7,437 / 40 mg<sup>2</sup><br><small>自費 7,437–8,924<sup>13</sup></small></td><td>80 mg，之後 40 mg 每 2 週<sup>2</sup></td><td>14,874<br><small>自費 14,874–17,848<sup>13</sup></small></td>
+        <td class="w">PASI 75 71–78% 對比 7–19%，第 16 週；直接比較試驗 PASI 90 47–50%<sup>5,7,8</sup></td>
+        <td class="c-note">比 Humira 便宜 17%<sup>2</sup></td></tr>
+      <tr><td>Humira<br><small>adalimumab</small><small class="m-only"><br>Amgevita 同價<sup>2</sup></small></td>
+        <td class="c-unit">8,937 / 40 mg<sup>2</sup><br><small>自費 10,354<sup>13</sup></small></td><td>80 mg，之後 40 mg 每 2 週<sup>2</sup></td><td>17,874<br><small>自費 20,708<sup>13</sup></small></td>
+        <td class="w">同上<sup>5</sup></td>
+        <td class="c-note">Amgevita 同價<sup>2</sup></td></tr>
+      <tr><td>Enbrel / Erelzi<br><small>etanercept</small><small class="m-only"><br>Erelzi 為 17,016（每 4 週）<sup>2</sup></small></td>
+        <td class="c-unit">6,141 / 50 mg；3,071 / 25 mg（Erelzi 4,254）<sup>2</sup><br><small>自費 6,898–7,369<sup>13</sup></small></td><td>50 mg 每週兩次共 3 個月，之後 25 mg 每週兩次（健保）<sup>2</sup></td><td>24,568<br><small>自費 27,592–29,476<sup>13</sup></small></td>
+        <td class="w">PASI 75 46–47% 對比 3–4%，3 個月<sup>5</sup></td>
+        <td class="c-note">Erelzi 為 17,016（每 4 週）<sup>2</sup></td></tr>
+      <tr><td>Cimzia<br><small>certolizumab</small><small class="m-only"><br>懷孕可用（健保）<sup>2</sup></small></td>
+        <td class="c-unit">8,188 / 200 mg<sup>2</sup><br><small>自費 9,826–10,643<sup>13</sup></small></td><td>400 mg 於第 0、2、4 週，之後 200 mg 每 2 週<sup>2</sup></td><td>16,376<br><small>自費 19,652–21,286<sup>13</sup></small></td>
+        <td class="w">PASI 90 36–50% 對比 0–5%，第 16 週（200 mg）<sup>5</sup></td>
+        <td class="c-note">懷孕可用（健保）<sup>2</sup></td></tr>
+
+      <tr class="grp" data-g="g3"><td colspan="6">IL-12/23 抑制劑</td></tr>
+      <tr><td>Stelara / Steqeyma<br><small>ustekinumab、生物相似藥</small><small class="m-only"><br>Steqeyma 為 13,402（每 4 週）<sup>2</sup></small></td>
+        <td class="c-unit">47,302（Steqeyma 40,206）/ 45 或 90 mg<sup>2</sup><br><small>自費 52,873–54,397<sup>13</sup></small></td><td>45 mg 於第 0、4 週，之後每 12 週；90 mg 用於 > 100 kg<sup>2</sup></td><td>15,767<br><small>自費 17,624–18,132<sup>13</sup></small></td>
+        <td class="w">PASI 75 67–76% 對比 3–4%，第 12 週；直接比較試驗 PASI 90 42–50%<sup>5,6,9</sup></td>
+        <td class="c-note">Steqeyma 為 13,402（每 4 週）<sup>2</sup></td></tr>
+
+      <tr class="grp" data-g="g4"><td colspan="6">IL-17 抑制劑・發炎性腸道疾病 避免使用</td></tr>
+      <tr><td>Cosentyx<br><small>secukinumab</small><small class="m-only"><br>150 mg 用於 ≤ 60 kg（健保）：14,092<sup>2</sup></small></td>
+        <td class="c-unit">14,092 / 150 mg<sup>2</sup><br><small>自費 15,655–16,206<sup>13</sup></small></td><td>300 mg 每週至第 4 週，之後每 4 週<sup>2</sup></td><td>28,184<br><small>自費 31,310–32,412<sup>13</sup></small></td>
+        <td class="w">PASI 90 54–59% 對比 1–2%，第 12 週<sup>5</sup></td>
+        <td class="c-note">150 mg 用於 ≤ 60 kg（健保）：14,092<sup>2</sup></td></tr>
+      <tr><td>Taltz<br><small>ixekizumab</small><small class="m-only"><br>直接比較試驗勝過 Stelara<sup>9</sup></small></td>
+        <td class="c-unit">25,452 / 80 mg<sup>2</sup><br><small>自費 28,750–29,270<sup>13</sup></small></td><td>160 mg，之後 80 mg 每 2 週至第 12 週，再改每 4 週<sup>2</sup></td><td>25,452<br><small>自費 28,750–29,270<sup>13</sup></small></td>
+        <td class="g">PASI 90 68–71% 對比 1–3%，第 12 週<sup>5</sup></td>
+        <td class="c-note">直接比較試驗勝過 Stelara<sup>9</sup></td></tr>
+      <tr><td>Lumicef<br><small>brodalumab</small><small class="m-only"><br>美國加框警語：自殺傾向；克隆氏症不可用<sup>5</sup></small></td>
+        <td class="c-unit">12,828 / 210 mg<sup>2</sup><br><small>自費 14,309–14,752<sup>13</sup></small></td><td>210 mg 於第 0、1、2 週，之後每 2 週<sup>2</sup></td><td>25,656<br><small>自費 28,618–29,504<sup>13</sup></small></td>
+        <td class="w">PASI 75 83–86% 對比 3–8%，第 12 週（仿單無 PASI 90）<sup>5</sup></td>
+        <td class="c-note">美國加框警語：自殺傾向；克隆氏症不可用<sup>5</sup></td></tr>
+      <tr><td>Bimzelx<br><small>bimekizumab</small><small class="m-only"><br>先驗肝功能<sup>5</sup>；口腔念珠菌感染比 Cosentyx 多<sup>12</sup></small></td>
+        <td class="c-unit">26,025 / 160 mg<sup>2</sup><br><small>自費 29,929–31,230<sup>13</sup></small></td><td>320 mg 每 4 週至第 16 週，之後每 8 週<sup>2</sup></td><td>26,025<br><small>自費 29,929–31,230<sup>13</sup></small></td>
+        <td class="g">PASI 90 85–91% 對比 1–5%，第 16 週<sup>5</sup></td>
+        <td class="c-note">先驗肝功能<sup>5</sup>；口腔念珠菌感染比 Cosentyx 多<sup>12</sup></td></tr>
+
+      <tr class="grp" data-g="g5"><td colspan="6">IL-23 抑制劑</td></tr>
+      <tr><td>Tremfya<br><small>guselkumab</small><small class="m-only"><br>直接比較試驗勝過 adalimumab<sup>7</sup></small></td>
+        <td class="c-unit">59,973 / 100 mg<sup>2</sup><br><small>自費 67,503<sup>13</sup></small></td><td>100 mg 於第 0、4 週，之後每 8 週<sup>2</sup></td><td>29,987<br><small>自費 33,752<sup>13</sup></small></td>
+        <td class="g">PASI 90 70–73% 對比 2–3%，第 16 週<sup>5</sup></td>
+        <td class="c-note">直接比較試驗勝過 adalimumab<sup>7</sup></td></tr>
+      <tr><td>Skyrizi<br><small>risankizumab</small><small class="m-only"><br>健保要求達 PASI 75（第 16 週）<sup>2</sup></small></td>
+        <td class="c-unit">88,206 / 150 mg<sup>2</sup><br><small>自費 97,027<sup>13</sup></small></td><td>150 mg 於第 0、4 週，之後每 12 週<sup>2</sup></td><td>29,402<br><small>自費 32,342<sup>13</sup></small></td>
+        <td class="g">PASI 90 73–75% 對比 2–5%，第 16 週<sup>5</sup></td>
+        <td class="c-note">健保要求達 PASI 75（第 16 週）<sup>2</sup></td></tr>
+    </tbody>
+  </table>
+  <ul class="notes">
+    <li>名詞：PASI 為乾癬面積與嚴重度指數，PASI 75／90 指改善 75%／90% 以上，PASI 100 為完全清除；IGA 0/1 指醫師評估為「清除或幾乎清除」。</li>
+    <li>療效底色： <i class="key" style="background:var(--good-bg)"></i>▲ PASI 90 達成率 ≥ 65% <i class="key" style="background:var(--warn-bg)"></i>△ 較低，或僅報告 PASI 75。範圍為各美國仿單的樞紐試驗；adalimumab、etanercept、成人 ustekinumab、brodalumab 與 apremilast 的仿單沒有 PASI 90，因此跨藥比較以 Cochrane 回顧較公平<sup>4,5</sup>。</li>
+    <li>PASI 90 直接比較，第 16 週（Taltz 為第 12 週）：Bimzelx 86% 對比 adalimumab 47%，85% 對比 Stelara 50%<sup>10,11</sup>；Skyrizi 72% 對比 adalimumab 47%，75% 對比 Stelara 42–48%<sup>6,8</sup>；Tremfya 73% 對比 adalimumab 50%<sup>7</sup>；Taltz 73% 對比 Stelara 42%<sup>9</sup>。</li>
+    <li>每 4 週費用為維持期健保價；起始劑量較貴（例如 Bimzelx 為 260,250，第 0–16 週）<sup>2</sup>。Cochrane：各藥嚴重不良事件與安慰劑無差異；證據涵蓋誘導期（8–24 週）<sup>4</sup>。</li>
+    <li data-g="na">台灣乾癬未給付或無適應症：tildrakizumab（Ilumetri；2026 年七月取得許可證，未列入健保）；infliximab（僅有其他疾病適應症）<sup>2,3</sup>。台灣未核准：icotrokinra（Icotyde，口服 IL-23 受體拮抗劑，每日 200 mg；美國 2026-03-17、歐盟 2026-09-18 核准；第 16 週 PASI 90 50–58% 對安慰劑 1–4%，直接比較也優於 Sotyktu 的 30–34%）<sup>5</sup>。spesolimab（Spevigo）用於全身型膿疱性乾癬，不在本表範圍<sup>2,3</sup>。</li>
+  </ul>
+</section>
+
+<section class="calc" data-sec="calc" aria-labelledby="zh-pso-calc-h" data-calc='[{"n": "adalimumab 生物相似藥 40 mg", "p": 7437, "lo": 7437, "hi": 8924, "u": 1, "d": 14}, {"n": "Humira 40 mg", "p": 8937, "lo": 10354, "hi": 10354, "u": 1, "d": 14}, {"n": "Enbrel 25 mg（每週兩次）", "p": 3071, "lo": null, "hi": null, "u": 2, "d": 7}, {"n": "Cimzia 200 mg", "p": 8188, "lo": 9826, "hi": 10643, "u": 1, "d": 14}, {"n": "Stelara 45／90 mg", "p": 47302, "lo": 52873, "hi": 54397, "u": 1, "d": 84}, {"n": "Steqeyma 45／90 mg", "p": 40206, "lo": null, "hi": null, "u": 1, "d": 84}, {"n": "Cosentyx 150 mg（300 mg = 2 支）", "p": 14092, "lo": 15655, "hi": 16206, "u": 2, "d": 28}, {"n": "Taltz 80 mg", "p": 25452, "lo": 28750, "hi": 29270, "u": 1, "d": 28}, {"n": "Lumicef 210 mg", "p": 12828, "lo": 14309, "hi": 14752, "u": 1, "d": 14}, {"n": "Bimzelx 160 mg（320 mg = 2 支）", "p": 26025, "lo": 29929, "hi": 31230, "u": 2, "d": 56}, {"n": "Tremfya 100 mg", "p": 59973, "lo": 67503, "hi": 67503, "u": 1, "d": 56}, {"n": "Skyrizi 150 mg", "p": 88206, "lo": 97027, "hi": 97027, "u": 1, "d": 84}, {"n": "Otezla 30 mg", "p": 171, "lo": 195, "hi": 195, "u": 2, "d": 1}, {"n": "Sotyktu 6 mg", "p": 396, "lo": 436, "hi": 527, "u": 1, "d": 1}]' data-na="自費價未查到">
+  <h2 id="zh-pso-calc-h">費用試算</h2>
+  <p class="hint">選藥物後輸入您醫院的每支／每顆價格；只算維持期藥費，誘導期與部分負擔另計。<sup>2,13</sup></p>
+  <div class="cgrid">
+    <label for="zh-pso-c-drug">藥物<select id="zh-pso-c-drug" class="c-drug"><option value="0">adalimumab 生物相似藥 40 mg</option><option value="1">Humira 40 mg</option><option value="2">Enbrel 25 mg（每週兩次）</option><option value="3">Cimzia 200 mg</option><option value="4">Stelara 45／90 mg</option><option value="5">Steqeyma 45／90 mg</option><option value="6">Cosentyx 150 mg（300 mg = 2 支）</option><option value="7">Taltz 80 mg</option><option value="8">Lumicef 210 mg</option><option value="9">Bimzelx 160 mg（320 mg = 2 支）</option><option value="10">Tremfya 100 mg</option><option value="11">Skyrizi 150 mg</option><option value="12">Otezla 30 mg</option><option value="13">Sotyktu 6 mg</option></select></label>
+    <label for="zh-pso-c-price">每支／每顆價格（元）<input id="zh-pso-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="zh-pso-c-units">每次用量（支／顆）<input id="zh-pso-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label for="zh-pso-c-days">間隔（天）<input id="zh-pso-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
+  </div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">健保價</button><button type="button" class="pb" data-k="lo">自費低</button><button type="button" class="pb" data-k="hi">自費高</button></div>
+  <div class="res" aria-live="polite"><div><span>每 4 週</span><b class="c-r4">—</b></div><div><span>每年（365 天）</span><b class="c-ry">—</b></div></div>
+</section>
+
+<section class="nhi" data-sec="nhi" aria-label="健保怎麼申請（生物製劑）">
+  <h2>健保怎麼申請（生物製劑）</h2>
+  <ol class="nsteps"><li><b>條件</b>：病灶 ≥ 6 個月，PASI ≥ 10。</li><li><b>先完成治療</b>：足量照光，加上 methotrexate、acitretin、環孢素、apremilast、deucravacitinib 至少兩種，各至少 3 個月無效。</li><li><b>送事前審查</b>：病歷影本與照光劑量紀錄；潛伏結核要先治療滿 4 週。</li><li><b>評估</b>：多數藥第 12 週（Stelara、Bimzelx 第 16 週）需達 PASI 25，Skyrizi 第 16 週需 PASI 75；每 6 個月續用，需達 PASI 50（Skyrizi PASI 75）。</li><li><b>暫緩</b>：用滿 2 年 PASI ≤ 10 要暫緩；復發 ≥ 50% 可重新申請<sup>2</sup>。</li></ol>
+  <details class="more"><summary>詳細規定</summary><ul><li>Otezla、Sotyktu（8.2.16）：照光加 methotrexate 或環孢素其中一種無效即可申請；每 24 週續用；不可與生物製劑、tofacitinib、環孢素併用。</li><li>控制不夠理想（PASI &gt; 1、面積 &gt; 3%，或臉、手、指甲有病灶）可在續用時平行轉換另一種生物製劑，期間合併計入 2 年。</li><li>懷孕或哺乳時可申請 Cimzia。</li><li>排除：活動性感染、人工關節、曾有嚴重敗血症、癌症或癌前病變<sup>2</sup>。</li></ul></details>
+</section>
+
+<section data-sec="fig" class="cmp" aria-label="圖 3：同層級比較">
+  <h2>圖 3：同層級比較</h2>
+  <div class="cmp-tier"><h3>口服標靶藥</h3><div class="cmp-head"><span></span><span>療效：PASI 90<sup>5–11</sup></span><span>每 4 週（健保價）<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Otezla<small>apremilast</small></div><div class="cmp-e"><span class="noval">仿單無 PASI 90；PASI 75 29–33%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.4%"></div><span>9,576</span><small>自費 10,920</small></div></div><div class="cmp-row"><div class="cmp-n">Sotyktu<small>deucravacitinib</small></div><div class="cmp-e"><div class="cbar e" style="width:31.5%"></div><span>27–36%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>11,088</span><small>自費 12,208–14,756</small></div></div></div>
+  <div class="cmp-tier"><h3>生物製劑（健保同一關卡）</h3><div class="cmp-head"><span></span><span>療效：PASI 90<sup>5–11</sup></span><span>每 4 週（健保價）<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Adalimumab 生物相似藥<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50%（直接比較試驗）</span></div><div class="cmp-c"><div class="cbar c" style="width:49.6%"></div><span>14,874</span><small>自費 14,874–17,848</small></div></div><div class="cmp-row"><div class="cmp-n">Humira<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50%（直接比較試驗）</span></div><div class="cmp-c"><div class="cbar c" style="width:59.6%"></div><span>17,874</span><small>自費 20,708</small></div></div><div class="cmp-row"><div class="cmp-n">Enbrel<small>TNF</small></div><div class="cmp-e"><span class="noval">仿單無 PASI 90；PASI 75 46–47%</span></div><div class="cmp-c"><div class="cbar c" style="width:81.9%"></div><span>24,568</span><small>自費 27,592–29,476</small></div></div><div class="cmp-row"><div class="cmp-n">Cimzia<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:43%"></div><span>36–50%</span></div><div class="cmp-c"><div class="cbar c" style="width:54.6%"></div><span>16,376</span><small>自費 19,652–21,286</small></div></div><div class="cmp-row"><div class="cmp-n">Stelara<small>IL-12/23</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>42–50%（直接比較試驗）</span></div><div class="cmp-c"><div class="cbar c" style="width:52.6%"></div><span>15,767</span><small>自費 17,624–18,132</small></div></div><div class="cmp-row"><div class="cmp-n">Steqeyma<small>IL-12/23 生物相似藥</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>同 Stelara</span></div><div class="cmp-c"><div class="cbar c" style="width:44.7%"></div><span>13,402</span><small>自費 未查到</small></div></div><div class="cmp-row"><div class="cmp-n">Cosentyx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:56.5%"></div><span>54–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:94.0%"></div><span>28,184</span><small>自費 31,310–32,412</small></div></div><div class="cmp-row"><div class="cmp-n">Taltz<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:70%"></div><span>68–71%</span></div><div class="cmp-c"><div class="cbar c" style="width:84.9%"></div><span>25,452</span><small>自費 28,750–29,270</small></div></div><div class="cmp-row"><div class="cmp-n">Lumicef<small>IL-17</small></div><div class="cmp-e"><span class="noval">仿單無 PASI 90；PASI 75 83–86%</span></div><div class="cmp-c"><div class="cbar c" style="width:85.6%"></div><span>25,656</span><small>自費 28,618–29,504</small></div></div><div class="cmp-row"><div class="cmp-n">Bimzelx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:88%"></div><span>85–91%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.8%"></div><span>26,025</span><small>自費 29,929–31,230</small></div></div><div class="cmp-row"><div class="cmp-n">Tremfya<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:71.5%"></div><span>70–73%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>29,987</span><small>自費 33,752</small></div></div><div class="cmp-row"><div class="cmp-n">Skyrizi<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:74%"></div><span>73–75%</span></div><div class="cmp-c"><div class="cbar c" style="width:98.0%"></div><span>29,402</span><small>自費 32,342</small></div></div></div>
+  <p class="note">療效來自不同試驗與週數，只能看大概，不能直接相減；費用為維持期藥費，長條為健保價，小字為醫院自費價範圍。</p>
+</section>
+
+<details class="more"><summary>重點整理</summary>
+<ul class="sum">
+    <li><b>健保的順序：</b>照光、傳統口服藥（methotrexate、ciclosporin、acitretin）→ apremilast 或 deucravacitinib → 生物製劑。2026 年德國版 EuroGuiDerm 指引：第一次用全身性治療時，可考慮直接用有第一線適應症的生物製劑或 deucravacitinib（弱建議）；目標最低 PASI 75，理想 PASI 90<sup>1</sup>。</li>
+    <li><b>健保生物製劑：</b>病灶持續 6 個月以上、PASI ≥ 10；先做足量照光，加上 methotrexate、acitretin、ciclosporin、apremilast、deucravacitinib 至少兩種，每種至少 3 個月無效；需事前審查，6 個月一個療程，續用要達 PASI 50（risankizumab 要 PASI 75）；用滿 2 年且 PASI ≤ 10 要暫緩<sup>2</sup>。</li>
+    <li><b>健保口服標靶藥：</b>apremilast、deucravacitinib 只要照光加 methotrexate 或 ciclosporin 其中一種無效即可申請；不能和生物製劑、tofacitinib、ciclosporin 併用<sup>2</sup>。</li>
+    <li><b>療效與省錢：</b>Cochrane 2025 統合分析中，PASI 90 最好的是 bimekizumab、ixekizumab、risankizumab（排第一的 infliximab 在台灣沒有乾癬適應症）<sup>3,4</sup>。adalimumab 生物相似藥每支便宜 1,500 元（17%），ustekinumab 生物相似藥便宜 15%<sup>2</sup>。</li>
+  </ul>
+</details>
+<details class="more"><summary>不同情況，文獻怎麼說</summary>
+<table class="pick">
+    <thead><tr><th style="width:45%">情境</th><th>文獻與規定怎麼說</th></tr></thead>
+    <tbody>
+      <tr><td>皮膚完全清除的機會</td><td>Cochrane 2025：bimekizumab、ixekizumab、risankizumab 達到 PASI 90 的機會最高<sup>4</sup></td></tr>
+      <tr><td>費用</td><td>最便宜的生物製劑是 ustekinumab 與 adalimumab 生物相似藥；Otezla、Sotyktu 更便宜，健保門檻也較低<sup>2</sup></td></tr>
+      <tr><td>合併乾癬性關節炎</td><td>表中生物製劑在台灣皆有此適應症；Sotyktu、Ilumetri 在台灣沒有（Sotyktu 美國仿單已有；Drugs@FDA 療效補充核准 2026-03-06）<sup>3,5</sup></td></tr>
+      <tr><td>發炎性腸道疾病</td><td>IL-17 抑制劑（Cosentyx、Taltz、Lumicef、Bimzelx）仿單警告 發炎性腸道疾病；Humira、Stelara、Skyrizi、Tremfya 在台灣也有克隆氏症與潰瘍性結腸炎適應症<sup>3,5</sup></td></tr>
+      <tr><td>懷孕或哺乳</td><td>Cimzia：胎盤轉移量可忽略；健保允許懷孕使用<sup>2,5</sup></td></tr>
+      <tr><td>有憂鬱或自殺意念病史</td><td>Lumicef 有美國加框警語；Otezla 仿單也提醒憂鬱<sup>5</sup></td></tr>
+      <tr><td>打針次數</td><td>Skyrizi、Stelara 每 12 週；Tremfya、Bimzelx 每 8 週<sup>2</sup></td></tr>
+      <tr><td>體重 &gt; 100 kg</td><td>Stelara 90 mg 與 45 mg 同價；Bimzelx 美國仿單 ≥ 120 kg 可維持每 4 週，費用加倍<sup>2,5</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<details class="box">
+  <summary>用藥前與用藥中</summary>
+  <ul>
+    <li>生物製劑與 Sotyktu：先篩檢結核；健保排除未治療的潛伏結核（治療未滿 4 週），並要求篩檢紀錄<sup>2,5</sup>。健保要求處方醫師監測結核與病毒性肝炎<sup>2</sup>。</li>
+    <li><b>B 型肝炎：</b>用藥前篩檢 HBsAg、anti-HBc 與 C 肝。TNF 抑制劑仿單警告帶原者可能 B 肝再活化，曾有致命案例<sup>5</sup>。健保預防性抗病毒藥（10.7.3）只給付併用 rituximab、anthracycline 類或中高劑量類固醇者；用生物製劑時要 B 肝發作後才給付，事先預防需自費<sup>2</sup>。</li>
+    <li>健保也排除活動性感染、人工關節、曾有嚴重敗血症、癌症或癌前病變，以及懷孕或哺乳（Cimzia 除外）<sup>2</sup>。</li>
+    <li>使用生物製劑與 Sotyktu 時避免活性疫苗<sup>5</sup>。Stelara：IL-12/23 缺乏者接種 BCG 後曾有嚴重感染報告<sup>5</sup>。</li>
+    <li>懷孕：多數嬰兒的 Cimzia 胎盤轉移量可忽略<sup>5</sup>。methotrexate 禁用。acitretin：用藥前 4 週至停藥後 ≥ 24 個月需避孕（健保同意書；美國仿單 3 年）；期間不可捐血<sup>2,5</sup>。</li>
+    <li>台灣 6 歲以上有適應症：Cosentyx、Taltz、Stelara、Otezla<sup>3</sup>。</li>
+  </ul>
+</details>
+
+<details class="refs" data-sec="refs">
+  <summary>參考文獻（13）</summary>
+  <ol class="refs">
+    <li>Nast A, et al. S3 guideline for the treatment of psoriasis vulgaris, adapted from EuroGuiDerm – part 1. <i>J Dtsch Dermatol Ges</i> 2026;24(1):122–37. PMID 41531416.</li>
+    <li>National Health Insurance Administration, Taiwan. NHI drug price list (open data), downloaded 24 October 2026; NHI rules 8.2.4, 8.2.4.6, 8.2.4.6.1 (revised 1 May 2026), 8.2.16 (revised 1 August 2026), 13.5 and 10.7.3 (hepatitis B antivirals).</li>
+    <li>Taiwan Food and Drug Administration. All drug licences (open data), downloaded 24 October 2026.</li>
+    <li>Sbidian E, et al. Systemic pharmacological treatments for chronic plaque psoriasis: a network meta-analysis. <i>Cochrane Database Syst Rev</i> 2025;8:CD011535. <a href="https://doi.org/10.1002/14651858.CD011535.pub7" target="_blank" rel="noopener">doi:10.1002/14651858.CD011535.pub7</a></li>
+    <li>US prescribing information (DailyMed, accessed 24 October 2026): Humira, Enbrel, Cimzia, Stelara, Cosentyx, Taltz, Siliq (brodalumab), Bimzelx, Tremfya, Skyrizi, Otezla, Sotyktu, Icotyde (icotrokinra), acitretin, Trexall; EMA medicines report (Icotyde, Opzelura), accessed 24 October 2026.</li>
+    <li>Gordon KB, et al. Risankizumab vs ustekinumab and placebo (UltIMMa-1 and -2). <i>Lancet</i> 2018;392:650–61. PMID 30097359.</li>
+    <li>Blauvelt A, et al. Guselkumab vs adalimumab and placebo (VOYAGE 1). <i>J Am Acad Dermatol</i> 2017;76:405–17. PMID 28057360.</li>
+    <li>Reich K, et al. Risankizumab vs adalimumab (IMMvent). <i>Lancet</i> 2019;394:576–86. PMID 31280967.</li>
+    <li>Reich K, et al. Ixekizumab vs ustekinumab (IXORA-S). <i>Br J Dermatol</i> 2017;177:1014–23. PMID 28542874.</li>
+    <li>Warren RB, et al. Bimekizumab vs adalimumab (BE SURE). <i>N Engl J Med</i> 2021;385:130–41. PMID 33891379.</li>
+    <li>Reich K, et al. Bimekizumab vs ustekinumab (BE VIVID). <i>Lancet</i> 2021;397:487–98. PMID 33549193.</li>
+    <li>Reich K, et al. Bimekizumab vs secukinumab (BE RADIANT). <i>N Engl J Med</i> 2021;385:142–52. PMID 33891380.</li>
+      <li>Self-pay prices from hospital public price lists: Chang Gung Memorial Hospital (list dated 1 October 2025), Fu Jen Catholic University Hospital, Kuang Tien General Hospital (September 2026) and Taipei City Hospital (October 2026); accessed 24 October 2026. Prices differ by hospital and purchasing contract.</li>
+  </ol>
+</details>
+</div>
+
+<div class="disease" data-dz="pso" data-lang="en" hidden>
+<h2 class="dz">Psoriasis (moderate to severe plaque, systemic therapy)</h2>
+<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">NHI application</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
+<section class="flow" data-sec="flow" aria-label="Flowchart: NHI application order2">
+  <h2>Flowchart: NHI application order<sup>2</sup></h2>
+  <p class="fhint">Guideline: a biologic or deucravacitinib can be considered as the first systemic treatment (weak)<sup>1</sup>. Tap a box to jump to the table</p>
+  <div class="fwrap"><div class="fstep"><div class="frow"><button type="button" class="fnode" data-go="g0">Phototherapy + conventional oral<small>MTX, ciclosporin, acitretin</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">Phototherapy + one oral drug failed</span><div class="frow"><button type="button" class="fnode" data-go="g1">Oral targeted<small>Otezla, Sotyktu</small></button><button type="button" class="fnode na" data-go="na">icotrokinra<small>Icotyde, oral IL-23; not approved in Taiwan</small></button></div></div><div class="farrow" aria-hidden="true">↓</div><div class="fstep"><span class="flab">Two systemic treatments failed, 3 months each, PASI ≥ 10</span><div class="frow"><button type="button" class="fnode" data-go="g2">TNF<small>adalimumab and others</small></button><button type="button" class="fnode" data-go="g3">IL-12/23<small>Stelara</small></button><button type="button" class="fnode" data-go="g4">IL-17<small>Cosentyx and others</small></button><button type="button" class="fnode" data-go="g5">IL-23<small>Tremfya, Skyrizi</small></button><button type="button" class="fnode na" data-go="na">tildrakizumab (IL-23)<small>Ilumetri; licensed, not NHI-listed</small></button></div></div></div>
+</section>
+
+<section data-sec="table" aria-labelledby="en-pso-h-table">
+  <h2 id="en-pso-h-table">Table 3. Systemic drugs for moderate-to-severe plaque psoriasis in Taiwan</h2>
+  <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
+  <table class="main simple">
+    <thead><tr><th>Drug</th><th class="c-unit">Unit price</th><th>Dosing</th><th>Per 4 weeks</th><th>Efficacy vs placebo</th><th class="c-note">NHI and notes</th></tr></thead>
+    <tbody>
+      <tr class="grp" data-g="g0"><td colspan="6">Conventional oral</td></tr>
+      <tr><td>Methotrexate<small class="m-only"><br>Contraindicated in pregnancy<sup>5</sup></small></td>
+        <td class="c-unit">3.2–4.3 / 2.5 mg<sup>2</sup></td><td>15 mg weekly (NHI dose)<sup>2</sup></td><td>~100</td>
+        <td class="w">No comparable figure; better than apremilast for PASI 90<sup>4</sup></td>
+        <td class="c-note">Contraindicated in pregnancy<sup>5</sup></td></tr>
+      <tr><td>Ciclosporin<small class="m-only"><br>Kidney function, blood pressure</small></td>
+        <td class="c-unit">113 / 100 mg<sup>2</sup></td><td>2.5–5 mg/kg/day<sup>2</sup></td><td>~5,200–9,500<br><small>60 kg; 100 + 25 mg capsules</small></td>
+        <td class="w">No comparable figure; better than apremilast for PASI 90<sup>4</sup></td>
+        <td class="c-note">Kidney function, blood pressure</td></tr>
+      <tr><td>Acitretin<small class="m-only"><br>No pregnancy for ≥ 24 months after stopping (NHI consent; US label 3 years)<sup>2,5</sup></small></td>
+        <td class="c-unit">71 / 25 mg<sup>2</sup></td><td>0.3–1 mg/kg/day<sup>2</sup></td><td>~2,000<br><small>25 mg/day</small></td>
+        <td class="w">No comparable figure</td>
+        <td class="c-note">No pregnancy for ≥ 24 months after stopping (NHI consent; US label 3 years)<sup>2,5</sup></td></tr>
+
+      <tr class="grp" data-g="g1"><td colspan="6">Oral targeted · NHI rule 8.2.16</td></tr>
+      <tr><td>Otezla<br><small>apremilast</small><small class="m-only"><br>Depression, weight loss<sup>5</sup></small></td>
+        <td class="c-unit">171 / 30 mg<sup>2</sup><br><small>Self-pay 195<sup>13</sup></small></td><td>30 mg twice daily after titration<sup>5</sup></td><td>9,576<br><small>Self-pay 10,920<sup>13</sup></small></td>
+        <td class="w">PASI 75 29–33% vs 5–6%, wk 16 (no PASI 90 in label)<sup>5</sup></td>
+        <td class="c-note">Depression, weight loss<sup>5</sup></td></tr>
+      <tr><td>Sotyktu<br><small>deucravacitinib</small><small class="m-only"><br>Raised CPK; zoster vaccine first<sup>5</sup></small></td>
+        <td class="c-unit">396 / 6 mg<sup>2</sup><br><small>Self-pay 436–527<sup>13</sup></small></td><td>6 mg daily<sup>5</sup></td><td>11,088<br><small>Self-pay 12,208–14,756<sup>13</sup></small></td>
+        <td class="w">PASI 90 27–36% vs 3–4%, wk 16; better than apremilast<sup>5</sup></td>
+        <td class="c-note">Raised CPK; zoster vaccine first<sup>5</sup></td></tr>
+
+      <tr class="grp" data-g="g2"><td colspan="6">TNF inhibitors · boxed warning</td></tr>
+      <tr><td>Adalimumab biosimilar<br><small>Hulio, Idacio, Hyrimoz, Yuflyma</small><small class="m-only"><br>17% cheaper than Humira<sup>2</sup></small></td>
+        <td class="c-unit">7,437 / 40 mg<sup>2</sup><br><small>Self-pay 7,437–8,924<sup>13</sup></small></td><td>80 mg, then 40 mg every 2 weeks<sup>2</sup></td><td>14,874<br><small>Self-pay 14,874–17,848<sup>13</sup></small></td>
+        <td class="w">PASI 75 71–78% vs 7–19%, wk 16; PASI 90 47–50% head to head<sup>5,7,8</sup></td>
+        <td class="c-note">17% cheaper than Humira<sup>2</sup></td></tr>
+      <tr><td>Humira<br><small>adalimumab</small><small class="m-only"><br>Amgevita same price<sup>2</sup></small></td>
+        <td class="c-unit">8,937 / 40 mg<sup>2</sup><br><small>Self-pay 10,354<sup>13</sup></small></td><td>80 mg, then 40 mg every 2 weeks<sup>2</sup></td><td>17,874<br><small>Self-pay 20,708<sup>13</sup></small></td>
+        <td class="w">As above<sup>5</sup></td>
+        <td class="c-note">Amgevita same price<sup>2</sup></td></tr>
+      <tr><td>Enbrel / Erelzi<br><small>etanercept</small><small class="m-only"><br>Erelzi 17,016 per 4 weeks<sup>2</sup></small></td>
+        <td class="c-unit">6,141 / 50 mg; 3,071 / 25 mg (Erelzi 4,254)<sup>2</sup><br><small>Self-pay 6,898–7,369<sup>13</sup></small></td><td>50 mg twice weekly for 3 months, then 25 mg twice weekly (NHI)<sup>2</sup></td><td>24,568<br><small>Self-pay 27,592–29,476<sup>13</sup></small></td>
+        <td class="w">PASI 75 46–47% vs 3–4%, 3 months<sup>5</sup></td>
+        <td class="c-note">Erelzi 17,016 per 4 weeks<sup>2</sup></td></tr>
+      <tr><td>Cimzia<br><small>certolizumab</small><small class="m-only"><br>Option in pregnancy (NHI)<sup>2</sup></small></td>
+        <td class="c-unit">8,188 / 200 mg<sup>2</sup><br><small>Self-pay 9,826–10,643<sup>13</sup></small></td><td>400 mg at wk 0, 2, 4, then 200 mg every 2 weeks<sup>2</sup></td><td>16,376<br><small>Self-pay 19,652–21,286<sup>13</sup></small></td>
+        <td class="w">PASI 90 36–50% vs 0–5%, wk 16 (200 mg)<sup>5</sup></td>
+        <td class="c-note">Option in pregnancy (NHI)<sup>2</sup></td></tr>
+
+      <tr class="grp" data-g="g3"><td colspan="6">IL-12/23 inhibitor</td></tr>
+      <tr><td>Stelara / Steqeyma<br><small>ustekinumab, biosimilar</small><small class="m-only"><br>Steqeyma 13,402 per 4 weeks<sup>2</sup></small></td>
+        <td class="c-unit">47,302 (Steqeyma 40,206) / 45 or 90 mg<sup>2</sup><br><small>Self-pay 52,873–54,397<sup>13</sup></small></td><td>45 mg at wk 0 and 4, then every 12 weeks; 90 mg if > 100 kg<sup>2</sup></td><td>15,767<br><small>Self-pay 17,624–18,132<sup>13</sup></small></td>
+        <td class="w">PASI 75 67–76% vs 3–4%, wk 12; PASI 90 42–50% head to head<sup>5,6,9</sup></td>
+        <td class="c-note">Steqeyma 13,402 per 4 weeks<sup>2</sup></td></tr>
+
+      <tr class="grp" data-g="g4"><td colspan="6">IL-17 inhibitors · avoid in IBD</td></tr>
+      <tr><td>Cosentyx<br><small>secukinumab</small><small class="m-only"><br>150 mg if ≤ 60 kg (NHI): 14,092<sup>2</sup></small></td>
+        <td class="c-unit">14,092 / 150 mg<sup>2</sup><br><small>Self-pay 15,655–16,206<sup>13</sup></small></td><td>300 mg weekly to wk 4, then every 4 weeks<sup>2</sup></td><td>28,184<br><small>Self-pay 31,310–32,412<sup>13</sup></small></td>
+        <td class="w">PASI 90 54–59% vs 1–2%, wk 12<sup>5</sup></td>
+        <td class="c-note">150 mg if ≤ 60 kg (NHI): 14,092<sup>2</sup></td></tr>
+      <tr><td>Taltz<br><small>ixekizumab</small><small class="m-only"><br>Beat Stelara head to head<sup>9</sup></small></td>
+        <td class="c-unit">25,452 / 80 mg<sup>2</sup><br><small>Self-pay 28,750–29,270<sup>13</sup></small></td><td>160 mg, 80 mg every 2 weeks to wk 12, then every 4 weeks<sup>2</sup></td><td>25,452<br><small>Self-pay 28,750–29,270<sup>13</sup></small></td>
+        <td class="g">PASI 90 68–71% vs 1–3%, wk 12<sup>5</sup></td>
+        <td class="c-note">Beat Stelara head to head<sup>9</sup></td></tr>
+      <tr><td>Lumicef<br><small>brodalumab</small><small class="m-only"><br>US boxed warning: suicidality; not in Crohn's disease<sup>5</sup></small></td>
+        <td class="c-unit">12,828 / 210 mg<sup>2</sup><br><small>Self-pay 14,309–14,752<sup>13</sup></small></td><td>210 mg at wk 0, 1, 2, then every 2 weeks<sup>2</sup></td><td>25,656<br><small>Self-pay 28,618–29,504<sup>13</sup></small></td>
+        <td class="w">PASI 75 83–86% vs 3–8%, wk 12 (no PASI 90 in label)<sup>5</sup></td>
+        <td class="c-note">US boxed warning: suicidality; not in Crohn's disease<sup>5</sup></td></tr>
+      <tr><td>Bimzelx<br><small>bimekizumab</small><small class="m-only"><br>Liver tests first<sup>5</sup>; more oral candidiasis than Cosentyx<sup>12</sup></small></td>
+        <td class="c-unit">26,025 / 160 mg<sup>2</sup><br><small>Self-pay 29,929–31,230<sup>13</sup></small></td><td>320 mg every 4 weeks to wk 16, then every 8 weeks<sup>2</sup></td><td>26,025<br><small>Self-pay 29,929–31,230<sup>13</sup></small></td>
+        <td class="g">PASI 90 85–91% vs 1–5%, wk 16<sup>5</sup></td>
+        <td class="c-note">Liver tests first<sup>5</sup>; more oral candidiasis than Cosentyx<sup>12</sup></td></tr>
+
+      <tr class="grp" data-g="g5"><td colspan="6">IL-23 inhibitors</td></tr>
+      <tr><td>Tremfya<br><small>guselkumab</small><small class="m-only"><br>Beat adalimumab head to head<sup>7</sup></small></td>
+        <td class="c-unit">59,973 / 100 mg<sup>2</sup><br><small>Self-pay 67,503<sup>13</sup></small></td><td>100 mg at wk 0 and 4, then every 8 weeks<sup>2</sup></td><td>29,987<br><small>Self-pay 33,752<sup>13</sup></small></td>
+        <td class="g">PASI 90 70–73% vs 2–3%, wk 16<sup>5</sup></td>
+        <td class="c-note">Beat adalimumab head to head<sup>7</sup></td></tr>
+      <tr><td>Skyrizi<br><small>risankizumab</small><small class="m-only"><br>NHI needs PASI 75 at wk 16<sup>2</sup></small></td>
+        <td class="c-unit">88,206 / 150 mg<sup>2</sup><br><small>Self-pay 97,027<sup>13</sup></small></td><td>150 mg at wk 0 and 4, then every 12 weeks<sup>2</sup></td><td>29,402<br><small>Self-pay 32,342<sup>13</sup></small></td>
+        <td class="g">PASI 90 73–75% vs 2–5%, wk 16<sup>5</sup></td>
+        <td class="c-note">NHI needs PASI 75 at wk 16<sup>2</sup></td></tr>
+    </tbody>
+  </table>
+  <ul class="notes">
+    <li>Terms: PASI is the Psoriasis Area and Severity Index; PASI 75/90 means at least 75%/90% improvement and PASI 100 complete clearance; IGA 0/1 means the doctor rates the skin "clear or almost clear".</li>
+    <li>Efficacy shading: <i class="key" style="background:var(--good-bg)"></i>▲ PASI 90 in ≥ 65% <i class="key" style="background:var(--warn-bg)"></i>△ lower, or only PASI 75 reported. Ranges are the pivotal trials in each US label; the labels for adalimumab, etanercept, adult ustekinumab, brodalumab and apremilast give no PASI 90, so the Cochrane review is the fairer cross-drug comparison<sup>4,5</sup>.</li>
+    <li>Head to head, PASI 90 at week 16 (week 12 for Taltz): Bimzelx 86% vs adalimumab 47% and 85% vs Stelara 50%<sup>10,11</sup>; Skyrizi 72% vs adalimumab 47% and 75% vs Stelara 42–48%<sup>6,8</sup>; Tremfya 73% vs adalimumab 50%<sup>7</sup>; Taltz 73% vs Stelara 42%<sup>9</sup>.</li>
+    <li>Per 4 weeks is maintenance at NHI prices; loading doses cost more (for example Bimzelx 260,250 for weeks 0–16)<sup>2</sup>. Cochrane: no difference from placebo in serious adverse events for any drug; evidence covers induction (8–24 weeks)<sup>4</sup>.</li>
+    <li data-g="na">Not covered or not licensed for psoriasis in Taiwan: tildrakizumab (Ilumetri; licensed July 2026, not in the NHI list); infliximab (licensed only for other diseases)<sup>2,3</sup>. Not approved in Taiwan: icotrokinra (Icotyde, oral IL-23 receptor antagonist, 200 mg daily; approved US 2026-03-17, EU 2026-09-18; week 16 PASI 90 50–58% vs placebo 1–4%, and better than Sotyktu at 30–34% head to head)<sup>5</sup>. Spesolimab (Spevigo) is for generalized pustular psoriasis and outside this table<sup>2,3</sup>.</li>
+  </ul>
+</section>
+
+<section class="calc" data-sec="calc" aria-labelledby="en-pso-calc-h" data-calc='[{"n": "Adalimumab biosimilar 40 mg", "p": 7437, "lo": 7437, "hi": 8924, "u": 1, "d": 14}, {"n": "Humira 40 mg", "p": 8937, "lo": 10354, "hi": 10354, "u": 1, "d": 14}, {"n": "Enbrel 25 mg (twice weekly)", "p": 3071, "lo": null, "hi": null, "u": 2, "d": 7}, {"n": "Cimzia 200 mg", "p": 8188, "lo": 9826, "hi": 10643, "u": 1, "d": 14}, {"n": "Stelara 45/90 mg", "p": 47302, "lo": 52873, "hi": 54397, "u": 1, "d": 84}, {"n": "Steqeyma 45/90 mg", "p": 40206, "lo": null, "hi": null, "u": 1, "d": 84}, {"n": "Cosentyx 150 mg (300 mg = 2)", "p": 14092, "lo": 15655, "hi": 16206, "u": 2, "d": 28}, {"n": "Taltz 80 mg", "p": 25452, "lo": 28750, "hi": 29270, "u": 1, "d": 28}, {"n": "Lumicef 210 mg", "p": 12828, "lo": 14309, "hi": 14752, "u": 1, "d": 14}, {"n": "Bimzelx 160 mg (320 mg = 2)", "p": 26025, "lo": 29929, "hi": 31230, "u": 2, "d": 56}, {"n": "Tremfya 100 mg", "p": 59973, "lo": 67503, "hi": 67503, "u": 1, "d": 56}, {"n": "Skyrizi 150 mg", "p": 88206, "lo": 97027, "hi": 97027, "u": 1, "d": 84}, {"n": "Otezla 30 mg", "p": 171, "lo": 195, "hi": 195, "u": 2, "d": 1}, {"n": "Sotyktu 6 mg", "p": 396, "lo": 436, "hi": 527, "u": 1, "d": 1}]' data-na="Self-pay price not found">
+  <h2 id="en-pso-calc-h">Cost calculator</h2>
+  <p class="hint">Pick a drug and enter your hospital's price per syringe or tablet; maintenance drug cost only, excluding induction and co-payment.<sup>2,13</sup></p>
+  <div class="cgrid">
+    <label for="en-pso-c-drug">Drug<select id="en-pso-c-drug" class="c-drug"><option value="0">Adalimumab biosimilar 40 mg</option><option value="1">Humira 40 mg</option><option value="2">Enbrel 25 mg (twice weekly)</option><option value="3">Cimzia 200 mg</option><option value="4">Stelara 45/90 mg</option><option value="5">Steqeyma 45/90 mg</option><option value="6">Cosentyx 150 mg (300 mg = 2)</option><option value="7">Taltz 80 mg</option><option value="8">Lumicef 210 mg</option><option value="9">Bimzelx 160 mg (320 mg = 2)</option><option value="10">Tremfya 100 mg</option><option value="11">Skyrizi 150 mg</option><option value="12">Otezla 30 mg</option><option value="13">Sotyktu 6 mg</option></select></label>
+    <label for="en-pso-c-price">Price per unit (NT$)<input id="en-pso-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="en-pso-c-units">Units per dose<input id="en-pso-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
+    <label for="en-pso-c-days">Interval (days)<input id="en-pso-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
+  </div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">NHI price</button><button type="button" class="pb" data-k="lo">Self-pay low</button><button type="button" class="pb" data-k="hi">Self-pay high</button></div>
+  <div class="res" aria-live="polite"><div><span>Per 4 weeks</span><b class="c-r4">—</b></div><div><span>Per year (365 days)</span><b class="c-ry">—</b></div></div>
+</section>
+
+<section class="nhi" data-sec="nhi" aria-label="NHI application (biologics)">
+  <h2>NHI application (biologics)</h2>
+  <ol class="nsteps"><li><b>Criteria</b>: lesions for ≥ 6 months, PASI ≥ 10.</li><li><b>Treatments first</b>: adequate phototherapy plus at least two of MTX, acitretin, ciclosporin, apremilast and deucravacitinib, each for at least 3 months without response.</li><li><b>Pre-approval</b>: copies of records and the phototherapy dose log; latent TB treated for 4 weeks first.</li><li><b>Review</b>: PASI 25 at week 12 for most drugs (week 16 for Stelara, Bimzelx), PASI 75 at week 16 for Skyrizi; renew every 6 months with PASI 50 (PASI 75 for Skyrizi).</li><li><b>Pause</b>: after 2 years, pause if PASI ≤ 10; relapse ≥ 50% allows a new application<sup>2</sup>.</li></ol>
+  <details class="more"><summary>Full rules</summary><ul><li>Otezla and Sotyktu (8.2.16): phototherapy plus failure of MTX or ciclosporin is enough; renew every 24 weeks; not combined with biologics, tofacitinib or ciclosporin.</li><li>If control is not ideal (PASI &gt; 1, area &gt; 3%, or lesions on face, hands or nails), another biologic can be swapped in at renewal; both periods count toward the 2 years.</li><li>Cimzia can be requested in pregnancy or breastfeeding.</li><li>Excluded: active infection, prosthetic joint, past severe sepsis, cancer or precancer<sup>2</sup>.</li></ul></details>
+</section>
+
+<section data-sec="fig" class="cmp" aria-label="Figure 3. Compare within each step">
+  <h2>Figure 3. Compare within each step</h2>
+  <div class="cmp-tier"><h3>Oral targeted drugs</h3><div class="cmp-head"><span></span><span>Efficacy：PASI 90<sup>5–11</sup></span><span>Per 4 weeks (NHI price)<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Otezla<small>apremilast</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 29–33%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.4%"></div><span>9,576</span><small>Self-pay 10,920</small></div></div><div class="cmp-row"><div class="cmp-n">Sotyktu<small>deucravacitinib</small></div><div class="cmp-e"><div class="cbar e" style="width:31.5%"></div><span>27–36%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>11,088</span><small>Self-pay 12,208–14,756</small></div></div></div>
+  <div class="cmp-tier"><h3>Biologics (same NHI step)</h3><div class="cmp-head"><span></span><span>Efficacy：PASI 90<sup>5–11</sup></span><span>Per 4 weeks (NHI price)<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Adalimumab biosimilar<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:49.6%"></div><span>14,874</span><small>Self-pay 14,874–17,848</small></div></div><div class="cmp-row"><div class="cmp-n">Humira<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:59.6%"></div><span>17,874</span><small>Self-pay 20,708</small></div></div><div class="cmp-row"><div class="cmp-n">Enbrel<small>TNF</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 46–47%</span></div><div class="cmp-c"><div class="cbar c" style="width:81.9%"></div><span>24,568</span><small>Self-pay 27,592–29,476</small></div></div><div class="cmp-row"><div class="cmp-n">Cimzia<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:43%"></div><span>36–50%</span></div><div class="cmp-c"><div class="cbar c" style="width:54.6%"></div><span>16,376</span><small>Self-pay 19,652–21,286</small></div></div><div class="cmp-row"><div class="cmp-n">Stelara<small>IL-12/23</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>42–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:52.6%"></div><span>15,767</span><small>Self-pay 17,624–18,132</small></div></div><div class="cmp-row"><div class="cmp-n">Steqeyma<small>IL-12/23 biosimilar</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>Same as Stelara</span></div><div class="cmp-c"><div class="cbar c" style="width:44.7%"></div><span>13,402</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Cosentyx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:56.5%"></div><span>54–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:94.0%"></div><span>28,184</span><small>Self-pay 31,310–32,412</small></div></div><div class="cmp-row"><div class="cmp-n">Taltz<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:70%"></div><span>68–71%</span></div><div class="cmp-c"><div class="cbar c" style="width:84.9%"></div><span>25,452</span><small>Self-pay 28,750–29,270</small></div></div><div class="cmp-row"><div class="cmp-n">Lumicef<small>IL-17</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 83–86%</span></div><div class="cmp-c"><div class="cbar c" style="width:85.6%"></div><span>25,656</span><small>Self-pay 28,618–29,504</small></div></div><div class="cmp-row"><div class="cmp-n">Bimzelx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:88%"></div><span>85–91%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.8%"></div><span>26,025</span><small>Self-pay 29,929–31,230</small></div></div><div class="cmp-row"><div class="cmp-n">Tremfya<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:71.5%"></div><span>70–73%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>29,987</span><small>Self-pay 33,752</small></div></div><div class="cmp-row"><div class="cmp-n">Skyrizi<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:74%"></div><span>73–75%</span></div><div class="cmp-c"><div class="cbar c" style="width:98.0%"></div><span>29,402</span><small>Self-pay 32,342</small></div></div></div>
+  <p class="note">Efficacy comes from different trials and weeks and is only a rough guide, not for direct subtraction; costs are maintenance drug costs, bars at NHI price, small text the hospital self-pay range.</p>
+</section>
+
+<details class="more"><summary>Summary</summary>
+<ul class="sum">
+    <li><b>NHI order:</b> Phototherapy, conventional oral drugs (MTX, ciclosporin, acitretin) → apremilast or deucravacitinib → biologic. 2026 German EuroGuiDerm guideline: for the first systemic treatment, consider going straight to a biologic with a first-line indication or deucravacitinib (weak recommendation). Target at least PASI 75, ideally PASI 90<sup>1</sup>.</li>
+    <li><b>NHI, biologics:</b> Lesions for at least 6 months, PASI ≥ 10. Failed full-dose phototherapy plus at least two of MTX, acitretin, ciclosporin, apremilast and deucravacitinib, each for at least 3 months. Pre-approval required; 6-month courses; continuing needs PASI 50 (PASI 75 for risankizumab). After 2 years, PASI ≤ 10 means a pause<sup>2</sup>.</li>
+    <li><b>NHI, oral targeted drugs:</b> Apremilast and deucravacitinib need only failed phototherapy plus one of MTX or ciclosporin. Not combined with biologics, tofacitinib or ciclosporin<sup>2</sup>.</li>
+    <li><b>Efficacy and cost:</b> In the Cochrane 2025 meta-analysis, the best for PASI 90 were bimekizumab, ixekizumab and risankizumab (top-ranked infliximab has no psoriasis indication in Taiwan)<sup>3,4</sup>. Adalimumab biosimilars are NT$1,500 (17%) cheaper per syringe; ustekinumab biosimilars are 15% cheaper<sup>2</sup>.</li>
+  </ul>
+</details>
+<details class="more"><summary>What the sources say, by situation</summary>
+<table class="pick">
+    <thead><tr><th style="width:45%">Situation</th><th>What the sources say</th></tr></thead>
+    <tbody>
+      <tr><td>Chance of clear skin</td><td>Cochrane 2025: bimekizumab, ixekizumab and risankizumab had the highest chance of PASI 90<sup>4</sup></td></tr>
+      <tr><td>Cost</td><td>The cheapest biologics are the ustekinumab and adalimumab biosimilars; Otezla and Sotyktu cost less still and have a lower NHI bar<sup>2</sup></td></tr>
+      <tr><td>Also has psoriatic arthritis</td><td>All biologics in the table are licensed for it in Taiwan; Sotyktu and Ilumetri are not (Sotyktu's US label now includes it; Drugs@FDA efficacy supplement approved 2026-03-06)<sup>3,5</sup></td></tr>
+      <tr><td>Inflammatory bowel disease</td><td>IL-17 inhibitor labels (Cosentyx, Taltz, Lumicef, Bimzelx) warn about IBD; Humira, Stelara, Skyrizi and Tremfya are also licensed for Crohn's disease and ulcerative colitis in Taiwan<sup>3,5</sup></td></tr>
+      <tr><td>Pregnant or breastfeeding</td><td>Cimzia: negligible placental transfer; NHI allows it in pregnancy<sup>2,5</sup></td></tr>
+      <tr><td>History of depression or suicidal thoughts</td><td>Lumicef carries a US boxed warning; Otezla's label also warns about depression<sup>5</sup></td></tr>
+      <tr><td>Number of injections</td><td>Skyrizi, Stelara every 12 weeks; Tremfya, Bimzelx every 8 weeks<sup>2</sup></td></tr>
+      <tr><td>Weight &gt; 100 kg</td><td>Stelara 90 mg costs the same as 45 mg; Bimzelx at ≥ 120 kg may stay at every 4 weeks (US label), doubling the cost<sup>2,5</sup></td></tr>
+    </tbody>
+  </table>
+</details>
+<details class="box">
+  <summary>Before and during treatment</summary>
+  <ul>
+    <li>Biologics and Sotyktu: test for tuberculosis first; NHI excludes untreated latent TB (less than 4 weeks of treatment) and asks for screening records<sup>2,5</sup>. NHI asks prescribers to monitor for TB and viral hepatitis<sup>2</sup>.</li>
+    <li><b>Hepatitis B:</b> screen for HBsAg, anti-HBc and hepatitis C first. TNF inhibitor labels warn of hepatitis B reactivation in carriers, sometimes fatal<sup>5</sup>. NHI pays for preventive antivirals (rule 10.7.3) only with rituximab, anthracyclines or moderate-to-high-dose steroids; with biologics it pays only after a hepatitis B flare, so prophylaxis is self-pay<sup>2</sup>.</li>
+    <li>NHI also excludes active infection, a prosthetic joint, past severe sepsis, cancer or precancer, and pregnancy or breastfeeding (except Cimzia)<sup>2</sup>.</li>
+    <li>Avoid live vaccines with biologics and Sotyktu<sup>5</sup>. Stelara: serious infections reported after BCG vaccination in IL-12/23-deficient people<sup>5</sup>.</li>
+    <li>Pregnancy: Cimzia's placental transfer was negligible in most infants<sup>5</sup>. Methotrexate is contraindicated. Acitretin: contraception from 4 weeks before to ≥ 24 months after (NHI consent form; US label 3 years); no blood donation in that period<sup>2,5</sup>.</li>
+    <li>Licensed from age 6 in Taiwan: Cosentyx, Taltz, Stelara, Otezla<sup>3</sup>.</li>
+  </ul>
+</details>
+
+<details class="refs" data-sec="refs">
+  <summary>References (13)</summary>
+  <ol class="refs">
+    <li>Nast A, et al. S3 guideline for the treatment of psoriasis vulgaris, adapted from EuroGuiDerm – part 1. <i>J Dtsch Dermatol Ges</i> 2026;24(1):122–37. PMID 41531416.</li>
+    <li>National Health Insurance Administration, Taiwan. NHI drug price list (open data), downloaded 24 October 2026; NHI rules 8.2.4, 8.2.4.6, 8.2.4.6.1 (revised 1 May 2026), 8.2.16 (revised 1 August 2026), 13.5 and 10.7.3 (hepatitis B antivirals).</li>
+    <li>Taiwan Food and Drug Administration. All drug licences (open data), downloaded 24 October 2026.</li>
+    <li>Sbidian E, et al. Systemic pharmacological treatments for chronic plaque psoriasis: a network meta-analysis. <i>Cochrane Database Syst Rev</i> 2025;8:CD011535. <a href="https://doi.org/10.1002/14651858.CD011535.pub7" target="_blank" rel="noopener">doi:10.1002/14651858.CD011535.pub7</a></li>
+    <li>US prescribing information (DailyMed, accessed 24 October 2026): Humira, Enbrel, Cimzia, Stelara, Cosentyx, Taltz, Siliq (brodalumab), Bimzelx, Tremfya, Skyrizi, Otezla, Sotyktu, Icotyde (icotrokinra), acitretin, Trexall; EMA medicines report (Icotyde, Opzelura), accessed 24 October 2026.</li>
+    <li>Gordon KB, et al. Risankizumab vs ustekinumab and placebo (UltIMMa-1 and -2). <i>Lancet</i> 2018;392:650–61. PMID 30097359.</li>
+    <li>Blauvelt A, et al. Guselkumab vs adalimumab and placebo (VOYAGE 1). <i>J Am Acad Dermatol</i> 2017;76:405–17. PMID 28057360.</li>
+    <li>Reich K, et al. Risankizumab vs adalimumab (IMMvent). <i>Lancet</i> 2019;394:576–86. PMID 31280967.</li>
+    <li>Reich K, et al. Ixekizumab vs ustekinumab (IXORA-S). <i>Br J Dermatol</i> 2017;177:1014–23. PMID 28542874.</li>
+    <li>Warren RB, et al. Bimekizumab vs adalimumab (BE SURE). <i>N Engl J Med</i> 2021;385:130–41. PMID 33891379.</li>
+    <li>Reich K, et al. Bimekizumab vs ustekinumab (BE VIVID). <i>Lancet</i> 2021;397:487–98. PMID 33549193.</li>
+    <li>Reich K, et al. Bimekizumab vs secukinumab (BE RADIANT). <i>N Engl J Med</i> 2021;385:142–52. PMID 33891380.</li>
+      <li>Self-pay prices from hospital public price lists: Chang Gung Memorial Hospital (list dated 1 October 2025), Fu Jen Catholic University Hospital, Kuang Tien General Hospital (September 2026) and Taipei City Hospital (October 2026); accessed 24 October 2026. Prices differ by hospital and purchasing contract.</li>
+  </ol>
+</details>
+</div>
+
+<div class="disease guide" data-dz="csu" data-lang="zh" data-mode="guide" hidden>
+<button type="button" class="backbtn">← 回到選藥卡</button>
+  <h2>慢性自發性蕁麻疹</h2>
+  <div class="gkey"><b>一句話：</b>指引在抗組織胺加到 4 倍仍不夠時加上 omalizumab；台灣健保不給付任何 CSU 生物製劑，需自費。Omlyclo 健保價為原廠一半，指引也允許控制後拉長間隔；兩者合計，每 4 週費用約為原廠標準用法的四分之一。</div>
+
+  <section class="step">
+    <h3><span class="n">1</span>指引怎麼說</h3>
+    <p>2026 年國際蕁麻疹指引<sup>1</sup>：</p>
+    <ul>
+      <li><span class="rec">建議</span>二代抗組織胺每天固定吃，不是發作才吃；控制不好加到 4 倍（仿單外）。</li>
+      <li><span class="rec">建議</span>4 倍仍不夠，加上 omalizumab，抗組織胺繼續吃。</li>
+      <li><span class="rec">傾向建議</span>dupilumab、remibrutinib 也可加上；dupilumab 在合併異位性皮膚炎、氣喘、鼻息肉時特別合理。</li>
+      <li><span class="rec">反對</span>長期口服類固醇；急性發作可短期使用，最多 10 天。</li>
+      <li>ciclosporin 留給其他治療都無效的嚴重病人（仿單外，副作用較多）。</li>
+      <li>只做有限的檢查（血球分類、CRP 或 ESR），用 UAS7、UCT 追蹤；每 3–6 個月重新評估是否還需要用藥。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">2</span>證據有多強</h3>
+    <ul>
+      <li>omalizumab 300 mg：第 12 週完全沒症狀 36% 對安慰劑 9%<sup>2</sup>。</li>
+      <li>dupilumab：第 24 週 30–32% 對 13–17%；但在 omalizumab 用過仍不夠的病人身上（CUPID Study B）沒有達到主要指標<sup>3</sup>。</li>
+      <li>Omlyclo（omalizumab 生物相似藥）：619 人直接比較，主要指標與原廠等效<sup>4</sup>。</li>
+      <li>抗組織胺加量：標準劑量無效的人約 63% 加量後改善，但研究小<sup>5</sup>。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">3</span>台灣健保怎麼規定</h3>
+    <p>抗組織胺有給付。生物製劑用在 CSU 一律不給付：omalizumab 的給付規定 6.2.6 只限重度持續性氣喘，dupilumab 的 6.2.9、13.17 也不含 CSU<sup>6</sup>。病人要自費，醫院自費價通常高於健保價<sup>7</sup>。</p>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">4</span>指引和健保差在哪</h3>
+    <table>
+      <thead><tr><th></th><th class="cg">指引</th><th class="ch">台灣健保</th></tr></thead>
+      <tbody>
+        <tr><td>抗組織胺無效後</td><td class="cg">加上 omalizumab</td><td class="ch">不給付，要自費（Xolair 健保價每 4 週約 28,000 元）</td></tr>
+        <tr><td>控制良好後</td><td class="cg">完全控制 3 個月後可拉長打針間隔</td><td class="ch">沒有相關規定；自費病人拉長間隔就直接省錢</td></tr>
+        <tr><td>生物相似藥</td><td class="cg">與原廠相同</td><td class="ch">Omlyclo 健保價為 Xolair 的一半</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">5</span>健保與自費的情況</h3>
+    <ol class="path">
+      <li>二代抗組織胺每天吃，可加到 2–4 倍；健保給付，每月幾百元。</li>
+      <li>仍不夠時，生物製劑要自費；健保價最低的是 Omlyclo（每 4 週約 14,000 元）。</li>
+      <li>完全控制 3 個月後可逐步拉長打針間隔；例如每 8 週打，Omlyclo 每 4 週約 7,000 元。</li>
+      <li>合併異位性皮膚炎、氣喘、鼻息肉，或總 IgE 很低時，指引提到 dupilumab 的好處。</li>
+    </ol>
+  </section>
+
+  <details><summary>參考資料（7）</summary><ol class="refs">
+    <li>Zuberbier T, et al. International guideline for urticaria. <i>Allergy</i> 2026;81(8):2582–2632. <a href="https://doi.org/10.1111/all.70210" target="_blank" rel="noopener">doi:10.1111/all.70210</a></li>
+    <li>XOLAIR prescribing information (DailyMed); Saini SS, et al. <i>J Invest Dermatol</i> 2015;135:67–75.</li>
+    <li>DUPIXENT prescribing information (DailyMed), accessed 24 October 2026.</li>
+    <li>Saini SS, et al. CT-P39 vs reference omalizumab in CSU. <i>Allergy</i> 2025;80(8):2167–77. <a href="https://doi.org/10.1111/all.16446" target="_blank" rel="noopener">doi:10.1111/all.16446</a></li>
+    <li>Guillén-Aguinaga S, et al. <i>Br J Dermatol</i> 2016;175(6):1153–65. <a href="https://doi.org/10.1111/bjd.14768" target="_blank" rel="noopener">doi:10.1111/bjd.14768</a></li>
+    <li>健保署藥品給付規定 6.2.6、6.2.9、13.17；健保用藥品項，2026-10-24 下載。</li>
+    <li>醫院公開自費價目：長庚（2025-10-01 版）、輔大、光田（2026-09 版）、臺北市立聯合醫院（2026-10 版），2026-10-24 查詢；價格依醫院與採購合約而不同。</li>
+  </ol></details>
+</div>
+
+<div class="disease guide" data-dz="csu" data-lang="en" data-mode="guide" hidden>
+<button type="button" class="backbtn">← Back to drug cards</button>
+  <h2>Chronic spontaneous urticaria</h2>
+  <div class="gkey"><b>In one line:</b> the guideline adds omalizumab when an antihistamine at up to 4 times the dose is not enough; Taiwan NHI covers no biologic for CSU, so it is self-pay. Omlyclo's NHI price is half of Xolair's, and the guideline allows longer intervals once controlled; together, the cost per 4 weeks is about a quarter of Xolair at the standard dose.</div>
+
+  <section class="step">
+    <h3><span class="n">1</span>What the guideline says</h3>
+    <p>International urticaria guideline, 2026<sup>1</sup>:</p>
+    <ul>
+      <li><span class="rec">Recommended</span>A second-generation antihistamine every day, not on demand; if not controlled, up to 4 times the dose (off-label).</li>
+      <li><span class="rec">Recommended</span>If 4 times the dose is not enough, add omalizumab and keep the antihistamine.</li>
+      <li><span class="rec">Suggested</span>Dupilumab or remibrutinib can also be added; dupilumab makes most sense with atopic dermatitis, asthma or nasal polyps.</li>
+      <li><span class="rec">Against</span>Long-term oral corticosteroids; a short course of up to 10 days for a flare is acceptable.</li>
+      <li>Ciclosporin is kept for severe disease after other treatments fail (off-label, more adverse effects).</li>
+      <li>Limited tests only (blood count with differential, CRP or ESR); track with UAS7 and UCT; review every 3–6 months whether treatment is still needed.</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">2</span>How strong the evidence is</h3>
+    <ul>
+      <li>Omalizumab 300 mg: no itch or hives at week 12 in 36% vs 9% with placebo<sup>2</sup>.</li>
+      <li>Dupilumab: 30–32% vs 13–17% at week 24; it missed its primary endpoint in patients still uncontrolled on omalizumab (CUPID Study B)<sup>3</sup>.</li>
+      <li>Omlyclo (omalizumab biosimilar): equivalent to Xolair on the primary endpoint in a 619-patient head-to-head trial<sup>4</sup>.</li>
+      <li>Antihistamine up-dosing: about 63% of standard-dose non-responders improve, but the trials are small<sup>5</sup>.</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">3</span>What Taiwan NHI covers</h3>
+    <p>Antihistamines are covered. No biologic is covered for CSU: the omalizumab rule 6.2.6 is for severe persistent asthma only, and the dupilumab rules 6.2.9 and 13.17 do not include CSU<sup>6</sup>. Patients pay themselves, usually at hospital self-pay prices above the NHI price<sup>7</sup>.</p>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">4</span>Where the guideline and NHI differ</h3>
+    <table>
+      <thead><tr><th></th><th class="cg">Guideline</th><th class="ch">Taiwan NHI</th></tr></thead>
+      <tbody>
+        <tr><td>After antihistamines fail</td><td class="cg">Add omalizumab</td><td class="ch">Not covered; self-pay (Xolair about 28,000 per 4 weeks at NHI price)</td></tr>
+        <tr><td>Once controlled</td><td class="cg">After 3 months of complete control, lengthen the injection interval</td><td class="ch">No rule; for self-paying patients a longer interval saves money directly</td></tr>
+        <tr><td>Biosimilar</td><td class="cg">Same as the original</td><td class="ch">Omlyclo NHI price is half of Xolair</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">5</span>NHI and self-pay</h3>
+    <ol class="path">
+      <li>Second-generation antihistamine daily, up to 2–4 times the dose; NHI covered, a few hundred NT$ a month.</li>
+      <li>If still not enough, biologics are self-pay; the lowest NHI price is Omlyclo's (about 14,000 per 4 weeks).</li>
+      <li>After 3 months of complete control the interval can be lengthened step by step; for example every 8 weeks, Omlyclo costs about 7,000 per 4 weeks.</li>
+      <li>With atopic dermatitis, asthma or nasal polyps, or very low total IgE, the guideline notes benefits of dupilumab.</li>
+    </ol>
+  </section>
+
+  <details><summary>References (7)</summary><ol class="refs">
+    <li>Zuberbier T, et al. International guideline for urticaria. <i>Allergy</i> 2026;81(8):2582–2632. <a href="https://doi.org/10.1111/all.70210" target="_blank" rel="noopener">doi:10.1111/all.70210</a></li>
+    <li>XOLAIR prescribing information (DailyMed); Saini SS, et al. <i>J Invest Dermatol</i> 2015;135:67–75.</li>
+    <li>DUPIXENT prescribing information (DailyMed), accessed 24 October 2026.</li>
+    <li>Saini SS, et al. CT-P39 vs reference omalizumab in CSU. <i>Allergy</i> 2025;80(8):2167–77. <a href="https://doi.org/10.1111/all.16446" target="_blank" rel="noopener">doi:10.1111/all.16446</a></li>
+    <li>Guillén-Aguinaga S, et al. <i>Br J Dermatol</i> 2016;175(6):1153–65. <a href="https://doi.org/10.1111/bjd.14768" target="_blank" rel="noopener">doi:10.1111/bjd.14768</a></li>
+    <li>Taiwan NHI drug reimbursement rules 6.2.6, 6.2.9, 13.17; NHI drug list, downloaded 2026-10-24.</li>
+    <li>Hospital public self-pay price lists: Chang Gung (2025-10-01 list), Fu Jen, Kuang Tien (2026-09 list) and Taipei City Hospital (2026-10 list), checked 2026-10-24; prices differ by hospital and purchasing contract.</li>
+  </ol></details>
+</div>
+
+<div class="disease guide" data-dz="ad" data-lang="zh" data-mode="guide" hidden>
+<button type="button" class="backbtn">← 回到選藥卡</button>
+  <h2>異位性皮膚炎（中重度）</h2>
+  <div class="gkey"><b>一句話：</b>美國指引把生物製劑和 JAK 抑制劑列為「強烈建議」，傳統口服藥只是「條件式建議」；台灣健保的順序剛好相反，要先用過照光和兩種傳統口服藥才給付。</div>
+
+  <section class="step">
+    <h3><span class="n">1</span>指引怎麼說</h3>
+    <p>2024 年美國皮膚科醫學會（AAD）成人全身性治療指引<sup>1</sup>：</p>
+    <ul>
+      <li><span class="rec">強烈建議</span>dupilumab、tralokinumab、abrocitinib、baricitinib、upadacitinib。</li>
+      <li><span class="rec">條件式建議</span>照光、azathioprine、ciclosporin、methotrexate、mycophenolate。</li>
+      <li><span class="rec">條件式反對</span>全身性類固醇。</li>
+      <li>lebrikizumab（Ebglyss）、nemolizumab 在這份指引發表時還沒核准，沒有被評估。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">2</span>證據有多強</h3>
+    <ul>
+      <li>單用、第 16 週皮膚改善 75% 以上（EASI-75）：Rinvoq 15 mg 60–70%、30 mg 73–80%；Ebglyss 52–59%；Dupixent 44–51%；安慰劑 10–18%<sup>2</sup>。各試驗不能直接相減。</li>
+      <li>直接比較：Rinvoq 30 mg 對 Dupixent，第 16 週 EASI-75 71% 對 61%<sup>3</sup>；Cibinqo 200 mg 第 2 週止癢比 Dupixent 快（48% 對 26%）<sup>4</sup>。</li>
+      <li>代價：JAK 抑制劑有美國黑框警語（嚴重感染、死亡、癌症、心血管事件、血栓）；歐盟建議 65 歲以上、吸菸、有心血管或癌症風險者，沒有其他選擇才用<sup>2,5</sup>。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">3</span>台灣健保怎麼規定</h3>
+    <p>12 歲以上（規定 13.17.1）<sup>6</sup>：</p>
+    <ul>
+      <li>病灶持續 6 個月以上；EASI ≥ 16、紅腫面積 ≥ 30%、IGA 3–4。</li>
+      <li>先做完足量照光 12 週，加上 methotrexate、azathioprine、ciclosporin 至少兩種，各足量 12 週無效，或有副作用、禁忌；光敏感等醫療因素無法照光可免照光。</li>
+      <li>事前審查；第 16 週要達 EASI 50；6 個月一個療程。</li>
+      <li>Dupixent 用滿 1 年、其他用滿 2 年後若 EASI ≤ 16，要暫緩續用；復發可重新申請。</li>
+      <li>6–11 歲只給付 Dupixent，條件較寬：外用藥 12 週加一種全身性藥物 12 週無效（規定 13.17.2）。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">4</span>指引和健保差在哪</h3>
+    <table>
+      <thead><tr><th></th><th class="cg">AAD 指引</th><th class="ch">台灣健保</th></tr></thead>
+      <tbody>
+        <tr><td>生物製劑、JAK</td><td class="cg">強烈建議，可以優先選</td><td class="ch">要先失敗照光加兩種傳統口服藥</td></tr>
+        <tr><td>傳統口服藥</td><td class="cg">條件式建議</td><td class="ch">申請生物製劑前的必經步驟</td></tr>
+        <tr><td>長期治療</td><td class="cg">沒有規定停藥時間</td><td class="ch">用滿 1–2 年控制好就要暫緩</td></tr>
+        <tr><td>Ebglyss</td><td class="cg">未評估</td><td class="ch">2026/6 起給付</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">5</span>健保規定的申請順序</h3>
+    <ol class="path">
+      <li>外用類固醇加保濕；外用鈣調磷酸酶抑制劑在台灣為第二線。</li>
+      <li>中重度控制不好時，健保要求先做照光和傳統口服藥；每種藥的劑量、期間與照光劑量都要記錄，申請時要附。</li>
+      <li>符合條件後各藥的差異：Dupixent 另有氣喘、鼻息肉適應症；JAK 抑制劑止癢較快；EMA 限制 65 歲以上或心血管風險高者使用 JAK。</li>
+      <li>不符合健保條件時只能自費；指引對生物製劑與 JAK 抑制劑是強烈建議。</li>
+    </ol>
+  </section>
+
+  <details><summary>參考資料（6）</summary><ol class="refs">
+    <li>Davis DMR, et al. Executive summary: guidelines of care for the management of atopic dermatitis in adults with phototherapy and systemic therapies. <i>J Am Acad Dermatol</i> 2024;90(2):342–5. <a href="https://doi.org/10.1016/j.jaad.2023.08.103" target="_blank" rel="noopener">doi:10.1016/j.jaad.2023.08.103</a></li>
+    <li>US prescribing information (DailyMed, accessed 24 October 2026): Dupixent, Ebglyss, Rinvoq, Cibinqo.</li>
+    <li>Blauvelt A, et al. Heads Up. <i>JAMA Dermatol</i> 2021;157(9):1047–55. <a href="https://doi.org/10.1001/jamadermatol.2021.3023" target="_blank" rel="noopener">doi:10.1001/jamadermatol.2021.3023</a></li>
+    <li>Reich K, et al. JADE DARE. <i>Lancet</i> 2022;400:273–82. <a href="https://doi.org/10.1016/S0140-6736(22)01199-0" target="_blank" rel="noopener">doi:10.1016/S0140-6736(22)01199-0</a></li>
+    <li>European Medicines Agency. Measures to minimise risk of serious side effects with Janus kinase inhibitors. 28 October 2022.</li>
+    <li>健保署藥品給付規定 13.17、13.17.1（115/6/1 修訂）、13.17.2。</li>
+  </ol></details>
+</div>
+
+<div class="disease guide" data-dz="ad" data-lang="en" data-mode="guide" hidden>
+<button type="button" class="backbtn">← Back to drug cards</button>
+  <h2>Atopic dermatitis (moderate to severe)</h2>
+  <div class="gkey"><b>In one line:</b> the US guideline gives biologics and JAK inhibitors a strong recommendation and conventional oral drugs only a conditional one; Taiwan NHI reverses the order and pays only after phototherapy and two conventional oral drugs.</div>
+
+  <section class="step">
+    <h3><span class="n">1</span>What the guideline says</h3>
+    <p>American Academy of Dermatology (AAD) guideline for systemic therapy in adults, 2024<sup>1</sup>:</p>
+    <ul>
+      <li><span class="rec">Strong for</span>Dupilumab, tralokinumab, abrocitinib, baricitinib, upadacitinib.</li>
+      <li><span class="rec">Conditional for</span>Phototherapy, azathioprine, ciclosporin, methotrexate, mycophenolate.</li>
+      <li><span class="rec">Conditional against</span>Systemic corticosteroids.</li>
+      <li>Lebrikizumab (Ebglyss) and nemolizumab were not yet approved when the guideline was written and were not assessed.</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">2</span>How strong the evidence is</h3>
+    <ul>
+      <li>Monotherapy, at least 75% skin improvement (EASI-75) at week 16: Rinvoq 15 mg 60–70%, 30 mg 73–80%; Ebglyss 52–59%; Dupixent 44–51%; placebo 10–18%<sup>2</sup>. Trials cannot be compared by simple subtraction.</li>
+      <li>Head to head: Rinvoq 30 mg vs Dupixent, EASI-75 at week 16 71% vs 61%<sup>3</sup>; Cibinqo 200 mg relieved itch faster than Dupixent at week 2 (48% vs 26%)<sup>4</sup>.</li>
+      <li>The trade-off: JAK inhibitors carry a US boxed warning (serious infection, death, cancer, cardiovascular events, thrombosis); the EU advises using them at age 65 or older, in smokers, or with cardiovascular or cancer risk only when there is no alternative<sup>2,5</sup>.</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">3</span>What Taiwan NHI covers</h3>
+    <p>Age 12 and over (rule 13.17.1)<sup>6</sup>:</p>
+    <ul>
+      <li>Lesions for at least 6 months; EASI ≥ 16, red inflamed area ≥ 30%, IGA 3–4.</li>
+      <li>First, adequate phototherapy for 12 weeks plus at least two of methotrexate, azathioprine and ciclosporin, each at full dose for 12 weeks without response, or stopped for side effects or contraindications; phototherapy can be skipped for photosensitivity or other medical reasons.</li>
+      <li>Pre-approval; EASI 50 needed at week 16; 6 months per course.</li>
+      <li>After 1 year of Dupixent or 2 years of the others, treatment is paused if EASI ≤ 16; a relapse allows a new application.</li>
+      <li>Age 6–11: only Dupixent, on easier terms: 12 weeks of topical therapy plus one systemic drug for 12 weeks without response (rule 13.17.2).</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">4</span>Where the guideline and NHI differ</h3>
+    <table>
+      <thead><tr><th></th><th class="cg">AAD guideline</th><th class="ch">Taiwan NHI</th></tr></thead>
+      <tbody>
+        <tr><td>Biologics, JAK</td><td class="cg">Strong for; can be chosen first</td><td class="ch">Only after phototherapy and two conventional oral drugs fail</td></tr>
+        <tr><td>Conventional oral drugs</td><td class="cg">Conditional for</td><td class="ch">A required step before any biologic</td></tr>
+        <tr><td>Long-term treatment</td><td class="cg">No stopping time set</td><td class="ch">Pause once controlled after 1–2 years</td></tr>
+        <tr><td>Ebglyss</td><td class="cg">Not assessed</td><td class="ch">Covered since 2026/6</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">5</span>NHI application sequence</h3>
+    <ol class="path">
+      <li>Topical corticosteroid and moisturiser; topical calcineurin inhibitors are second line in Taiwan.</li>
+      <li>For moderate to severe disease, NHI requires phototherapy and conventional oral drugs first; each drug's dose and duration and the phototherapy doses must be recorded for the application.</li>
+      <li>Once eligible, the drugs differ: Dupixent is also licensed for asthma and nasal polyps; JAK inhibitors relieve itch faster; the EMA restricts JAK inhibitors at age 65 or older or with high cardiovascular risk.</li>
+      <li>Without NHI eligibility the only route is self-pay; the guideline gives biologics and JAK inhibitors a strong recommendation.</li>
+    </ol>
+  </section>
+
+  <details><summary>References (6)</summary><ol class="refs">
+    <li>Davis DMR, et al. Executive summary: guidelines of care for the management of atopic dermatitis in adults with phototherapy and systemic therapies. <i>J Am Acad Dermatol</i> 2024;90(2):342–5. <a href="https://doi.org/10.1016/j.jaad.2023.08.103" target="_blank" rel="noopener">doi:10.1016/j.jaad.2023.08.103</a></li>
+    <li>US prescribing information (DailyMed, accessed 24 October 2026): Dupixent, Ebglyss, Rinvoq, Cibinqo.</li>
+    <li>Blauvelt A, et al. Heads Up. <i>JAMA Dermatol</i> 2021;157(9):1047–55. <a href="https://doi.org/10.1001/jamadermatol.2021.3023" target="_blank" rel="noopener">doi:10.1001/jamadermatol.2021.3023</a></li>
+    <li>Reich K, et al. JADE DARE. <i>Lancet</i> 2022;400:273–82. <a href="https://doi.org/10.1016/S0140-6736(22)01199-0" target="_blank" rel="noopener">doi:10.1016/S0140-6736(22)01199-0</a></li>
+    <li>European Medicines Agency. Measures to minimise risk of serious side effects with Janus kinase inhibitors. 28 October 2022.</li>
+    <li>Taiwan NHI drug reimbursement rules 13.17, 13.17.1 (revised 115/6/1), 13.17.2.</li>
+  </ol></details>
+</div>
+
+<div class="disease guide" data-dz="pso" data-lang="zh" data-mode="guide" hidden>
+<button type="button" class="backbtn">← 回到選藥卡</button>
+  <h2>乾癬（中重度斑塊型）</h2>
+  <div class="gkey"><b>一句話：</b>2026 年歐洲系的指引說第一次用全身性治療就可以考慮生物製劑；台灣健保要先照光加兩種口服藥、各 3 個月無效才給付。療效最好的是 IL-17 和 IL-23 抑制劑；最便宜的生物製劑是 ustekinumab 和 adalimumab 的生物相似藥。</div>
+
+  <section class="step">
+    <h3><span class="n">1</span>指引怎麼說</h3>
+    <p>2026 年德國 S3 指引（改編自歐洲 EuroGuiDerm）<sup>1</sup>：</p>
+    <ul>
+      <li><span class="rec">強烈建議</span>選藥時同時考慮療效、安全性、共病和病人自己的情況。</li>
+      <li><span class="rec">弱建議</span>第一次用全身性治療時，可考慮有第一線適應症的生物製劑，或 deucravacitinib，特別是嚴重的病人。</li>
+      <li>治療目標：最低 PASI 75，理想 PASI 90 或 PASI 絕對值 &lt; 2。誘導期結束時評估：多數藥 10–12 週，起效慢的 16–24 週。</li>
+      <li>建議同樣適用於生物相似藥。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">2</span>證據有多強</h3>
+    <p>Cochrane 2025 網絡統合分析：204 個試驗、67,889 人、26 種治療<sup>2</sup>。</p>
+    <ul>
+      <li>PASI 90 最有效：infliximab、xeligekimab、bimekizumab（唯一高確定性）、ixekizumab、risankizumab，彼此效果相近。</li>
+      <li>bimekizumab、ixekizumab、risankizumab 優於 secukinumab、brodalumab、guselkumab。</li>
+      <li>IL-17、IL-23 抑制劑優於 ustekinumab、tildrakizumab、TNF 抑制劑（adalimumab、certolizumab、etanercept）和 deucravacitinib。</li>
+      <li>所有藥物的嚴重不良事件與安慰劑沒有差異。限制：只涵蓋誘導期（8–24 週）。</li>
+      <li>在台灣：infliximab 沒有乾癬適應症；xeligekimab 不在台灣<sup>3</sup>。</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">3</span>台灣健保怎麼規定</h3>
+    <p>生物製劑（規定 8.2.4.6.1）<sup>4</sup>：</p>
+    <ul>
+      <li>病灶持續 6 個月以上、PASI ≥ 10。</li>
+      <li>先做足量照光，加上 methotrexate、acitretin、ciclosporin、apremilast、deucravacitinib 至少兩種，每種至少 3 個月無效；育齡女性可不用 acitretin。</li>
+      <li>事前審查，6 個月一個療程；續用要達 PASI 50（risankizumab 要 PASI 75）。</li>
+      <li>用滿 2 年 PASI ≤ 10 要暫緩；控制不夠理想（PASI &gt; 1、面積 &gt; 3% 或臉、手、指甲有病灶）可在續用時平行轉換另一種生物製劑。</li>
+      <li>懷孕或哺乳時可申請 certolizumab。</li>
+    </ul>
+    <p>apremilast、deucravacitinib（規定 8.2.16）：照光加上 methotrexate 或 ciclosporin 其中一種無效就能申請，門檻比生物製劑低<sup>4</sup>。</p>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">4</span>指引和健保差在哪</h3>
+    <table>
+      <thead><tr><th></th><th class="cg">指引</th><th class="ch">台灣健保</th></tr></thead>
+      <tbody>
+        <tr><td>何時用生物製劑</td><td class="cg">第一次全身性治療就可考慮（弱建議）</td><td class="ch">照光加兩種口服藥、各 3 個月無效後</td></tr>
+        <tr><td>治療目標</td><td class="cg">至少 PASI 75，理想 PASI 90</td><td class="ch">續用門檻 PASI 50（risankizumab PASI 75）</td></tr>
+        <tr><td>長期治療</td><td class="cg">沒有規定停藥時間</td><td class="ch">用滿 2 年 PASI ≤ 10 要暫緩</td></tr>
+        <tr><td>生物相似藥</td><td class="cg">與原廠相同</td><td class="ch">adalimumab 便宜 17%、ustekinumab 便宜 15%</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">5</span>健保規定的申請順序</h3>
+    <ol class="path">
+      <li>健保要求的第一步：照光（每週至少 2 次）加 methotrexate 每週 15 mg；照光劑量與用藥期間都要記錄。</li>
+      <li>3 個月後仍不夠：可申請 apremilast 或 deucravacitinib，它也算第二種系統性治療。</li>
+      <li>再 3 個月仍 PASI ≥ 10：可申請生物製劑。清除率最高的是 bimekizumab、ixekizumab、risankizumab；最便宜的是 ustekinumab 與 adalimumab 生物相似藥；IL-17 抑制劑仿單警告發炎性腸道疾病。</li>
+      <li>B 肝帶原者：健保的預防性抗病毒藥不涵蓋生物製劑，事先預防需自費<sup>4</sup>。</li>
+    </ol>
+  </section>
+
+  <details><summary>參考資料（4）</summary><ol class="refs">
+    <li>Nast A, et al. S3 guideline for the treatment of psoriasis vulgaris, adapted from EuroGuiDerm – part 1. <i>J Dtsch Dermatol Ges</i> 2026;24(1):122–37. PMID 41531416.</li>
+    <li>Sbidian E, et al. Systemic pharmacological treatments for chronic plaque psoriasis: a network meta-analysis. <i>Cochrane Database Syst Rev</i> 2025;8:CD011535. <a href="https://doi.org/10.1002/14651858.CD011535.pub7" target="_blank" rel="noopener">doi:10.1002/14651858.CD011535.pub7</a></li>
+    <li>衛福部食藥署全部藥品許可證（開放資料），2026-10-24 下載。</li>
+    <li>健保署藥品給付規定 8.2.4.6.1（115/5/1 修訂）、8.2.16（115/8/1 修訂）、10.7.3；健保用藥品項，2026-10-24 下載。</li>
+  </ol></details>
+</div>
+
+<div class="disease guide" data-dz="pso" data-lang="en" data-mode="guide" hidden>
+<button type="button" class="backbtn">← Back to drug cards</button>
+  <h2>Psoriasis (moderate to severe plaque)</h2>
+  <div class="gkey"><b>In one line:</b> the 2026 European-based guideline allows a biologic as the first systemic treatment; Taiwan NHI pays only after phototherapy plus two oral drugs have each failed for 3 months. IL-17 and IL-23 inhibitors work best; the cheapest biologics are the ustekinumab and adalimumab biosimilars.</div>
+
+  <section class="step">
+    <h3><span class="n">1</span>What the guideline says</h3>
+    <p>German S3 guideline 2026, adapted from the European EuroGuiDerm guideline<sup>1</sup>:</p>
+    <ul>
+      <li><span class="rec">Strongly recommended</span>Weigh efficacy, safety, comorbidities and the patient's own circumstances when choosing.</li>
+      <li><span class="rec">Weakly suggested</span>For the first systemic treatment, consider a biologic with a first-line label, or deucravacitinib, especially in severe disease.</li>
+      <li>Treatment goals: at least PASI 75; ideally PASI 90 or an absolute PASI &lt; 2. Assess at the end of induction: 10–12 weeks for most drugs, 16–24 weeks for slower ones.</li>
+      <li>The recommendations apply equally to biosimilars.</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">2</span>How strong the evidence is</h3>
+    <p>Cochrane network meta-analysis, 2025: 204 trials, 67,889 people, 26 treatments<sup>2</sup>.</p>
+    <ul>
+      <li>Most effective for PASI 90: infliximab, xeligekimab, bimekizumab (the only high-certainty result), ixekizumab, risankizumab, with similar effects to one another.</li>
+      <li>Bimekizumab, ixekizumab and risankizumab beat secukinumab, brodalumab and guselkumab.</li>
+      <li>IL-17 and IL-23 inhibitors beat ustekinumab, tildrakizumab, TNF inhibitors (adalimumab, certolizumab, etanercept) and deucravacitinib.</li>
+      <li>No drug differed from placebo in serious adverse events. Limitation: induction only (8–24 weeks).</li>
+      <li>In Taiwan: infliximab has no psoriasis licence; xeligekimab is not available<sup>3</sup>.</li>
+    </ul>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">3</span>What Taiwan NHI covers</h3>
+    <p>Biologics (rule 8.2.4.6.1)<sup>4</sup>:</p>
+    <ul>
+      <li>Lesions for at least 6 months, PASI ≥ 10.</li>
+      <li>First, adequate phototherapy plus at least two of methotrexate, acitretin, ciclosporin, apremilast and deucravacitinib, each for at least 3 months without response; women of childbearing age may skip acitretin.</li>
+      <li>Pre-approval, 6 months per course; continuation needs PASI 50 (PASI 75 for risankizumab).</li>
+      <li>After 2 years, PASI ≤ 10 means a pause; if control is not ideal (PASI &gt; 1, area &gt; 3%, or lesions on face, hands or nails), another biologic can be swapped in at a renewal.</li>
+      <li>Certolizumab can be requested in pregnancy or breastfeeding.</li>
+    </ul>
+    <p>Apremilast and deucravacitinib (rule 8.2.16): phototherapy plus failure of either methotrexate or ciclosporin is enough, a lower bar than for biologics<sup>4</sup>.</p>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">4</span>Where the guideline and NHI differ</h3>
+    <table>
+      <thead><tr><th></th><th class="cg">Guideline</th><th class="ch">Taiwan NHI</th></tr></thead>
+      <tbody>
+        <tr><td>When to use a biologic</td><td class="cg">Can be the first systemic treatment (weak)</td><td class="ch">After phototherapy plus two oral drugs, each for 3 months</td></tr>
+        <tr><td>Treatment goal</td><td class="cg">At least PASI 75, ideally PASI 90</td><td class="ch">Continuation threshold PASI 50 (PASI 75 for risankizumab)</td></tr>
+        <tr><td>Long-term treatment</td><td class="cg">No stopping time set</td><td class="ch">After 2 years, pause if PASI ≤ 10</td></tr>
+        <tr><td>Biosimilars</td><td class="cg">Same as the original</td><td class="ch">Adalimumab 17% cheaper, ustekinumab 15% cheaper</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="step">
+    <h3><span class="n">5</span>NHI application sequence</h3>
+    <ol class="path">
+      <li>NHI's first step: phototherapy (at least 2 times a week) plus methotrexate 15 mg weekly; phototherapy doses and drug durations must be recorded.</li>
+      <li>Not enough after 3 months: apremilast or deucravacitinib can be requested, and it also counts as the second systemic treatment.</li>
+      <li>Still PASI ≥ 10 after another 3 months: a biologic can be requested. Highest clearance: bimekizumab, ixekizumab, risankizumab; cheapest: ustekinumab and adalimumab biosimilars; IL-17 inhibitor labels warn about inflammatory bowel disease.</li>
+      <li>Hepatitis B carriers: NHI preventive antivirals do not cover biologics, so prophylaxis is self-pay<sup>4</sup>.</li>
+    </ol>
+  </section>
+
+  <details><summary>References (4)</summary><ol class="refs">
+    <li>Nast A, et al. S3 guideline for the treatment of psoriasis vulgaris, adapted from EuroGuiDerm – part 1. <i>J Dtsch Dermatol Ges</i> 2026;24(1):122–37. PMID 41531416.</li>
+    <li>Sbidian E, et al. Systemic pharmacological treatments for chronic plaque psoriasis: a network meta-analysis. <i>Cochrane Database Syst Rev</i> 2025;8:CD011535. <a href="https://doi.org/10.1002/14651858.CD011535.pub7" target="_blank" rel="noopener">doi:10.1002/14651858.CD011535.pub7</a></li>
+    <li>Taiwan Food and Drug Administration, all drug licences (open data), downloaded 2026-10-24.</li>
+    <li>Taiwan NHI drug reimbursement rules 8.2.4.6.1 (revised 115/5/1), 8.2.16 (revised 115/8/1), 10.7.3; NHI drug list, downloaded 2026-10-24.</li>
+  </ol></details>
+</div>
+
+<section id="feedback" class="feedback" aria-labelledby="fb-h">
+  <h2 id="fb-h"><span class="l-zh">意見與合作</span><span class="l-en">Feedback and collaboration</span></h2>
+  <p class="note"><span class="l-zh">這是試用版。任何人都可以給意見：看不懂的地方、錯誤、想新增的疾病或資料，或想一起合作。填完後按「用 Email 寄出」，會打開您的郵件程式；也可以按「複製內容」，自行寄到 rogerwang890928@gmail.com。</span><span class="l-en">This is a beta. Anyone can comment: anything unclear, errors, diseases or data to add, or ideas for working together. "Send by email" opens your mail app; or "Copy text" and send it yourself to rogerwang890928@gmail.com.</span></p>
+  <form id="fb-form" class="fb">
+    <label for="fb-role"><span class="l-zh">您的身分</span><span class="l-en">You are</span>
+      <select id="fb-role"><option value="醫師 / Doctor">醫師 / Doctor</option><option value="藥師 / Pharmacist">藥師 / Pharmacist</option><option value="護理師 / Nurse">護理師 / Nurse</option><option value="醫學生 / Student">醫學生 / Student</option><option value="病人或家屬 / Patient or family">病人或家屬 / Patient or family</option><option value="研究或產業 / Research or industry">研究或產業 / Research or industry</option><option value="其他 / Other">其他 / Other</option></select></label>
+    <label for="fb-type"><span class="l-zh">意見類型</span><span class="l-en">Type</span>
+      <select id="fb-type"><option value="看不懂 / Unclear">看不懂 / Unclear</option><option value="錯誤 / Error">錯誤 / Error</option><option value="想新增 / Please add">想新增 / Please add</option><option value="合作 / Collaboration">合作 / Collaboration</option><option value="其他 / Other">其他 / Other</option></select></label>
+    <label for="fb-page"><span class="l-zh">相關頁面</span><span class="l-en">Page</span>
+      <select id="fb-page"><option value="慢性蕁麻疹 / CSU">慢性蕁麻疹 / CSU</option><option value="異位性皮膚炎 / Atopic dermatitis">異位性皮膚炎 / Atopic dermatitis</option><option value="乾癬 / Psoriasis">乾癬 / Psoriasis</option><option value="整體 / Whole site">整體 / Whole site</option></select></label>
+    <label for="fb-text" class="wide"><span class="l-zh">內容</span><span class="l-en">Your comment</span><textarea id="fb-text" rows="5" required></textarea></label>
+    <label for="fb-who" class="wide"><span class="l-zh">稱呼與聯絡方式（選填）</span><span class="l-en">Name and contact (optional)</span><input id="fb-who" type="text"></label>
+    <div class="fbbtns wide"><button type="submit"><span class="l-zh">用 Email 寄出</span><span class="l-en">Send by email</span></button><button type="button" id="fb-copy"><span class="l-zh">複製內容</span><span class="l-en">Copy text</span></button><span id="fb-msg" aria-live="polite"></span></div>
+  </form>
+</section>
+
+<p class="foot"><span class="l-zh">整理給醫師參考，不是給病人的醫療建議。仿單外用法請自行評估並告知病人。價格與給付規定會變動，以查核日為準。</span><span class="l-en">For clinicians; not medical advice for patients. Assess off-label use yourself and tell the patient. Prices and NHI rules change; figures are as of the check date.</span></p>
+</div>
+<script>
+(function(){
+  var tabs=document.querySelectorAll('.tabs a'), lang='zh', tab='csu', mode='card';
+  function get(k){try{return localStorage.getItem(k);}catch(_){return null;}}
+  function put(k,v){try{localStorage.setItem(k,v);}catch(_){}}
+  function render(){
+    document.body.classList.toggle('en',lang==='en');
+    document.documentElement.lang=lang==='en'?'en':'zh-Hant-TW';
+    document.body.classList.toggle('guidemode',mode==='guide');
+    document.querySelectorAll('[data-mode-btn]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.modeBtn===mode));});
+    document.querySelectorAll('.disease').forEach(function(d){d.hidden=!(d.dataset.dz===tab&&d.dataset.lang===lang&&(d.dataset.mode||'card')===mode);});
+    tabs.forEach(function(t){if(t.dataset.tab===tab)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
+    document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.langBtn===lang));});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();tab=t.dataset.tab;render();});});
+  document.querySelectorAll('[data-mode-btn]').forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.modeBtn;render();});});
+  document.querySelectorAll('[data-lang-btn]').forEach(function(b){b.addEventListener('click',function(){lang=b.dataset.langBtn;put('cardlang',lang);render();});});
+  var h=(location.hash||'').slice(1); if(/-guide$/.test(h)){mode='guide';h=h.replace(/-guide$/,'');} if(['csu','ad','pso'].indexOf(h)>=0) tab=h;
+  if(get('cardlang')==='en') lang='en';
+  document.querySelectorAll('.calc').forEach(function(c){
+    var data=JSON.parse(c.dataset.calc), sel=c.querySelector('.c-drug'), pr=c.querySelector('.c-price'), un=c.querySelector('.c-units'), dy=c.querySelector('.c-days');
+    var fmt=function(v){return isFinite(v)&&v>0?Math.round(v).toLocaleString('en-US'):'—';};
+    function calc(){var p=+pr.value,u=+un.value,d=+dy.value; c.querySelector('.c-r4').textContent=d>0?fmt(p*u*28/d):'—'; c.querySelector('.c-ry').textContent=d>0?fmt(p*u*365/d):'—';}
+    function pick(){var x=data[sel.value]; pr.value=x.p; un.value=x.u; dy.value=x.d;
+      c.querySelectorAll('.pb').forEach(function(b){var v=x[b.dataset.k]; b.disabled=(v==null); b.title=(v==null)?c.dataset.na:'';}); calc();}
+    sel.addEventListener('change',pick); [pr,un,dy].forEach(function(i){i.addEventListener('input',calc);});
+    c.querySelectorAll('.pb').forEach(function(b){b.addEventListener('click',function(){var v=data[sel.value][b.dataset.k]; if(v!=null){pr.value=v;calc();}});});
+    pick();
+  });
+  document.querySelectorAll('.backbtn').forEach(function(b){b.addEventListener('click',function(){mode='card';render();window.scrollTo(0,0);});});
+  document.querySelectorAll('.secnav button').forEach(function(b){b.addEventListener('click',function(){
+    if(b.dataset.jump==='guide'){mode='guide';render();window.scrollTo(0,0);return;}
+    var box=b.closest('.disease'), t=box&&box.querySelector('[data-sec="'+b.dataset.jump+'"]'); if(!t) return;
+    if(t.tagName==='DETAILS') t.open=true;
+    t.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  });});
+  document.querySelectorAll('.colbtn').forEach(function(b){b.addEventListener('click',function(){
+    var t=b.parentNode.querySelector('table.main'); var full=t.classList.toggle('simple')===false; b.setAttribute('aria-pressed',String(full));
+    b.textContent=full?(document.body.classList.contains('en')?'Show simple table':'顯示簡單版'):b.dataset.label;
+  }); b.dataset.label=b.textContent;});
+  document.querySelectorAll('.fnode').forEach(function(b){b.addEventListener('click',function(){
+    var box=b.closest('.disease'); var t=box&&box.querySelector('[data-g="'+b.dataset.go+'"]'); if(!t) return; var dt=t.closest('details'); if(dt) dt.open=true; if(t.tagName==='DETAILS') t.open=true;
+    t.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+    var hl=t.tagName==='TR'?t.querySelector('td'):t; hl.classList.remove('flash'); void hl.offsetWidth; hl.classList.add('flash');
+  });});
+  render();
+  document.querySelectorAll('table.main').forEach(function(t){
+    var hd=[].map.call(t.querySelectorAll('thead th'),function(x){return x.textContent;});
+    t.querySelectorAll('tbody tr:not(.grp)').forEach(function(r){[].forEach.call(r.children,function(td,i){
+      td.setAttribute('data-label',hd[i]||'');
+      if(i>0){var w=document.createElement('span');w.className='cv';while(td.firstChild)w.appendChild(td.firstChild);td.appendChild(w);}
+    });});
+  });
+  var vb=document.querySelectorAll('[data-view]');
+  function view(v){document.body.classList.toggle('cards',v==='cards');vb.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.view===v));});put('cardview',v);}
+  vb.forEach(function(b){b.addEventListener('click',function(){view(b.dataset.view);});});
+  view(get('cardview')==='cards'?'cards':'table');
+})();
+</script>
+
+<script>
+(function(){
+  var f=document.getElementById('fb-form'); if(!f) return;
+  function body(){return '身分 Role: '+document.getElementById('fb-role').value+'\n類型 Type: '+document.getElementById('fb-type').value+'\n頁面 Page: '+document.getElementById('fb-page').value+'\n\n'+document.getElementById('fb-text').value+'\n\n稱呼與聯絡 Contact: '+document.getElementById('fb-who').value;}
+  var msg=document.getElementById('fb-msg'), en=function(){return document.body.classList.contains('en');};
+  f.addEventListener('submit',function(e){e.preventDefault();
+    var subj='[選藥卡 Drug cards] '+document.getElementById('fb-type').value;
+    location.href='mailto:rogerwang890928@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body());
+    msg.textContent=en()?'If no mail app opened, use "Copy text" and send to rogerwang890928@gmail.com.':'若沒有開啟郵件程式，請按「複製內容」寄到 rogerwang890928@gmail.com。';});
+  document.getElementById('fb-copy').addEventListener('click',function(){var t=body();
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){msg.textContent=en()?'Copied.':'已複製。';},
+      function(){var ta=document.getElementById('fb-text');ta.focus();ta.select();msg.textContent=en()?'Copy failed; please copy by hand.':'無法自動複製，請手動複製。';});});
+})();
+</script>
+</body>
+</html>
