@@ -245,6 +245,19 @@ details.upd summary{cursor:pointer}
 .fb :focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 #fb-msg{font-size:.82rem;color:var(--muted)}
 @media print{.beta,.feedback{display:none!important}}
+.beta{background:var(--warn-bg);border:1px solid var(--rule);border-radius:10px;padding:10px 14px;font-size:.9rem;line-height:1.6}
+.beta b{margin-right:6px} .beta a{color:var(--accent)} .mail{font-family:var(--num);user-select:all;overflow-wrap:anywhere}
+.feedback{display:flex;flex-direction:column;gap:8px}
+.fb{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.fb label{display:flex;flex-direction:column;gap:3px;font-size:.82rem;color:var(--muted)}
+.fb .wide{grid-column:1/-1}
+.fb select,.fb textarea,.fb input{font:inherit;font-size:.95rem;color:var(--fg);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:6px 8px;width:100%;min-width:0}
+.fbbtns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fbbtns button{font:inherit;border-radius:999px;padding:6px 16px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--panel)}
+.fbbtns button[type=button]{background:var(--panel);color:var(--accent)}
+.fb :focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#fb-msg{font-size:.82rem;color:var(--muted)}
+@media print{.beta,.feedback{display:none!important}}
 </style>
 
 </head>
@@ -424,7 +437,7 @@ details.upd summary{cursor:pointer}
 
 <div class="disease" data-dz="csu" data-lang="en">
 <h2 class="dz">Chronic spontaneous urticaria (CSU)</h2>
-<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">NHI application</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
+<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">Taiwan NHI (example)</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
 <section class="flow" data-sec="flow" aria-label="Flowchart: guideline order1">
   <h2>Flowchart: guideline order<sup>1</sup></h2>
   <p class="fhint">Tap a box to jump to the table</p>
@@ -436,7 +449,7 @@ details.upd summary{cursor:pointer}
   <div class="tags"><span><span class="tag t1">On-label</span> in the Taiwan or US label</span><span><span class="tag t2">Off-label · guideline</span> recommended by the 2026 guideline</span><span><span class="tag t3">Off-label · observational</span> studies only</span></div>
   <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
   <table class="main simple">
-    <thead><tr><th>Drug</th><th class="c-unit">Unit price</th><th>Dosing</th><th>Per 4 weeks</th><th>Efficacy</th><th class="c-note">Notes</th></tr></thead>
+    <thead><tr><th>Drug</th><th class="c-unit">Taiwan price (NT$)</th><th>Dosing</th><th>Per 4 weeks (Taiwan, NT$)</th><th>Efficacy</th><th class="c-note">Notes</th></tr></thead>
     <tbody>
       <tr class="grp" data-g="g0"><td colspan="6">First line</td></tr>
       <tr><td>2nd-gen antihistamine<br><small>fexofenadine, bilastine</small><small class="m-only"><br>Step down once controlled<sup>1</sup></small></td>
@@ -506,28 +519,28 @@ details.upd summary{cursor:pointer}
   </ul>
 </section>
 
-<section class="calc" data-sec="calc" aria-labelledby="en-csu-calc-h" data-calc='[{"n": "Xolair 150 mg", "p": 14234, "lo": 15657, "hi": 17081, "u": 2, "d": 28}, {"n": "Omlyclo 150 mg", "p": 7026, "lo": null, "hi": null, "u": 2, "d": 28}, {"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}]' data-na="Self-pay price not found">
+<section class="calc" data-blank="1" data-sec="calc" aria-labelledby="en-csu-calc-h" data-calc='[{"n": "Xolair 150 mg", "p": 14234, "lo": 15657, "hi": 17081, "u": 2, "d": 28}, {"n": "Omlyclo 150 mg", "p": 7026, "lo": null, "hi": null, "u": 2, "d": 28}, {"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}]' data-na="Self-pay price not found">
   <h2 id="en-csu-calc-h">Cost calculator</h2>
-  <p class="hint">Pick a drug and enter your hospital's price per syringe or tablet; maintenance drug cost only, excluding induction and co-payment.<sup>2,7</sup></p>
+  <p class="hint">Pick a drug and enter your local price per syringe or tablet in any currency (the buttons fill in Taiwan prices as examples); maintenance drug cost only, excluding induction and co-payment.<sup>2,7</sup></p>
   <div class="cgrid">
     <label for="en-csu-c-drug">Drug<select id="en-csu-c-drug" class="c-drug"><option value="0">Xolair 150 mg</option><option value="1">Omlyclo 150 mg</option><option value="2">Dupixent 300 mg</option></select></label>
-    <label for="en-csu-c-price">Price per unit (NT$)<input id="en-csu-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="en-csu-c-price">Your price per unit<input id="en-csu-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
     <label for="en-csu-c-units">Units per dose<input id="en-csu-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
     <label for="en-csu-c-days">Interval (days)<input id="en-csu-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
   </div>
-  <div class="pbs"><button type="button" class="pb" data-k="p">NHI price</button><button type="button" class="pb" data-k="lo">Self-pay low</button><button type="button" class="pb" data-k="hi">Self-pay high</button></div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">Taiwan NHI price</button><button type="button" class="pb" data-k="lo">Taiwan self-pay low</button><button type="button" class="pb" data-k="hi">Taiwan self-pay high</button></div>
   <div class="res" aria-live="polite"><div><span>Per 4 weeks</span><b class="c-r4">—</b></div><div><span>Per year (365 days)</span><b class="c-ry">—</b></div></div>
 </section>
 
-<section class="nhi" data-sec="nhi" aria-label="NHI application">
-  <h2>NHI application</h2>
-  <ol class="nsteps"><li><b>Antihistamines</b>: covered by NHI.</li><li><b>Biologics for CSU</b>: not covered; self-pay. The omalizumab rule 6.2.6 is for severe persistent asthma only; the dupilumab rules 6.2.9 and 13.17 do not include CSU<sup>2</sup>.</li><li><b>Self-pay price</b>: differs by hospital; enter your hospital's price in the cost calculator above<sup>7</sup>.</li></ol>
+<section class="nhi" data-sec="nhi" aria-label="Example: how Taiwan's NHI decides">
+  <h2>Example: how Taiwan's NHI decides</h2>
+  <ol class="nsteps"><li><b>Antihistamines</b>: covered by NHI.</li><li><b>Biologics for CSU</b>: not covered; self-pay. The omalizumab rule 6.2.6 is for severe persistent asthma only; the dupilumab rules 6.2.9 and 13.17 do not include CSU<sup>2</sup>.</li><li><b>Self-pay price</b>: differs by hospital; enter your local price in the cost calculator above<sup>7</sup>.</li></ol>
   
 </section>
 
 <section data-sec="fig" class="cmp" aria-label="Figure 1. Compare within each step">
   <h2>Figure 1. Compare within each step</h2>
-  <div class="cmp-tier"><h3>When 4× antihistamine is not enough, add</h3><div class="cmp-head"><span></span><span>Efficacy：No itch or hives (UAS7 = 0)<sup>4,6</sup></span><span>Per 4 weeks (NHI price)<sup>2,7</sup></span></div><div class="cmp-row"><div class="cmp-n">Xolair<small>omalizumab; week 12</small></div><div class="cmp-e"><div class="cbar e" style="width:36%"></div><span>36% (placebo 9%)</span></div><div class="cmp-c"><div class="cbar c" style="width:90.7%"></div><span>28,468</span><small>Self-pay 31,314–34,162</small></div></div><div class="cmp-row"><div class="cmp-n">Omlyclo<small>biosimilar</small></div><div class="cmp-e"><span class="noval">Equivalent to Xolair on the primary endpoint</span></div><div class="cmp-c"><div class="cbar c" style="width:44.8%"></div><span>14,052</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>dupilumab; week 24</small></div><div class="cmp-e"><div class="cbar e" style="width:31%"></div><span>30–32% (placebo 13–17%)</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>31,374</span><small>Self-pay 34,512–37,650</small></div></div></div>
+  <div class="cmp-tier"><h3>When 4× antihistamine is not enough, add</h3><div class="cmp-head"><span></span><span>Efficacy：No itch or hives (UAS7 = 0)<sup>4,6</sup></span><span>Per 4 weeks (Taiwan NHI price, NT$)<sup>2,7</sup></span></div><div class="cmp-row"><div class="cmp-n">Xolair<small>omalizumab; week 12</small></div><div class="cmp-e"><div class="cbar e" style="width:36%"></div><span>36% (placebo 9%)</span></div><div class="cmp-c"><div class="cbar c" style="width:90.7%"></div><span>28,468</span><small>Self-pay 31,314–34,162</small></div></div><div class="cmp-row"><div class="cmp-n">Omlyclo<small>biosimilar</small></div><div class="cmp-e"><span class="noval">Equivalent to Xolair on the primary endpoint</span></div><div class="cmp-c"><div class="cbar c" style="width:44.8%"></div><span>14,052</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>dupilumab; week 24</small></div><div class="cmp-e"><div class="cbar e" style="width:31%"></div><span>30–32% (placebo 13–17%)</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>31,374</span><small>Self-pay 34,512–37,650</small></div></div></div>
   <p class="note">Efficacy comes from different trials and weeks and is only a rough guide, not for direct subtraction; costs are maintenance drug costs, bars at NHI price, small text the hospital self-pay range.</p>
 </section>
 
@@ -764,7 +777,7 @@ details.upd summary{cursor:pointer}
 
 <div class="disease" data-dz="ad" data-lang="en" hidden>
 <h2 class="dz">Atopic dermatitis (moderate to severe, systemic therapy)</h2>
-<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">NHI application</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
+<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">Taiwan NHI (example)</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
 <section class="flow" data-sec="flow" aria-label="Flowchart: NHI application order2">
   <h2>Flowchart: NHI application order<sup>2</sup></h2>
   <p class="fhint">The guideline strongly recommends biologics and JAK inhibitors without requiring step 2 first<sup>1</sup>. Tap a box to jump to the table</p>
@@ -787,7 +800,7 @@ details.upd summary{cursor:pointer}
   <div class="tags"><span><span class="tag t1">On-label</span> in the Taiwan or US label</span><span><span class="tag t2">Off-label · guideline</span></span><span><span class="tag t3">Off-label · observational</span> studies only</span></div>
   <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
   <table class="main simple">
-    <thead><tr><th>Drug</th><th class="c-unit">Unit price</th><th>Dosing</th><th>Per 4 weeks</th><th>EASI-75, monotherapy</th><th class="c-note">NHI and notes</th></tr></thead>
+    <thead><tr><th>Drug</th><th class="c-unit">Taiwan price (NT$)</th><th>Dosing</th><th>Per 4 weeks (Taiwan, NT$)</th><th>EASI-75, monotherapy</th><th class="c-note">NHI and notes</th></tr></thead>
     <tbody>
       <tr class="grp" data-g="g0"><td colspan="6">Conventional oral · conditional recommendation</td></tr>
       <tr><td>Ciclosporin<small class="m-only"><br>Not with JAK inhibitors (NHI)<sup>2</sup></small></td>
@@ -854,28 +867,28 @@ details.upd summary{cursor:pointer}
   </ul>
 </section>
 
-<section class="calc" data-sec="calc" aria-labelledby="en-ad-calc-h" data-calc='[{"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}, {"n": "Ebglyss 250 mg (after week 16)", "p": 23183, "lo": 26660, "hi": 36000, "u": 1, "d": 28}, {"n": "Rinvoq 15 mg", "p": 743, "lo": 817, "hi": 988, "u": 1, "d": 1}, {"n": "Cibinqo 200 mg", "p": 799, "lo": 879, "hi": 960, "u": 1, "d": 1}, {"n": "Olumiant 4 mg", "p": 959, "lo": 1060, "hi": 1275, "u": 1, "d": 1}]' data-na="Self-pay price not found">
+<section class="calc" data-blank="1" data-sec="calc" aria-labelledby="en-ad-calc-h" data-calc='[{"n": "Dupixent 300 mg", "p": 15687, "lo": 17256, "hi": 18825, "u": 1, "d": 14}, {"n": "Ebglyss 250 mg (after week 16)", "p": 23183, "lo": 26660, "hi": 36000, "u": 1, "d": 28}, {"n": "Rinvoq 15 mg", "p": 743, "lo": 817, "hi": 988, "u": 1, "d": 1}, {"n": "Cibinqo 200 mg", "p": 799, "lo": 879, "hi": 960, "u": 1, "d": 1}, {"n": "Olumiant 4 mg", "p": 959, "lo": 1060, "hi": 1275, "u": 1, "d": 1}]' data-na="Self-pay price not found">
   <h2 id="en-ad-calc-h">Cost calculator</h2>
-  <p class="hint">Pick a drug and enter your hospital's price per syringe or tablet; maintenance drug cost only, excluding induction and co-payment.<sup>2,16</sup></p>
+  <p class="hint">Pick a drug and enter your local price per syringe or tablet in any currency (the buttons fill in Taiwan prices as examples); maintenance drug cost only, excluding induction and co-payment.<sup>2,16</sup></p>
   <div class="cgrid">
     <label for="en-ad-c-drug">Drug<select id="en-ad-c-drug" class="c-drug"><option value="0">Dupixent 300 mg</option><option value="1">Ebglyss 250 mg (after week 16)</option><option value="2">Rinvoq 15 mg</option><option value="3">Cibinqo 200 mg</option><option value="4">Olumiant 4 mg</option></select></label>
-    <label for="en-ad-c-price">Price per unit (NT$)<input id="en-ad-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="en-ad-c-price">Your price per unit<input id="en-ad-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
     <label for="en-ad-c-units">Units per dose<input id="en-ad-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
     <label for="en-ad-c-days">Interval (days)<input id="en-ad-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
   </div>
-  <div class="pbs"><button type="button" class="pb" data-k="p">NHI price</button><button type="button" class="pb" data-k="lo">Self-pay low</button><button type="button" class="pb" data-k="hi">Self-pay high</button></div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">Taiwan NHI price</button><button type="button" class="pb" data-k="lo">Taiwan self-pay low</button><button type="button" class="pb" data-k="hi">Taiwan self-pay high</button></div>
   <div class="res" aria-live="polite"><div><span>Per 4 weeks</span><b class="c-r4">—</b></div><div><span>Per year (365 days)</span><b class="c-ry">—</b></div></div>
 </section>
 
-<section class="nhi" data-sec="nhi" aria-label="NHI application (age 12+)">
-  <h2>NHI application (age 12+)</h2>
+<section class="nhi" data-sec="nhi" aria-label="Example: how Taiwan's NHI decides (age 12+)">
+  <h2>Example: how Taiwan's NHI decides (age 12+)</h2>
   <ol class="nsteps"><li><b>Criteria</b>: lesions for ≥ 6 months; EASI ≥ 16, red inflamed area ≥ 30%, IGA 3–4.</li><li><b>Treatments first</b>: phototherapy for 12 weeks plus at least two of MTX, AZA and ciclosporin, each at full dose for 12 weeks without response; phototherapy can be skipped for medical reasons.</li><li><b>Pre-approval</b>: application form, EASI score sheet, photos, copies of records and the phototherapy dose log.</li><li><b>Week 16 review</b>: EASI 50 needed; 6 months per course; apply to continue 1 month before expiry.</li><li><b>Pause</b>: after 1 year of Dupixent or 2 years of the others, pause if EASI ≤ 16; relapse ≥ 50% or EASI ≥ 16 allows a new application<sup>2</sup>.</li></ol>
   <details class="more"><summary>Full rules</summary><ul><li>Age 6–11: only Dupixent; topical therapy for 12 weeks plus one systemic drug for 12 weeks without response (13.17.2).</li><li>Dupixent, Ebglyss, Rinvoq and Cibinqo are not combined; JAK inhibitors are not combined with ciclosporin; Rinvoq or Cibinqo, switching only for intolerable side effects.</li><li>Excluded in pregnancy or breastfeeding; stop if pregnant.</li><li>For Cibinqo, record hepatitis B and C tests<sup>2</sup>.</li></ul></details>
 </section>
 
 <section data-sec="fig" class="cmp" aria-label="Figure 2. Compare within each step">
   <h2>Figure 2. Compare within each step</h2>
-  <div class="cmp-tier"><h3>Same NHI step: biologics and JAK inhibitors</h3><div class="cmp-head"><span></span><span>Efficacy：EASI-75, monotherapy<sup>4–8</sup></span><span>Per 4 weeks (NHI price)<sup>2,16</sup></span></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>biologic; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:47.5%"></div><span>44–51%</span></div><div class="cmp-c"><div class="cbar c" style="width:75.4%"></div><span>31,374</span><small>Self-pay 34,512–37,650</small></div></div><div class="cmp-row"><div class="cmp-n">Ebglyss<small>biologic; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:55.5%"></div><span>52–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:55.7%"></div><span>23,183</span><small>Self-pay 26,660–36,000</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 15<small>JAK; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:65%"></div><span>60–70%</span></div><div class="cmp-c"><div class="cbar c" style="width:50.0%"></div><span>20,804</span><small>Self-pay 22,876–27,664</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 30<small>JAK; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:76.5%"></div><span>73–80%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>41,608</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Cibinqo 200<small>JAK; week 12</small></div><div class="cmp-e"><div class="cbar e" style="width:61.5%"></div><span>61–62%</span></div><div class="cmp-c"><div class="cbar c" style="width:53.8%"></div><span>22,372</span><small>Self-pay 24,612–26,880</small></div></div><div class="cmp-row"><div class="cmp-n">Olumiant 4<small>JAK; not NHI-covered for atopic dermatitis</small></div><div class="cmp-e"><span class="noval">IGA 0/1 14–17% (a stricter outcome)</span></div><div class="cmp-c"><div class="cbar c" style="width:64.5%"></div><span>26,852</span><small>Self-pay 29,680–35,700</small></div></div></div>
+  <div class="cmp-tier"><h3>Same NHI step: biologics and JAK inhibitors</h3><div class="cmp-head"><span></span><span>Efficacy：EASI-75, monotherapy<sup>4–8</sup></span><span>Per 4 weeks (Taiwan NHI price, NT$)<sup>2,16</sup></span></div><div class="cmp-row"><div class="cmp-n">Dupixent<small>biologic; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:47.5%"></div><span>44–51%</span></div><div class="cmp-c"><div class="cbar c" style="width:75.4%"></div><span>31,374</span><small>Self-pay 34,512–37,650</small></div></div><div class="cmp-row"><div class="cmp-n">Ebglyss<small>biologic; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:55.5%"></div><span>52–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:55.7%"></div><span>23,183</span><small>Self-pay 26,660–36,000</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 15<small>JAK; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:65%"></div><span>60–70%</span></div><div class="cmp-c"><div class="cbar c" style="width:50.0%"></div><span>20,804</span><small>Self-pay 22,876–27,664</small></div></div><div class="cmp-row"><div class="cmp-n">Rinvoq 30<small>JAK; week 16</small></div><div class="cmp-e"><div class="cbar e" style="width:76.5%"></div><span>73–80%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>41,608</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Cibinqo 200<small>JAK; week 12</small></div><div class="cmp-e"><div class="cbar e" style="width:61.5%"></div><span>61–62%</span></div><div class="cmp-c"><div class="cbar c" style="width:53.8%"></div><span>22,372</span><small>Self-pay 24,612–26,880</small></div></div><div class="cmp-row"><div class="cmp-n">Olumiant 4<small>JAK; not NHI-covered for atopic dermatitis</small></div><div class="cmp-e"><span class="noval">IGA 0/1 14–17% (a stricter outcome)</span></div><div class="cmp-c"><div class="cbar c" style="width:64.5%"></div><span>26,852</span><small>Self-pay 29,680–35,700</small></div></div></div>
   <p class="note">Efficacy comes from different trials and weeks and is only a rough guide, not for direct subtraction; costs are maintenance drug costs, bars at NHI price, small text the hospital self-pay range.</p>
 </section>
 
@@ -1130,7 +1143,7 @@ details.upd summary{cursor:pointer}
 
 <div class="disease" data-dz="pso" data-lang="en" hidden>
 <h2 class="dz">Psoriasis (moderate to severe plaque, systemic therapy)</h2>
-<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">NHI application</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
+<nav class="secnav" aria-label="On this page"><button type="button" data-jump="flow">Flowchart</button><button type="button" data-jump="table">Drug table</button><button type="button" data-jump="calc">Cost calculator</button><button type="button" data-jump="nhi">Taiwan NHI (example)</button><button type="button" data-jump="fig">Compare</button><button type="button" data-jump="guide">Guidelines explained</button><button type="button" data-jump="refs">References</button></nav>
 <section class="flow" data-sec="flow" aria-label="Flowchart: NHI application order2">
   <h2>Flowchart: NHI application order<sup>2</sup></h2>
   <p class="fhint">Guideline: a biologic or deucravacitinib can be considered as the first systemic treatment (weak)<sup>1</sup>. Tap a box to jump to the table</p>
@@ -1141,7 +1154,7 @@ details.upd summary{cursor:pointer}
   <h2 id="en-pso-h-table">Table 3. Systemic drugs for moderate-to-severe plaque psoriasis in Taiwan</h2>
   <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
   <table class="main simple">
-    <thead><tr><th>Drug</th><th class="c-unit">Unit price</th><th>Dosing</th><th>Per 4 weeks</th><th>Efficacy vs placebo</th><th class="c-note">NHI and notes</th></tr></thead>
+    <thead><tr><th>Drug</th><th class="c-unit">Taiwan price (NT$)</th><th>Dosing</th><th>Per 4 weeks (Taiwan, NT$)</th><th>Efficacy vs placebo</th><th class="c-note">NHI and notes</th></tr></thead>
     <tbody>
       <tr class="grp" data-g="g0"><td colspan="6">Conventional oral</td></tr>
       <tr><td>Methotrexate<small class="m-only"><br>Contraindicated in pregnancy<sup>5</sup></small></td>
@@ -1229,29 +1242,29 @@ details.upd summary{cursor:pointer}
   </ul>
 </section>
 
-<section class="calc" data-sec="calc" aria-labelledby="en-pso-calc-h" data-calc='[{"n": "Adalimumab biosimilar 40 mg", "p": 7437, "lo": 7437, "hi": 8924, "u": 1, "d": 14}, {"n": "Humira 40 mg", "p": 8937, "lo": 10354, "hi": 10354, "u": 1, "d": 14}, {"n": "Enbrel 25 mg (twice weekly)", "p": 3071, "lo": null, "hi": null, "u": 2, "d": 7}, {"n": "Cimzia 200 mg", "p": 8188, "lo": 9826, "hi": 10643, "u": 1, "d": 14}, {"n": "Stelara 45/90 mg", "p": 47302, "lo": 52873, "hi": 54397, "u": 1, "d": 84}, {"n": "Steqeyma 45/90 mg", "p": 40206, "lo": null, "hi": null, "u": 1, "d": 84}, {"n": "Cosentyx 150 mg (300 mg = 2)", "p": 14092, "lo": 15655, "hi": 16206, "u": 2, "d": 28}, {"n": "Taltz 80 mg", "p": 25452, "lo": 28750, "hi": 29270, "u": 1, "d": 28}, {"n": "Lumicef 210 mg", "p": 12828, "lo": 14309, "hi": 14752, "u": 1, "d": 14}, {"n": "Bimzelx 160 mg (320 mg = 2)", "p": 26025, "lo": 29929, "hi": 31230, "u": 2, "d": 56}, {"n": "Tremfya 100 mg", "p": 59973, "lo": 67503, "hi": 67503, "u": 1, "d": 56}, {"n": "Skyrizi 150 mg", "p": 88206, "lo": 97027, "hi": 97027, "u": 1, "d": 84}, {"n": "Otezla 30 mg", "p": 171, "lo": 195, "hi": 195, "u": 2, "d": 1}, {"n": "Sotyktu 6 mg", "p": 396, "lo": 436, "hi": 527, "u": 1, "d": 1}]' data-na="Self-pay price not found">
+<section class="calc" data-blank="1" data-sec="calc" aria-labelledby="en-pso-calc-h" data-calc='[{"n": "Adalimumab biosimilar 40 mg", "p": 7437, "lo": 7437, "hi": 8924, "u": 1, "d": 14}, {"n": "Humira 40 mg", "p": 8937, "lo": 10354, "hi": 10354, "u": 1, "d": 14}, {"n": "Enbrel 25 mg (twice weekly)", "p": 3071, "lo": null, "hi": null, "u": 2, "d": 7}, {"n": "Cimzia 200 mg", "p": 8188, "lo": 9826, "hi": 10643, "u": 1, "d": 14}, {"n": "Stelara 45/90 mg", "p": 47302, "lo": 52873, "hi": 54397, "u": 1, "d": 84}, {"n": "Steqeyma 45/90 mg", "p": 40206, "lo": null, "hi": null, "u": 1, "d": 84}, {"n": "Cosentyx 150 mg (300 mg = 2)", "p": 14092, "lo": 15655, "hi": 16206, "u": 2, "d": 28}, {"n": "Taltz 80 mg", "p": 25452, "lo": 28750, "hi": 29270, "u": 1, "d": 28}, {"n": "Lumicef 210 mg", "p": 12828, "lo": 14309, "hi": 14752, "u": 1, "d": 14}, {"n": "Bimzelx 160 mg (320 mg = 2)", "p": 26025, "lo": 29929, "hi": 31230, "u": 2, "d": 56}, {"n": "Tremfya 100 mg", "p": 59973, "lo": 67503, "hi": 67503, "u": 1, "d": 56}, {"n": "Skyrizi 150 mg", "p": 88206, "lo": 97027, "hi": 97027, "u": 1, "d": 84}, {"n": "Otezla 30 mg", "p": 171, "lo": 195, "hi": 195, "u": 2, "d": 1}, {"n": "Sotyktu 6 mg", "p": 396, "lo": 436, "hi": 527, "u": 1, "d": 1}]' data-na="Self-pay price not found">
   <h2 id="en-pso-calc-h">Cost calculator</h2>
-  <p class="hint">Pick a drug and enter your hospital's price per syringe or tablet; maintenance drug cost only, excluding induction and co-payment.<sup>2,13</sup></p>
+  <p class="hint">Pick a drug and enter your local price per syringe or tablet in any currency (the buttons fill in Taiwan prices as examples); maintenance drug cost only, excluding induction and co-payment.<sup>2,13</sup></p>
   <div class="cgrid">
     <label for="en-pso-c-drug">Drug<select id="en-pso-c-drug" class="c-drug"><option value="0">Adalimumab biosimilar 40 mg</option><option value="1">Humira 40 mg</option><option value="2">Enbrel 25 mg (twice weekly)</option><option value="3">Cimzia 200 mg</option><option value="4">Stelara 45/90 mg</option><option value="5">Steqeyma 45/90 mg</option><option value="6">Cosentyx 150 mg (300 mg = 2)</option><option value="7">Taltz 80 mg</option><option value="8">Lumicef 210 mg</option><option value="9">Bimzelx 160 mg (320 mg = 2)</option><option value="10">Tremfya 100 mg</option><option value="11">Skyrizi 150 mg</option><option value="12">Otezla 30 mg</option><option value="13">Sotyktu 6 mg</option></select></label>
-    <label for="en-pso-c-price">Price per unit (NT$)<input id="en-pso-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
+    <label for="en-pso-c-price">Your price per unit<input id="en-pso-c-price" class="c-price" type="number" min="0" step="1" inputmode="decimal"></label>
     <label for="en-pso-c-units">Units per dose<input id="en-pso-c-units" class="c-units" type="number" min="0" step="0.5" inputmode="decimal"></label>
     <label for="en-pso-c-days">Interval (days)<input id="en-pso-c-days" class="c-days" type="number" min="1" step="1" inputmode="numeric"></label>
   </div>
-  <div class="pbs"><button type="button" class="pb" data-k="p">NHI price</button><button type="button" class="pb" data-k="lo">Self-pay low</button><button type="button" class="pb" data-k="hi">Self-pay high</button></div>
+  <div class="pbs"><button type="button" class="pb" data-k="p">Taiwan NHI price</button><button type="button" class="pb" data-k="lo">Taiwan self-pay low</button><button type="button" class="pb" data-k="hi">Taiwan self-pay high</button></div>
   <div class="res" aria-live="polite"><div><span>Per 4 weeks</span><b class="c-r4">—</b></div><div><span>Per year (365 days)</span><b class="c-ry">—</b></div></div>
 </section>
 
-<section class="nhi" data-sec="nhi" aria-label="NHI application (biologics)">
-  <h2>NHI application (biologics)</h2>
+<section class="nhi" data-sec="nhi" aria-label="Example: how Taiwan's NHI decides (biologics)">
+  <h2>Example: how Taiwan's NHI decides (biologics)</h2>
   <ol class="nsteps"><li><b>Criteria</b>: lesions for ≥ 6 months, PASI ≥ 10.</li><li><b>Treatments first</b>: adequate phototherapy plus at least two of MTX, acitretin, ciclosporin, apremilast and deucravacitinib, each for at least 3 months without response.</li><li><b>Pre-approval</b>: copies of records and the phototherapy dose log; latent TB treated for 4 weeks first.</li><li><b>Review</b>: PASI 25 at week 12 for most drugs (week 16 for Stelara, Bimzelx), PASI 75 at week 16 for Skyrizi; renew every 6 months with PASI 50 (PASI 75 for Skyrizi).</li><li><b>Pause</b>: after 2 years, pause if PASI ≤ 10; relapse ≥ 50% allows a new application<sup>2</sup>.</li></ol>
   <details class="more"><summary>Full rules</summary><ul><li>Otezla and Sotyktu (8.2.16): phototherapy plus failure of MTX or ciclosporin is enough; renew every 24 weeks; not combined with biologics, tofacitinib or ciclosporin.</li><li>If control is not ideal (PASI &gt; 1, area &gt; 3%, or lesions on face, hands or nails), another biologic can be swapped in at renewal; both periods count toward the 2 years.</li><li>Cimzia can be requested in pregnancy or breastfeeding.</li><li>Excluded: active infection, prosthetic joint, past severe sepsis, cancer or precancer<sup>2</sup>.</li></ul></details>
 </section>
 
 <section data-sec="fig" class="cmp" aria-label="Figure 3. Compare within each step">
   <h2>Figure 3. Compare within each step</h2>
-  <div class="cmp-tier"><h3>Oral targeted drugs</h3><div class="cmp-head"><span></span><span>Efficacy：PASI 90<sup>5–11</sup></span><span>Per 4 weeks (NHI price)<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Otezla<small>apremilast</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 29–33%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.4%"></div><span>9,576</span><small>Self-pay 10,920</small></div></div><div class="cmp-row"><div class="cmp-n">Sotyktu<small>deucravacitinib</small></div><div class="cmp-e"><div class="cbar e" style="width:31.5%"></div><span>27–36%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>11,088</span><small>Self-pay 12,208–14,756</small></div></div></div>
-  <div class="cmp-tier"><h3>Biologics (same NHI step)</h3><div class="cmp-head"><span></span><span>Efficacy：PASI 90<sup>5–11</sup></span><span>Per 4 weeks (NHI price)<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Adalimumab biosimilar<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:49.6%"></div><span>14,874</span><small>Self-pay 14,874–17,848</small></div></div><div class="cmp-row"><div class="cmp-n">Humira<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:59.6%"></div><span>17,874</span><small>Self-pay 20,708</small></div></div><div class="cmp-row"><div class="cmp-n">Enbrel<small>TNF</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 46–47%</span></div><div class="cmp-c"><div class="cbar c" style="width:81.9%"></div><span>24,568</span><small>Self-pay 27,592–29,476</small></div></div><div class="cmp-row"><div class="cmp-n">Cimzia<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:43%"></div><span>36–50%</span></div><div class="cmp-c"><div class="cbar c" style="width:54.6%"></div><span>16,376</span><small>Self-pay 19,652–21,286</small></div></div><div class="cmp-row"><div class="cmp-n">Stelara<small>IL-12/23</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>42–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:52.6%"></div><span>15,767</span><small>Self-pay 17,624–18,132</small></div></div><div class="cmp-row"><div class="cmp-n">Steqeyma<small>IL-12/23 biosimilar</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>Same as Stelara</span></div><div class="cmp-c"><div class="cbar c" style="width:44.7%"></div><span>13,402</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Cosentyx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:56.5%"></div><span>54–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:94.0%"></div><span>28,184</span><small>Self-pay 31,310–32,412</small></div></div><div class="cmp-row"><div class="cmp-n">Taltz<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:70%"></div><span>68–71%</span></div><div class="cmp-c"><div class="cbar c" style="width:84.9%"></div><span>25,452</span><small>Self-pay 28,750–29,270</small></div></div><div class="cmp-row"><div class="cmp-n">Lumicef<small>IL-17</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 83–86%</span></div><div class="cmp-c"><div class="cbar c" style="width:85.6%"></div><span>25,656</span><small>Self-pay 28,618–29,504</small></div></div><div class="cmp-row"><div class="cmp-n">Bimzelx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:88%"></div><span>85–91%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.8%"></div><span>26,025</span><small>Self-pay 29,929–31,230</small></div></div><div class="cmp-row"><div class="cmp-n">Tremfya<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:71.5%"></div><span>70–73%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>29,987</span><small>Self-pay 33,752</small></div></div><div class="cmp-row"><div class="cmp-n">Skyrizi<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:74%"></div><span>73–75%</span></div><div class="cmp-c"><div class="cbar c" style="width:98.0%"></div><span>29,402</span><small>Self-pay 32,342</small></div></div></div>
+  <div class="cmp-tier"><h3>Oral targeted drugs</h3><div class="cmp-head"><span></span><span>Efficacy：PASI 90<sup>5–11</sup></span><span>Per 4 weeks (Taiwan NHI price, NT$)<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Otezla<small>apremilast</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 29–33%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.4%"></div><span>9,576</span><small>Self-pay 10,920</small></div></div><div class="cmp-row"><div class="cmp-n">Sotyktu<small>deucravacitinib</small></div><div class="cmp-e"><div class="cbar e" style="width:31.5%"></div><span>27–36%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>11,088</span><small>Self-pay 12,208–14,756</small></div></div></div>
+  <div class="cmp-tier"><h3>Biologics (same NHI step)</h3><div class="cmp-head"><span></span><span>Efficacy：PASI 90<sup>5–11</sup></span><span>Per 4 weeks (Taiwan NHI price, NT$)<sup>2,13</sup></span></div><div class="cmp-row"><div class="cmp-n">Adalimumab biosimilar<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:49.6%"></div><span>14,874</span><small>Self-pay 14,874–17,848</small></div></div><div class="cmp-row"><div class="cmp-n">Humira<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:48.5%"></div><span>47–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:59.6%"></div><span>17,874</span><small>Self-pay 20,708</small></div></div><div class="cmp-row"><div class="cmp-n">Enbrel<small>TNF</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 46–47%</span></div><div class="cmp-c"><div class="cbar c" style="width:81.9%"></div><span>24,568</span><small>Self-pay 27,592–29,476</small></div></div><div class="cmp-row"><div class="cmp-n">Cimzia<small>TNF</small></div><div class="cmp-e"><div class="cbar e" style="width:43%"></div><span>36–50%</span></div><div class="cmp-c"><div class="cbar c" style="width:54.6%"></div><span>16,376</span><small>Self-pay 19,652–21,286</small></div></div><div class="cmp-row"><div class="cmp-n">Stelara<small>IL-12/23</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>42–50% (head-to-head trials)</span></div><div class="cmp-c"><div class="cbar c" style="width:52.6%"></div><span>15,767</span><small>Self-pay 17,624–18,132</small></div></div><div class="cmp-row"><div class="cmp-n">Steqeyma<small>IL-12/23 biosimilar</small></div><div class="cmp-e"><div class="cbar e" style="width:46%"></div><span>Same as Stelara</span></div><div class="cmp-c"><div class="cbar c" style="width:44.7%"></div><span>13,402</span><small>Self-pay not found</small></div></div><div class="cmp-row"><div class="cmp-n">Cosentyx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:56.5%"></div><span>54–59%</span></div><div class="cmp-c"><div class="cbar c" style="width:94.0%"></div><span>28,184</span><small>Self-pay 31,310–32,412</small></div></div><div class="cmp-row"><div class="cmp-n">Taltz<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:70%"></div><span>68–71%</span></div><div class="cmp-c"><div class="cbar c" style="width:84.9%"></div><span>25,452</span><small>Self-pay 28,750–29,270</small></div></div><div class="cmp-row"><div class="cmp-n">Lumicef<small>IL-17</small></div><div class="cmp-e"><span class="noval">No PASI 90 in label; PASI 75 83–86%</span></div><div class="cmp-c"><div class="cbar c" style="width:85.6%"></div><span>25,656</span><small>Self-pay 28,618–29,504</small></div></div><div class="cmp-row"><div class="cmp-n">Bimzelx<small>IL-17</small></div><div class="cmp-e"><div class="cbar e" style="width:88%"></div><span>85–91%</span></div><div class="cmp-c"><div class="cbar c" style="width:86.8%"></div><span>26,025</span><small>Self-pay 29,929–31,230</small></div></div><div class="cmp-row"><div class="cmp-n">Tremfya<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:71.5%"></div><span>70–73%</span></div><div class="cmp-c"><div class="cbar c" style="width:100.0%"></div><span>29,987</span><small>Self-pay 33,752</small></div></div><div class="cmp-row"><div class="cmp-n">Skyrizi<small>IL-23</small></div><div class="cmp-e"><div class="cbar e" style="width:74%"></div><span>73–75%</span></div><div class="cmp-c"><div class="cbar c" style="width:98.0%"></div><span>29,402</span><small>Self-pay 32,342</small></div></div></div>
   <p class="note">Efficacy comes from different trials and weeks and is only a rough guide, not for direct subtraction; costs are maintenance drug costs, bars at NHI price, small text the hospital self-pay range.</p>
 </section>
 
@@ -1742,6 +1755,22 @@ details.upd summary{cursor:pointer}
   </form>
 </section>
 
+<section id="feedback" class="feedback" aria-labelledby="fb-h">
+  <h2 id="fb-h"><span class="l-zh">意見與合作</span><span class="l-en">Feedback and collaboration</span></h2>
+  <p class="note"><span class="l-zh">這是試用版。任何人都可以給意見：看不懂的地方、錯誤、想新增的疾病或資料，或想一起合作。填完後按「用 Email 寄出」，會打開您的郵件程式；也可以按「複製內容」，自行寄到 rogerwang890928@gmail.com。</span><span class="l-en">This is a beta. Anyone can comment: anything unclear, errors, diseases or data to add, or ideas for working together. "Send by email" opens your mail app; or "Copy text" and send it yourself to rogerwang890928@gmail.com.</span></p>
+  <form id="fb-form" class="fb">
+    <label for="fb-role"><span class="l-zh">您的身分</span><span class="l-en">You are</span>
+      <select id="fb-role"><option value="醫師 / Doctor">醫師 / Doctor</option><option value="藥師 / Pharmacist">藥師 / Pharmacist</option><option value="護理師 / Nurse">護理師 / Nurse</option><option value="醫學生 / Student">醫學生 / Student</option><option value="病人或家屬 / Patient or family">病人或家屬 / Patient or family</option><option value="研究或產業 / Research or industry">研究或產業 / Research or industry</option><option value="其他 / Other">其他 / Other</option></select></label>
+    <label for="fb-type"><span class="l-zh">意見類型</span><span class="l-en">Type</span>
+      <select id="fb-type"><option value="看不懂 / Unclear">看不懂 / Unclear</option><option value="錯誤 / Error">錯誤 / Error</option><option value="想新增 / Please add">想新增 / Please add</option><option value="合作 / Collaboration">合作 / Collaboration</option><option value="其他 / Other">其他 / Other</option></select></label>
+    <label for="fb-page"><span class="l-zh">相關頁面</span><span class="l-en">Page</span>
+      <select id="fb-page"><option value="慢性蕁麻疹 / CSU">慢性蕁麻疹 / CSU</option><option value="異位性皮膚炎 / Atopic dermatitis">異位性皮膚炎 / Atopic dermatitis</option><option value="乾癬 / Psoriasis">乾癬 / Psoriasis</option><option value="整體 / Whole site">整體 / Whole site</option></select></label>
+    <label for="fb-text" class="wide"><span class="l-zh">內容</span><span class="l-en">Your comment</span><textarea id="fb-text" rows="5" required></textarea></label>
+    <label for="fb-who" class="wide"><span class="l-zh">稱呼與聯絡方式（選填）</span><span class="l-en">Name and contact (optional)</span><input id="fb-who" type="text"></label>
+    <div class="fbbtns wide"><button type="submit"><span class="l-zh">用 Email 寄出</span><span class="l-en">Send by email</span></button><button type="button" id="fb-copy"><span class="l-zh">複製內容</span><span class="l-en">Copy text</span></button><span id="fb-msg" aria-live="polite"></span></div>
+  </form>
+</section>
+
 <p class="foot"><span class="l-zh">整理給醫師參考，不是給病人的醫療建議。仿單外用法請自行評估並告知病人。價格與給付規定會變動，以查核日為準。</span><span class="l-en">For clinicians; not medical advice for patients. Assess off-label use yourself and tell the patient. Prices and NHI rules change; figures are as of the check date.</span></p>
 </div>
 <script>
@@ -1767,7 +1796,7 @@ details.upd summary{cursor:pointer}
     var data=JSON.parse(c.dataset.calc), sel=c.querySelector('.c-drug'), pr=c.querySelector('.c-price'), un=c.querySelector('.c-units'), dy=c.querySelector('.c-days');
     var fmt=function(v){return isFinite(v)&&v>0?Math.round(v).toLocaleString('en-US'):'—';};
     function calc(){var p=+pr.value,u=+un.value,d=+dy.value; c.querySelector('.c-r4').textContent=d>0?fmt(p*u*28/d):'—'; c.querySelector('.c-ry').textContent=d>0?fmt(p*u*365/d):'—';}
-    function pick(){var x=data[sel.value]; pr.value=x.p; un.value=x.u; dy.value=x.d;
+    function pick(){var x=data[sel.value]; pr.value=c.dataset.blank?'':x.p; un.value=x.u; dy.value=x.d;
       c.querySelectorAll('.pb').forEach(function(b){var v=x[b.dataset.k]; b.disabled=(v==null); b.title=(v==null)?c.dataset.na:'';}); calc();}
     sel.addEventListener('change',pick); [pr,un,dy].forEach(function(i){i.addEventListener('input',calc);});
     c.querySelectorAll('.pb').forEach(function(b){b.addEventListener('click',function(){var v=data[sel.value][b.dataset.k]; if(v!=null){pr.value=v;calc();}});});
@@ -1804,6 +1833,20 @@ details.upd summary{cursor:pointer}
 })();
 </script>
 
+<script>
+(function(){
+  var f=document.getElementById('fb-form'); if(!f) return;
+  function body(){return '身分 Role: '+document.getElementById('fb-role').value+'\n類型 Type: '+document.getElementById('fb-type').value+'\n頁面 Page: '+document.getElementById('fb-page').value+'\n\n'+document.getElementById('fb-text').value+'\n\n稱呼與聯絡 Contact: '+document.getElementById('fb-who').value;}
+  var msg=document.getElementById('fb-msg'), en=function(){return document.body.classList.contains('en');};
+  f.addEventListener('submit',function(e){e.preventDefault();
+    var subj='[選藥卡 Drug cards] '+document.getElementById('fb-type').value;
+    location.href='mailto:rogerwang890928@gmail.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body());
+    msg.textContent=en()?'If no mail app opened, use "Copy text" and send to rogerwang890928@gmail.com.':'若沒有開啟郵件程式，請按「複製內容」寄到 rogerwang890928@gmail.com。';});
+  document.getElementById('fb-copy').addEventListener('click',function(){var t=body();
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){msg.textContent=en()?'Copied.':'已複製。';},
+      function(){var ta=document.getElementById('fb-text');ta.focus();ta.select();msg.textContent=en()?'Copy failed; please copy by hand.':'無法自動複製，請手動複製。';});});
+})();
+</script>
 <script>
 (function(){
   var f=document.getElementById('fb-form'); if(!f) return;
