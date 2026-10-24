@@ -1861,5 +1861,34 @@ details.upd summary{cursor:pointer}
       function(){var ta=document.getElementById('fb-text');ta.focus();ta.select();msg.textContent=en()?'Copy failed; please copy by hand.':'無法自動複製，請手動複製。';});});
 })();
 </script>
+<script>
+window.goatcounter={no_onload:true};
+(function(){
+  function dz(){var t=document.querySelector('[data-tab][aria-current=page]');return t?t.dataset.tab:'';}
+  function ev(name){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:name,title:name,event:true});}catch(e){}}
+  var n=0;try{n=(+localStorage.getItem('gc_visits')||0)+1;localStorage.setItem('gc_visits',n);}catch(e){}
+  function start(){
+    try{window.goatcounter.count({path:location.pathname});}catch(e){}
+    ev('visit-'+(n>=5?'5plus':n>0?n:'unknown'));
+    ev('lang-'+(document.body.classList.contains('en')?'en':'zh'));
+  }
+  window.addEventListener('load',function(){var w=0,t=setInterval(function(){if(window.goatcounter.count||++w>40){clearInterval(t);if(window.goatcounter.count)start();}},250);});
+  var calcSeen={};
+  document.addEventListener('click',function(e){var b=e.target.closest('button,a');if(!b)return;var d=b.dataset||{};
+    if(d.tab)ev('tab-'+d.tab);
+    else if(d.langBtn)ev('lang-'+d.langBtn);
+    else if(d.view)ev('view-'+d.view);
+    else if(d.jump)ev('nav-'+dz()+'-'+d.jump);
+    else if(d.go)ev('flow-'+dz()+'-'+d.go);
+    else if(b.classList.contains('colbtn'))ev('table-details-'+dz());
+    else if(b.classList.contains('backbtn'))ev('guide-back-'+dz());
+    else if(b.id==='fb-copy')ev('feedback-copy');
+    else if(b.type==='submit'&&b.closest('#fb-form'))ev('feedback-send');
+  },true);
+  document.addEventListener('input',function(e){var c=e.target.closest('.calc');if(c&&!calcSeen[dz()]){calcSeen[dz()]=1;ev('calc-'+dz());}},true);
+  document.addEventListener('toggle',function(e){var t=e.target;if(t.tagName==='DETAILS'&&t.open){var s=t.querySelector('summary');ev('open-'+dz()+'-'+(t.dataset.sec||t.className||'details')+'-'+((s&&s.textContent)||'').trim().slice(0,30));}},true);
+})();
+</script>
+<script data-goatcounter="https://drugcards.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
