@@ -245,6 +245,7 @@ details.upd summary{cursor:pointer}
 .fb :focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 #fb-msg{font-size:.82rem;color:var(--muted)}
 @media print{.beta,.feedback{display:none!important}}
+.viewbar.lay2{margin:0 0 8px}
 
 /* quick view: visual-abstract card on top, everything else folded under "deep" */
 .qv{padding:0;overflow:hidden;display:flex;flex-direction:column;gap:12px;padding-bottom:16px}
@@ -321,7 +322,7 @@ details.deep[open]>summary{margin-bottom:6px}
   <p class="meta"><span class="l-zh">給所有人看的研究整理 · 查核日 <span class="num">2026-10-24</span> · 價格為健保支付價（NT$），各院自費價不同</span><span class="l-en">A plain summary for everyone · checked <span class="num">2026-10-24</span> · prices are Taiwan NHI prices (NT$); hospital self-pay prices differ</span></p>
   <details class="upd"><summary><span class="l-zh">更新紀錄</span><span class="l-en">Update log</span></summary><p class="meta"><span class="l-zh">2026/10/24 新增乾癬、B 肝預防性用藥的健保規定；全面比對台灣、美國、歐盟已核准藥物，補上 icotrokinra、Staquis；建立卡片，全文對照原始資料查核 · 2026/8 Omlyclo 健保價為原廠一半 · 2026/6 Ebglyss 納入健保（異位性皮膚炎）、美國核准 Ebglyss 每 8 週維持。每週自動監測新研究與健保變動，人工核對後更新。</span><span class="l-en">2026/10/24 psoriasis and NHI rules on hepatitis B prophylaxis added; approved drugs in Taiwan, the US and the EU cross-checked, icotrokinra and Staquis added; cards created and every item checked against the original source · 2026/8 Omlyclo NHI price half of Xolair · 2026/6 Ebglyss covered by NHI (atopic dermatitis); US approves Ebglyss every 8 weeks for maintenance. New research and NHI changes are screened weekly and checked by hand before any update.</span></p></details>
 </header>
-<div class="viewbar" role="group" aria-label="版面 Layout"><span class="l-zh">語言</span><span class="l-en">Language</span><button type="button" data-lang-btn="zh" aria-pressed="true">中文</button><button type="button" data-lang-btn="en" aria-pressed="false">English</button><span class="sep lay"></span><span class="lay"><span class="l-zh">版面</span><span class="l-en">Layout</span></span><button type="button" data-view="table" aria-pressed="true"><span class="l-zh">表格</span><span class="l-en">Table</span></button><button type="button" data-view="cards" aria-pressed="false"><span class="l-zh">一藥一卡</span><span class="l-en">Cards</span></button></div>
+<div class="viewbar" role="group" aria-label="版面 Layout"><span class="l-zh">語言</span><span class="l-en">Language</span><button type="button" data-lang-btn="zh" aria-pressed="true">中文</button><button type="button" data-lang-btn="en" aria-pressed="false">English</button></div>
 <nav class="tabs" aria-label="疾病">
   <a href="#csu" data-tab="csu"><span class="l-zh">慢性蕁麻疹</span><span class="l-en">Chronic urticaria</span></a>
   <a href="#ad" data-tab="ad"><span class="l-zh">異位性皮膚炎</span><span class="l-en">Atopic dermatitis</span></a>
@@ -352,6 +353,7 @@ details.deep[open]>summary{margin-bottom:6px}
 
 <section data-sec="table" aria-labelledby="zh-csu-h-table">
   <h2 id="zh-csu-h-table">表 1：台灣慢性自發性蕁麻疹用藥</h2>
+  <div class="viewbar lay2" role="group" aria-label="版面"><span>版面</span><button type="button" data-view="table" aria-pressed="true">表格</button><button type="button" data-view="cards" aria-pressed="false">一藥一卡</button></div>
   <div class="tags"><span><span class="tag t1">仿單內</span> 台灣或美國仿單所列</span><span><span class="tag t2">仿單外・指引建議</span> 2026 年指引建議</span><span><span class="tag t3">仿單外・觀察性研究</span> 僅有研究證據</span></div>
   <button type="button" class="colbtn" aria-pressed="false">顯示完整欄位（單價、用法、備註）</button>
   <table class="main simple">
@@ -525,6 +527,7 @@ details.deep[open]>summary{margin-bottom:6px}
 
 <section data-sec="table" aria-labelledby="en-csu-h-table">
   <h2 id="en-csu-h-table">Table 1. Drugs for chronic spontaneous urticaria in Taiwan</h2>
+  <div class="viewbar lay2" role="group" aria-label="Layout"><span>Layout</span><button type="button" data-view="table" aria-pressed="true">Table</button><button type="button" data-view="cards" aria-pressed="false">Cards</button></div>
   <div class="tags"><span><span class="tag t1">On-label</span> in the Taiwan or US label</span><span><span class="tag t2">Off-label · guideline</span> recommended by the 2026 guideline</span><span><span class="tag t3">Off-label · observational</span> studies only</span></div>
   <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
   <table class="main simple">
@@ -709,6 +712,7 @@ details.deep[open]>summary{margin-bottom:6px}
 </details>
 <section data-sec="table" aria-labelledby="zh-ad-h-table">
   <h2 id="zh-ad-h-table">表 2：台灣中重度異位性皮膚炎全身性用藥</h2>
+  <div class="viewbar lay2" role="group" aria-label="版面"><span>版面</span><button type="button" data-view="table" aria-pressed="true">表格</button><button type="button" data-view="cards" aria-pressed="false">一藥一卡</button></div>
   <div class="tags"><span><span class="tag t1">仿單內</span> 台灣或美國仿單所列</span><span><span class="tag t2">仿單外・指引建議</span></span><span><span class="tag t3">仿單外・觀察性研究</span> 僅有研究證據</span></div>
   <button type="button" class="colbtn" aria-pressed="false">顯示完整欄位（單價、用法、備註）</button>
   <table class="main simple">
@@ -910,6 +914,7 @@ details.deep[open]>summary{margin-bottom:6px}
 </details>
 <section data-sec="table" aria-labelledby="en-ad-h-table">
   <h2 id="en-ad-h-table">Table 2. Systemic drugs for moderate-to-severe atopic dermatitis in Taiwan</h2>
+  <div class="viewbar lay2" role="group" aria-label="Layout"><span>Layout</span><button type="button" data-view="table" aria-pressed="true">Table</button><button type="button" data-view="cards" aria-pressed="false">Cards</button></div>
   <div class="tags"><span><span class="tag t1">On-label</span> in the Taiwan or US label</span><span><span class="tag t2">Off-label · guideline</span></span><span><span class="tag t3">Off-label · observational</span> studies only</span></div>
   <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
   <table class="main simple">
@@ -1100,6 +1105,7 @@ details.deep[open]>summary{margin-bottom:6px}
 
 <section data-sec="table" aria-labelledby="zh-pso-h-table">
   <h2 id="zh-pso-h-table">表 3：台灣中重度斑塊型乾癬全身性用藥</h2>
+  <div class="viewbar lay2" role="group" aria-label="版面"><span>版面</span><button type="button" data-view="table" aria-pressed="true">表格</button><button type="button" data-view="cards" aria-pressed="false">一藥一卡</button></div>
   <button type="button" class="colbtn" aria-pressed="false">顯示完整欄位（單價、用法、備註）</button>
   <table class="main simple">
     <thead><tr><th>藥物</th><th class="c-unit">單價</th><th>用法</th><th>每 4 週</th><th>療效 對比 安慰劑</th><th class="c-note">健保與備註</th></tr></thead>
@@ -1296,6 +1302,7 @@ details.deep[open]>summary{margin-bottom:6px}
 
 <section data-sec="table" aria-labelledby="en-pso-h-table">
   <h2 id="en-pso-h-table">Table 3. Systemic drugs for moderate-to-severe plaque psoriasis in Taiwan</h2>
+  <div class="viewbar lay2" role="group" aria-label="Layout"><span>Layout</span><button type="button" data-view="table" aria-pressed="true">Table</button><button type="button" data-view="cards" aria-pressed="false">Cards</button></div>
   <button type="button" class="colbtn" aria-pressed="false">Show all columns (unit price, dosing, notes)</button>
   <table class="main simple">
     <thead><tr><th>Drug</th><th class="c-unit">Taiwan price (NT$)</th><th>Dosing</th><th>Per 4 weeks (Taiwan, NT$)</th><th>Efficacy vs placebo</th><th class="c-note">NHI and notes</th></tr></thead>
